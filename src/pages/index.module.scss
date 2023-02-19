@@ -1,0 +1,95 @@
+/**
+ * CSS files with the .module.css suffix will be treated as CSS modules
+ * and scoped locally.
+ */
+
+.heroBanner {
+  padding: 4rem 0;
+  text-align: center;
+  position: relative;
+  overflow: hidden;
+}
+
+@media screen and (max-width: 996px) {
+  .heroBanner {
+    padding: 2rem;
+  }
+}
+
+.buttons {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.logoWrap {
+  min-height: 90vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: relative;
+
+  &::after {
+    background: var(--primary-glow);
+    width: 30%;
+    height: 40%;
+
+    content: '';
+    left: 30%;
+    top: 40%;
+    position: absolute;
+    filter: blur(95px);
+    transform: translateZ(0);
+
+    z-index: 0;
+  }
+}
+
+.logoTitle {
+  position: absolute;
+  text-align: center;
+
+  h1 {
+    font-size: 110px;
+    font-family: 'Unbounded', cursive;
+    mix-blend-mode: color;
+    text-align: center;
+    color: #000;
+    transition: 0.5s ease-in-out;
+    span {
+      display: block;
+    }
+  }
+
+  p {
+    margin-top: 2rem;
+    font-size: 1.2rem;
+    font-weight: 700;
+  }
+}
+
+[data-theme='dark'] {
+  .logoTitle h1 {
+    color: #fff;
+    mix-blend-mode: difference;
+  }
+}
+
+.polkadotLogo {
+  animation: 40s rotate linear infinite reverse;
+  transition: transform 3s;
+  position: absolute;
+}
+.polkadotLogo2 {
+  animation: 28s rotate linear infinite;
+  mix-blend-mode: difference;
+}
+
+@keyframes rotate {
+  from {
+    transform: rotate(360deg);
+  }
+  to {
+    transform: rotate(0deg);
+  }
+}
