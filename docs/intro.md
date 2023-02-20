@@ -2,46 +2,14 @@
 sidebar_position: 1
 ---
 
-# Tutorial Intro
+# Polkadot.study Tutorials
 
-Let's discover **Docusaurus in less than 5 minutes**.
+Let's discover the **Polkadot ecosystem through interactive tutorials and other learning resources**. This website is a place for developers, to learn and study and to teach. The goal is to educate developers from diverse backgrounds about specific Polkadot and Kusama related subjects.
 
-## Getting Started
+## Our Tutorials
 
-Get started by **creating a new site**.
+Ex veniam do commodo voluptate labore id non incididunt occaecat sunt amet id. Excepteur irure eiusmod exercitation qui aliqua qui officia consectetur reprehenderit magna labore amet labore. Excepteur commodo laboris excepteur minim in consequat aute nisi qui incididunt nostrud cillum elit. Consequat eiusmod Lorem commodo officia laborum. Amet fugiat exercitation ex Lorem et culpa. Amet nostrud mollit veniam aliqua sunt veniam sint. Ad anim adipisicing nisi non dolor.
 
-Or **try Docusaurus immediately** with **[docusaurus.new](https://docusaurus.new)**.
+Esse pariatur minim eiusmod minim tempor esse ad tempor eu Lorem est. Adipisicing proident veniam irure est fugiat dolore cupidatat minim commodo laborum nostrud. Nostrud cupidatat dolor ipsum occaecat esse eiusmod ea occaecat reprehenderit eu est sit dolor. Ut commodo sunt exercitation sunt esse magna et. Consectetur et amet nulla incididunt nostrud.
 
-### What you'll need
-
-- [Node.js](https://nodejs.org/en/download/) version 16.14 or above:
-  - When installing Node.js, you are recommended to check all checkboxes related to dependencies.
-
-## Generate a new site
-
-Generate a new Docusaurus site using the **classic template**.
-
-The classic template will automatically be added to your project after you run the command:
-
-```bash
-npm init docusaurus@latest my-website classic
-```
-
-You can type this command into Command Prompt, Powershell, Terminal, or any other integrated terminal of your code editor.
-
-The command also installs all necessary dependencies you need to run Docusaurus.
-
-## Start your site
-
-Run the development server:
-
-```bash
-cd my-website
-npm run start
-```
-
-The `cd` command changes the directory you're working with. In order to work with your newly created Docusaurus site, you'll need to navigate the terminal there.
-
-The `npm run start` command builds your website locally and serves it through a development server, ready for you to view at http://localhost:3000/.
-
-Open `docs/intro.md` (this page) and edit some lines: the site **reloads automatically** and displays your changes.
+Excepteur sunt ipsum exercitation magna occaecat reprehenderit deserunt nulla. Ullamco dolor nulla anim reprehenderit nisi tempor cillum exercitation nostrud ullamco amet. Eiusmod ad culpa excepteur ipsum dolore aute elit anim minim magna commodo irure cillum. Nisi esse consequat ipsum tempor irure ea minim reprehenderit eiusmod minim.

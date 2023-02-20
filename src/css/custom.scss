@@ -24,6 +24,13 @@
     #f700ffb2 160deg,
     transparent 360deg
   );
+
+  nav.navbar {
+    backdrop-filter: blur(10px);
+    background: #fffa;
+    background: linear-gradient(90deg, #fff9 0%, #fbfbfb99 100%); 
+    border-bottom: 1px solid var(--ifm-color-primary);
+  }
 }
 
 /* For readability concerns, you should choose a lighter palette in dark mode. */
@@ -44,12 +51,9 @@
   }
 
   nav.navbar {
-    backdrop-filter: blur(10px);
-    opacity: 1;
     background: #151515aa;
     background: linear-gradient(90deg, #222a 0%, #151515aa 100%); 
-    // border-bottom: 1px solid var(--ifm-color-primary);
-    box-shadow: 0 -5px 10px var(--ifm-color-primary);
+    border-bottom: 1px solid var(--ifm-color-primary);
   }
 }
 
