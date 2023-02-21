@@ -1,0 +1,86 @@
+.quiz {
+    padding: 1rem 1.5rem;
+    border-left: 3px solid var(--quiz-color-primary);
+    background: var(--quiz-color-background);
+    border-radius: 2px;
+}
+
+.question {
+    padding-bottom: 1rem;
+    font-size: larger;
+    color: var(--quiz-color-primary);
+    display: flex;
+    align-items: center;
+}
+
+.questionMark {
+    border-radius: 2rem;
+    padding: 4px 14px;
+    margin-right: 1rem;
+    border: 2px solid var(--quiz-color-primary);
+}
+
+.answers {
+    padding-left: 0px;
+
+    label {
+        display: block;
+        padding-bottom: 0.6rem;
+        display: flex;
+        align-items: center;
+
+        span {
+            padding-left: 0.6rem;
+        }
+    }
+
+    input {
+        accent-color: var(--quiz-color-primary);
+        width: 20px; 
+        height: 20px;
+    }
+}
+
+.interaction {
+    margin: 0.8rem 0;
+    button {
+        cursor: pointer;
+        margin: 0 3px;
+        font-size: medium;
+        padding: 0.6rem 1.1rem;
+        border-color: var(--ifm-color-content);
+        border-radius: 8px;
+        background: none;
+        color: var(--ifm-color-content);
+        transition: all 0.2s;
+
+        &:hover {
+            background: #0002;
+        }
+    }    
+}
+
+.feedback {
+    padding: 1rem;
+    font-weight: 700;
+    display: flex;
+    align-items: center;
+
+    &.isWrong {
+        background: var(--quiz-color-wrong);
+    }
+
+    &.isCorrect {
+        background: var(--quiz-color-correct);
+    }
+
+    .feedbackIcon {
+        margin-left: 0.5rem;
+        margin-right: 1.5rem;
+        border-radius: 20px;
+        border: 2px solid #fff;
+        padding: 2px 14px;
+        font-size: large;
+    }
+}
+
