@@ -1,0 +1,17 @@
+.tag-contribute {
+    
+}
+
+.tag-substrate {
+
+}
+
+.tag-polkadotjs a {
+    background: var(--polkadot-pink);
+    color: #eee;
+    border-color: #c9117a;
+
+    &:hover {
+        background: #c9117a;
+    }
+}

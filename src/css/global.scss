@@ -1,0 +1,23 @@
+nav.navbar {
+    backdrop-filter: blur(10px);
+    background: #fffa;
+    background: linear-gradient(90deg, #fff9 0%, #fbfbfb99 100%); 
+    border-bottom: 1px solid var(--ifm-color-primary);
+}
+  
+.docSidebar {
+    flex: 1;
+}
+
+[data-theme='dark'] {
+    #__docusaurus,
+    main {
+    background: #090909;
+    }
+
+    nav.navbar {
+    background: #151515aa;
+    background: linear-gradient(90deg, #222a 0%, #151515aa 100%); 
+    border-bottom: 1px solid var(--ifm-color-primary);
+    }
+}
