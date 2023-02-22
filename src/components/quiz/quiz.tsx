@@ -81,7 +81,7 @@ export default function Quiz( { quizItem }: { quizItem: quizItemType } ): JSX.El
         return res;
     }
 
-    const solutionClassName = cn( 
+    const solutionClassName = cn(
         styles.feedback, 
         {
             [styles.isWrong]: ! isCorrect,

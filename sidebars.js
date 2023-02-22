@@ -42,6 +42,15 @@ const sidebars = {
         'authors/contribution-steps',
         'authors/contribution-guide',
         'authors/contribution-cheatsheet',
+        {
+          type: 'category',
+          label: 'Tutorial Template',
+          link: {
+            type: 'doc',
+            id: 'tutorial-template/intro',
+          },
+          items: [ 'tutorial-template/part1', 'tutorial-template/part2', 'tutorial-template/further-reading' ]
+        }
       ]
     }
   ],
