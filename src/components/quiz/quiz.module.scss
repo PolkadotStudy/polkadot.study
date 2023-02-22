@@ -1,6 +1,6 @@
 .quiz {
     padding: 1rem 1.5rem;
-    border-left: 3px solid var(--quiz-color-primary);
+    border-left: 4px solid var(--quiz-color-primary);
     background: var(--quiz-color-background);
     border-radius: 2px;
 }
@@ -15,7 +15,7 @@
 
 .questionMark {
     border-radius: 2rem;
-    padding: 4px 14px;
+    padding: 4px 15px;
     margin-right: 1rem;
     border: 2px solid var(--quiz-color-primary);
 }
@@ -65,20 +65,24 @@
     font-weight: 700;
     display: flex;
     align-items: center;
+    border-left: 4px solid;
+    border-radius: 2px;
 
     &.isWrong {
         background: var(--quiz-color-wrong);
+        border-color: var(--quiz-color-wrong);
     }
 
     &.isCorrect {
         background: var(--quiz-color-correct);
+        border-color: var(--quiz-color-correct);
     }
 
     .feedbackIcon {
         margin-left: 0.5rem;
         margin-right: 1.5rem;
         border-radius: 20px;
-        border: 2px solid #fff;
+        border: 2px solid var(--ifm-color-content);;
         padding: 2px 14px;
         font-size: large;
     }

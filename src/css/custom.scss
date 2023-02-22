@@ -18,6 +18,8 @@
 
   --quiz-color-primary: #552BBF;
   --quiz-color-background: #9992;
+  --quiz-color-wrong: rgba(255, 57, 57, 0.3);
+  --quiz-color-correct: rgba(43, 206, 78, 0.3);;
 
   --primary-glow: conic-gradient(
     from 180deg at 50% 50%,
@@ -55,8 +57,7 @@
   --docusaurus-highlighted-code-line-bg: rgba(0, 0, 0, 0.3);
 
   --quiz-color-primary: #00B2FF;
-  --quiz-color-wrong: rgba(255, 57, 57, 0.3);
-  --quiz-color-correct: rgba(43, 206, 78, 0.3);;
+
 
   #__docusaurus,
   main {
