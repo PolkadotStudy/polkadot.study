@@ -54,7 +54,6 @@ export default function Home(): JSX.Element {
             <p>Educational hub for developers by developers</p>
           </div>
         </div>
-        <HomepageFeatures />
       </main>
     </Layout>
   );

@@ -19,18 +19,6 @@ const sidebars = {
   // But you can create a sidebar manually
   tutorialSidebar: [
     'intro',
-    {
-      type: 'category',
-      label: 'Token Gated Website with polkadot.js',
-      link: {
-        type: 'generated-index',
-      },
-      items: [
-        'tutorials/tokengated-polkadotjs/intro',
-        'tutorials/tokengated-polkadotjs/frontend',
-        'tutorials/tokengated-polkadotjs/backend'
-      ],
-    },
   ],
 
   authorsSidebar: [
@@ -39,9 +27,6 @@ const sidebars = {
       label: 'Authors How To',
       items: [    
         'authors/authors',
-        'authors/contribution-steps',
-        'authors/contribution-guide',
-        'authors/contribution-cheatsheet',
       ]
     }
   ],
