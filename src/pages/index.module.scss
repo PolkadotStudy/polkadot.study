@@ -10,12 +10,6 @@
   overflow: hidden;
 }
 
-@media screen and (max-width: 996px) {
-  .heroBanner {
-    padding: 2rem;
-  }
-}
-
 .buttons {
   display: flex;
   align-items: center;
@@ -29,6 +23,10 @@
   align-items: center;
   position: relative;
 
+  img {
+    max-width: 80vw;
+  }
+
   &::after {
     background: var(--primary-glow);
     width: 30%;
@@ -40,7 +38,6 @@
     position: absolute;
     filter: blur(95px);
     transform: translateZ(0);
-
     z-index: 0;
   }
 }
@@ -48,9 +45,10 @@
 .logoTitle {
   position: absolute;
   text-align: center;
+  max-width: 80vw;
 
   h1 {
-    font-size: 110px;
+    font-size: 44px;
     font-family: 'Unbounded', cursive;
     text-align: center;
     color: #000;
@@ -82,6 +80,12 @@
 .polkadotLogo2 {
   animation: 28s rotate linear infinite;
   mix-blend-mode: difference;
+}
+
+@media screen and (min-width: 996px) {
+  .logoTitle h1 {
+    font-size: 90px;
+  }
 }
 
 @keyframes rotate {

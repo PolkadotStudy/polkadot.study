@@ -26,10 +26,16 @@
   );
 
   nav.navbar {
-    backdrop-filter: blur(10px);
-    background: #fffa;
-    background: linear-gradient(90deg, #fff9 0%, #fbfbfb99 100%); 
+    background: #fff;
+    background: linear-gradient(90deg, #fff 0%, #fbfbfb 100%); 
     border-bottom: 1px solid var(--ifm-color-primary);
+  }
+
+  @media (min-width: 992px) { 
+    nav.navbar {
+      backdrop-filter: blur(10px);
+      background: linear-gradient(90deg, #fff9 0%, #fbfbfb99 100%); 
+    }
   }
 }
 
@@ -52,8 +58,14 @@
 
   nav.navbar {
     background: #151515aa;
-    background: linear-gradient(90deg, #222a 0%, #151515aa 100%); 
+    background: linear-gradient(90deg, #1d1d1d 0%, #151515 100%); 
     border-bottom: 1px solid var(--ifm-color-primary);
+  }
+
+  @media (min-width: 992px) { 
+    nav.navbar {
+      background: linear-gradient(90deg, #222a 0%, #151515aa 100%); 
+    }
   }
 }
 
