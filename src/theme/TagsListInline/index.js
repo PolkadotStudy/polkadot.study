@@ -19,7 +19,7 @@ export default function TagsListInline({tags}) {
       <ul className={clsx(styles.tags, 'padding--none', 'margin-left--sm')}>
         {tags.map(({label, permalink: tagPermalink}) => (
           <li key={tagPermalink} className={ clsx(styles.tag, `tag-${ string_to_slug(label) }`) }>
-            <Tag label={label} permalink={tagPermalink.replace('tags', 'category')} />
+            <Tag label={label} permalink={tagPermalink} />
           </li>
         ))}
       </ul>
