@@ -10,6 +10,7 @@ import {
 import Translate, {translate} from '@docusaurus/Translate';
 import Layout from '@theme/Layout';
 import SearchMetadata from '@theme/SearchMetadata';
+import TutorialCard from '@site/src/components/tutorial/tutorial-card';
 // Very simple pluralization: probably good enough for now
 function useNDocsTaggedPlural() {
   const {selectMessage} = usePluralForm();
@@ -21,20 +22,21 @@ function useNDocsTaggedPlural() {
           id: 'theme.docs.tagDocListPageTitle.nDocsTagged',
           description:
             'Pluralized label for "{count} docs tagged". Use as much plural forms (separated by "|") as your language support (see https://www.unicode.org/cldr/cldr-aux/charts/34/supplemental/language_plural_rules.html)',
-          message: 'One doc tagged|{count} docs tagged',
+          message: 'One tutorial tagged|{count} docs tagged',
         },
         {count},
       ),
     );
 }
-function DocItem({doc}) {
+function DocItem({doc, tag}) {
+  console.log( 'doc', tag );
   return (
-    <article className="margin-vert--lg">
-      <Link to={doc.permalink}>
-        <h2>{doc.title}</h2>
-      </Link>
-      {doc.description && <p>{doc.description}</p>}
-    </article>
+    <TutorialCard
+      category={ tag.label }
+      title={ doc.title }
+      description={ doc.description}
+      permalink={ doc.permalink }
+    />
   );
 }
 export default function DocTagDocListPage({tag}) {
@@ -73,7 +75,7 @@ export default function DocTagDocListPage({tag}) {
               </header>
               <section className="margin-vert--lg">
                 {tag.items.map((doc) => (
-                  <DocItem key={doc.id} doc={doc} />
+                  <DocItem key={doc.id} doc={doc} tag={tag}/>
                 ))}
               </section>
             </main>

@@ -45,6 +45,14 @@ const config = {
         disableInDev: false,
       },
     ],
+    [
+      "@docusaurus/plugin-content-pages",
+      {
+        id: "tags-contribute",
+        path: "tags/contribute",
+        routeBasePath: "docs",
+      },
+    ],
   ],
 
   presets: [
