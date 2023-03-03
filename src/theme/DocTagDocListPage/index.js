@@ -62,7 +62,7 @@ export default function DocTagDocListPage({tag}) {
         <div className="container margin-vert--lg">
           <div className="row">
             <main className="col col--8 col--offset-2">
-              Test custom doc page              
+              TODO: write a logic here that reads from docs/category/tag-name.mdx    
               <header className="margin-bottom--xl">
                 <h1>{title}</h1>
                 <Link href={tag.allTagsPath}>
