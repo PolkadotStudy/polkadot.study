@@ -97,7 +97,12 @@ const config = {
             to: '/blog', label: 'Blog', position: 'right'
           },
           {
-            href: 'https://github.com/facebook/docusaurus',
+            href: '/about',
+            label: 'About',
+            position: 'right',
+          },
+          {
+            href: 'https://github.com/PolkadotStudy/website',
             label: 'GitHub',
             position: 'right',
           },
