@@ -1,0 +1,28 @@
+.tutorialCard {
+    border: 1px solid #fff;
+    padding: 1.5rem 2rem;
+    border-radius: 1rem 2rem;
+    max-width: 50%;
+    background: #0033;
+
+    p {
+        padding-bottom: 0;
+        margin-bottom: 0;
+    }
+
+    img {
+        max-height: 150px;
+    }
+}
+
+.imgLink {
+    width: 100%;
+    display: block;
+    justify-content: center;
+    align-items: center;
+    display: flex;
+    padding: 1rem;
+    margin-bottom: 1rem;
+    border: 1px solid #eee;
+    border-radius: 2px;
+}

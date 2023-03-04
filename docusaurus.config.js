@@ -44,6 +44,14 @@ const config = {
         disableInDev: false,
       },
     ],
+    [
+      "@docusaurus/plugin-content-pages",
+      {
+        id: "tags-contribute",
+        path: "tags/contribute",
+        routeBasePath: "docs",
+      },
+    ],
   ],
 
   presets: [
@@ -98,6 +106,11 @@ const config = {
           },
           {
             to: '/blog', label: 'Blog', position: 'right'
+          },
+          {
+            href: '/about',
+            label: 'About',
+            position: 'right',
           },
           {
             href: 'https://github.com/facebook/docusaurus',
