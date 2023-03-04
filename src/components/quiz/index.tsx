@@ -64,6 +64,10 @@ export default function Quiz( { quizItem }: { quizItem: quizItemType } ): JSX.El
         const newItems = [...checkedState];
         newItems[elIndex] = e.target.checked;
         setCheckedState(newItems);
+
+        if (isCorrect) {
+            setIsCorrect( false )
+        }
     }
 
     const isAnswerCorrect = () => {
@@ -113,8 +117,8 @@ export default function Quiz( { quizItem }: { quizItem: quizItemType } ): JSX.El
                 }
             </div>
             <div className={ styles.interaction }>
-                    { userTries < tries && <button onClick={ onSubmitAnswer }>Submit</button> }
-                    { userTries === tries && <button onClick={ onShowSolution }>Show Solution</button> }
+                    { ( userTries < tries || ! submitted ) && ! isCorrect && <button onClick={ onSubmitAnswer }>Submit</button> }
+                    { userTries >= tries && <button onClick={ onShowSolution }>Show Solution</button> }
             </div>
             { submitted && 
                 <div className={ solutionClassName }>
