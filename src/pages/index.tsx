@@ -50,7 +50,7 @@ export default function Home(): JSX.Element {
           />
           <div className={styles.logoTitle}>
             <h1>Polkadot<span>Study</span></h1>
-            <h2>Work in Progress</h2>
+            <h2>Work in Progress - <a href="/docs/authors">Looking for Authors</a></h2>
             <p>Educational hub for developers by developers</p>
           </div>
         </div>

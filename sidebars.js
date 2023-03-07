@@ -22,13 +22,7 @@ const sidebars = {
   ],
 
   authorsSidebar: [
-    {
-      type: 'category',
-      label: 'Authors How To',
-      items: [    
-        'authors/authors',
-      ]
-    }
+    'authors/authors',
   ],
 };
 
