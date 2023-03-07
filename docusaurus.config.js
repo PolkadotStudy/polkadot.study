@@ -44,14 +44,6 @@ const config = {
         disableInDev: false,
       },
     ],
-    [
-      "@docusaurus/plugin-content-pages",
-      {
-        id: "tags-contribute",
-        path: "tags/contribute",
-        routeBasePath: "docs",
-      },
-    ],
   ],
 
   presets: [
@@ -100,17 +92,12 @@ const config = {
           },          
           {
             type: 'doc',
-            docId: 'authors/authors',
+            docId: 'authors/new-tutorial-on-polkadot-study/intro',
             position: 'left',
             label: 'For Authors',
           },
           {
             to: '/blog', label: 'Blog', position: 'right'
-          },
-          {
-            href: '/about',
-            label: 'About',
-            position: 'right',
           },
           {
             href: 'https://github.com/facebook/docusaurus',
@@ -125,6 +112,8 @@ const config = {
           autoCollapseCategories: true,
         },
       },
+      showLastUpdateAuthor: true,
+      showLastUpdateTime: true,
       footer: {
         style: 'dark',
         // links: [

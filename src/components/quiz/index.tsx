@@ -1,6 +1,7 @@
 import React, { ChangeEvent, useEffect, useState } from "react";
 import cn from "classnames";
-import styles from './quiz.module.scss';
+import styles from "./index.module.scss";
+import clsx from "clsx";
 
 type quizItemType = {
     question: string;
@@ -98,7 +99,7 @@ export default function Quiz( { quizItem }: { quizItem: quizItemType } ): JSX.El
         `Try again or click the "Show Solution" button above.`
 
     return (
-        <div className={ styles.quiz }>
+        <div className={ clsx( 'ps-quiz', styles.quiz ) }>
             <div className={ styles.question }>
                 <span className={ styles.questionMark }>?</span><span>{ question }</span>
             </div>
