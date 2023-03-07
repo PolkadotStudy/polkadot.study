@@ -24,23 +24,20 @@ const sidebars = {
   authorsSidebar: [
     {
       type: 'category',
-      label: 'Authors How To',
-      items: [    
-        'authors/authors',
-        'authors/contribution-steps',
-        'authors/contribution-guide',
-        'authors/contribution-cheatsheet',
-        {
-          type: 'category',
-          label: 'Tutorial Template',
-          link: {
-            type: 'doc',
-            id: 'tutorial-template/intro',
-          },
-          items: [ 'tutorial-template/part1', 'tutorial-template/part2', 'tutorial-template/further-reading' ]
-        }
+      label: 'How to Write a New Tutorial on Polkadot.study',
+      link: {
+        type: 'doc',
+        id: 'authors/new-tutorial-on-polkadot-study/intro',
+      },
+      items: [ 
+        'authors/new-tutorial-on-polkadot-study/structure-and-style',
+        'authors/new-tutorial-on-polkadot-study/metadata',
+        'authors/new-tutorial-on-polkadot-study/copy-tutorial-template',
+        'authors/new-tutorial-on-polkadot-study/further-reading'
       ]
-    }
+    },    
+    'authors/contribution-cheatsheet',
+    'authors/components-cheatsheet',
   ],
 };
 

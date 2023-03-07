@@ -45,14 +45,6 @@ const config = {
         disableInDev: false,
       },
     ],
-    [
-      "@docusaurus/plugin-content-pages",
-      {
-        id: "tags-contribute",
-        path: "tags/contribute",
-        routeBasePath: "docs",
-      },
-    ],
   ],
 
   presets: [
@@ -97,7 +89,7 @@ const config = {
           },          
           {
             type: 'doc',
-            docId: 'authors/authors',
+            docId: 'authors/new-tutorial-on-polkadot-study/intro',
             position: 'left',
             label: 'For Authors',
           },
@@ -122,6 +114,8 @@ const config = {
           autoCollapseCategories: true,
         },
       },
+      showLastUpdateAuthor: true,
+      showLastUpdateTime: true,
       footer: {
         style: 'dark',
         // links: [
