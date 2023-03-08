@@ -19,6 +19,7 @@ const sidebars = {
   // But you can create a sidebar manually
   tutorialSidebar: [
     'intro',
+    //add your tutorial here
     {
       type: 'category',
       label: 'Token Gated Website with polkadot.js',
@@ -44,7 +45,10 @@ const sidebars = {
       items: [ 
         'authors/new-tutorial-on-polkadot-study/structure-and-style',
         'authors/new-tutorial-on-polkadot-study/metadata',
-        'authors/new-tutorial-on-polkadot-study/copy-tutorial-template',
+        'authors/new-tutorial-on-polkadot-study/use-the-tutorial-template',
+        'authors/new-tutorial-on-polkadot-study/local-dev-preview',
+        'authors/new-tutorial-on-polkadot-study/submitting-the-tutorial',
+        'authors/new-tutorial-on-polkadot-study/funding',
         'authors/new-tutorial-on-polkadot-study/further-reading'
       ]
     },    

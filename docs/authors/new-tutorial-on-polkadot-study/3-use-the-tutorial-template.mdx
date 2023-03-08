@@ -1,0 +1,75 @@
+# Using the Tutorial Template
+
+To get you started quickly at writing and guarantee a minimum amount of organization overhead, we created a tutorial template, 
+that you can use as a starting point for your new tutorials. Read below to find out how to use it, adapt it, and make it visible.
+
+## Copying the Template Files
+
+The tutorial template is located in the repository at `docs/tutorials/tutorial-template`.
+
+To start a new tutorial with hints and preformatted headings, go ahead and copy that folder to a new folder in the same parent directory.
+
+Afterwards rename the folder to a name that describes your tutorial. The folder name will later also be the slug, that is displayed
+in a user's browser, so make it precise and short. Also only use alphanumeric keys alongside the `-` character.
+
+:::note Example
+
+Let's say the tutorial name is `How to build a OpenGOV frontend with polkadot.js`, a good folder name could be `opengov-with-polkadot-js`.
+
+:::
+
+Make sure you *copy* the files and do not just rename the template folder, so authors coming after you can still use a fresh template for their tutorials.
+
+After you completed this step, the folder structure should e.g. look like the following
+
+```
+docs/tutorials
+├── ...
+├── opengov-with-polkadot-js
+│   ├── 0-intro.mdx
+│   ├── 1-step1.mdx
+│   ├── 2-step2.mdx
+│   └── 3-conclusion.mdx
+├── tutorial-template
+│   ├── 0-intro.mdx
+│   ├── 1-step1.mdx
+│   ├── 2-step2.mdx
+│   └── 3-conclusion.mdx
+└── ...
+```
+
+## Adding your Tutorial to the Tutorial Sidebar
+
+After copying the tutorial template and renaming it, you want to wire it to a sidebar in order for readers to find your tutorial when navigating the page.
+Polkadot.study uses two different sidebar definitions in the file `sidebars.js`. The array you want to add your navigation item to is called `tutorialSidebar`.
+Add the following code to index 1 of the array, directly after `intro`. 
+
+```js title="/sidebars.js"
+const sidebars = {
+    tutorialSidebar: [
+        'intro',
+        {
+            type: 'category',
+            label: 'Tutorial Template',
+            link: {
+                type: 'doc',
+                id: 'tutorials/[your-folder-name]/intro',
+            },
+            items: [
+                'tutorials/[your-folder-name]]/intro',
+                'tutorials/[your-folder-name]/step1',
+                'tutorials/[your-folder-name]/step2',
+                'tutorials/[your-folder-name]/conclusion'
+            ],
+        },
+        ...
+    ]
+```
+It will place your new tutorial at the top, the most prominent position of the sidebar to make it well visible for readers.
+Then **replace** the `label` with the title of your tutorial, or if it is too long, a shorter title that will be displayed in the sidebar.
+Also, in the `link` and `items` attributes, make sure to set the correct folder name, by replacing `[your-folder-name]` with the folder name you chose above.
+
+## Local Development Preview
+
+
+
