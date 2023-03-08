@@ -9,7 +9,6 @@ You are seeing a work in progress website that will hopefully be developed until
 
 
 ## Working on
-
 - Guidelines for new authors
 - Tutorial Template as a copy & paste starter for new authors
 - React Quiz Component (maybe in the form of a docusaurus plugin)
@@ -24,6 +23,8 @@ You are seeing a work in progress website that will hopefully be developed until
 - Tutorial: Merkle Trees and Merkle Proofs with rust
 - Tutorial: Tokengated Website with polkadot.js and next.js
 - Optimize authors listings in docusaurus
+- Include Analytics
+- SEO considerations
 
 ## Completed
 
