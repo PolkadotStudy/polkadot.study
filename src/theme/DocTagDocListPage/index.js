@@ -11,6 +11,7 @@ import Translate, {translate} from '@docusaurus/Translate';
 import Layout from '@theme/Layout';
 import SearchMetadata from '@theme/SearchMetadata';
 import TutorialCard from '@site/src/components/tutorial/tutorial-card';
+import CategoryMDX from '@site/src/components/tutorial/category-mdx';
 // Very simple pluralization: probably good enough for now
 function useNDocsTaggedPlural() {
   const {selectMessage} = usePluralForm();
@@ -62,7 +63,7 @@ export default function DocTagDocListPage({tag}) {
         <div className="container margin-vert--lg">
           <div className="row">
             <main className="col col--8 col--offset-2">
-              TODO: write a logic here that reads from docs/category/tag-name.mdx    
+              <CategoryMDX category={ tag.label } />
               <header className="margin-bottom--xl">
                 <h1>{title}</h1>
                 <Link href={tag.allTagsPath}>
