@@ -1,0 +1,61 @@
+# Setup the Development Environment
+
+Before you learn about the recommended style and structure of your polkadot.study tutorial, we will walk you through the process of 
+creating a local environment that you can later use for submitting your tutorial to our website and for local preview.
+
+## Forking the Repository
+
+Polkadot.study uses the [fork-and-pull-model](https://docs.github.com/en/pull-requests/collaborating-with-pull-requests/getting-started/about-collaborative-development-models#fork-and-pull-model). Meaning, that anyone can submit pull requests from their own forks of the repository.
+The project maintainer, can then (after discussing, reviewing and revising) merge your changes to the main repository and make it part of the
+website.
+
+## Forking the repository
+:::info
+If you have never done pull requests, or worked with forks, read the [Github Docs Page](https://docs.github.com/en/pull-requests/collaborating-with-pull-requests/proposing-changes-to-your-work-with-pull-requests/creating-a-pull-request-from-a-fork) about it, to get you started
+quickly.
+:::
+
+1. Go to the [polkadot.study github repository](https://github.com/PolkadotStudy/polkadot.study) and click the fork button at the top right.
+![github fork button](/tutorials/new-tutorials-on-polkadot-study/github-fork.png)
+
+1. **important**: uncheck the "Copy the `main` branch only" checkbox. You will need the `staging` branch in the next step.
+![github fork all branches](/tutorials/new-tutorials-on-polkadot-study/github-fork-all-branches.png)
+
+1. Clone the forked repository to your machine in order to make changes. You can copy the **forked** repository address, by clicking the blue `Code` button and then
+```
+git clone <your forked repo url>
+```
+
+:::info 
+
+If you get lost, or if anything is unclear, please contact [authors@polkadot.study](mailto:authors@polkadot.study) or [submit a github issue](https://github.com/PolkadotStudy/polkadot.study/issues).
+
+:::
+
+## Running Locally
+:::info
+
+If you do not have `node.js` and `npm` on your machine, please follow [this guide](https://docs.npmjs.com/downloading-and-installing-node-js-and-npm).
+:::
+
+After you have forked and cloned the repository to your machine, to run it you need to install some dependencies.
+
+```
+# go to the directory you cloned into, e.g.
+cd polkadot.study
+# install dependencies
+npm install
+```
+
+### Running the docusaurus development server
+To start the docusaurus dev server, do
+```
+npm run start
+```
+
+Then, navigate to [localhost:3000](http://localhost:3000/). If you did everything correct, you should be able to find your tutorial in the tutorials tab at the very top.
+
+The dev server supports hot module loading and will automatically update when you change and save your tutorial files.
+
+### 
+
