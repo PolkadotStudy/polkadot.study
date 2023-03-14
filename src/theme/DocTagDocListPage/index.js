@@ -63,7 +63,8 @@ export default function DocTagDocListPage({tag}) {
         <div className="container margin-vert--lg">
           <div className="row">
             <main className="col col--8 col--offset-2">
-              <CategoryMDX category={ tag.label } />
+              hello
+              <CategoryMDX category={ tag } />
               <header className="margin-bottom--xl">
                 <h1>{title}</h1>
                 <Link href={tag.allTagsPath}>

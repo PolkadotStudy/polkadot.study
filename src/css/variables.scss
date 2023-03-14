@@ -18,7 +18,10 @@
     --quiz-color-primary: #552BBF;
     --quiz-color-background: #9992;
     --quiz-color-wrong: rgba(255, 57, 57, 0.3);
-    --quiz-color-correct: rgba(43, 206, 78, 0.3);;
+    --quiz-color-correct: rgba(43, 206, 78, 0.3);
+
+    --task-color-primary: var(--quiz-color-primary);
+    --task-color-background: var(--quiz-color-background);
   
     --primary-glow: conic-gradient(
       from 180deg at 50% 50%,

@@ -24,6 +24,7 @@
     padding-left: 0px;
 
     label {
+        cursor: pointer;
         display: block;
         padding-bottom: 0.6rem;
         display: flex;
@@ -35,6 +36,7 @@
     }
 
     input {
+        cursor: pointer;
         accent-color: var(--quiz-color-primary);
         width: 20px; 
         height: 20px;
