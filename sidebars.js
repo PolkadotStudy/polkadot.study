@@ -20,18 +20,6 @@ const sidebars = {
   tutorialSidebar: [
     'intro',
     //add your tutorial here
-    {
-      type: 'category',
-      label: 'Token Gated Website with polkadot.js',
-      link: {
-        type: 'doc',
-        id: 'tutorials/tokengated-polkadotjs/intro',
-      },
-      items: [
-        'tutorials/tokengated-polkadotjs/frontend',
-        'tutorials/tokengated-polkadotjs/backend'
-      ],
-    },
   ],
 
   authorsSidebar: [
