@@ -37,7 +37,7 @@ export default function Home(): JSX.Element {
       <Head>
         <link rel="preconnect" href="https://fonts.googleapis.com"></link>
         <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin=""></link>
-        <link href="https://fonts.googleapis.com/css2?family=Unbounded&display=swap" rel="stylesheet"></link>
+        <link href="https://fonts.googleapis.com/css2?family=DM+Sans&family=Unbounded&display=swap" rel="stylesheet"></link>
       </Head>
       <main>
         <div className={styles.logoWrap}>
