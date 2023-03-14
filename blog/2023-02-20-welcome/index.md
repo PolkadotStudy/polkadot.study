@@ -2,7 +2,6 @@
 slug: roadmap-and-status
 title: Roadmap and Status
 authors: [niklasp]
-tags: [work in progres, meta]
 ---
 
 You are seeing a work in progress website that will hopefully be developed until May 2023. This is a post to inform followers about the current status of polkadot.study
