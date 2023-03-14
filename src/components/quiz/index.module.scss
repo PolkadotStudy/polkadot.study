@@ -64,11 +64,14 @@
 
 .feedback {
     padding: 1rem;
-    font-weight: 700;
     display: flex;
     align-items: center;
     border-left: 4px solid;
     border-radius: 2px;
+
+    span {
+        font-weight: 700;
+    }
 
     &.isWrong {
         background: var(--quiz-color-wrong);

@@ -1,11 +1,40 @@
 ---
 title: Components Cheatsheet
 ---
+
 import Tabs from '@theme/Tabs';
 import TabItem from '@theme/TabItem';
 import TOCInline from '@theme/TOCInline'
 
+import Task from '../../src/components/task';
+
+import Quiz from '../../src/components/quiz';
+export const question = { 
+  question: "How can you access the state of a component from inside of a member function?", 
+  answers: [ 
+    "this.getState()", 
+    "this.prototype.stateValue", 
+    "this.state", 
+    "this.values" 
+  ],
+  correctAnswerIdx: 3,
+  msgCorrect: "Correct answer. Good job.",
+  msgIncorrect: "Incorrect answer. Please try again.",
+  explanation: "Some extra explanation that will appear when the user answered the questioin correctly."
+}
+
 On this page you'll find most commonly used markdown & mdx components that you can copy to your tutorials.
+
+## Polkadot.study specific components
+
+### Tasks
+
+<Task caption="I have looked at the polkadot.study github repository" />
+<Task caption="I have forked the repository" />
+
+### Quizzes
+
+<Quiz quizItem={ question } />
 
 ## Page Title & Data
 

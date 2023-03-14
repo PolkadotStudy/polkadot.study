@@ -12,7 +12,7 @@ export default function Task( { caption }: { caption: string } ): JSX.Element {
         //if we are the first task component in the dom, we handle things
         console.log( 'ref', ref )
 
-        document.querySelector('.pagination-nav__link--next').addEventListener( 'mouseover', () => console.log( 'yyaaaa') );
+        document.querySelector('.pagination-nav__link--next')?.addEventListener( 'mouseover', () => console.log( 'yyaaaa') );
     }, []);
 
     const onChangeInput = () => {

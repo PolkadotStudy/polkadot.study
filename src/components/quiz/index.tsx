@@ -125,7 +125,7 @@ export default function Quiz( { quizItem }: { quizItem: quizItemType } ): JSX.El
                 <div className={ solutionClassName }>
                     { 
                         isCorrect ? 
-                            <><span>{ msgCorrect }</span></>
+                            <div><span>{ msgCorrect }</span> <br/>{ explanation }</div>
                         :
                             <><span className={ styles.feedbackIcon }>!</span><span>{ incorrectFeedback }</span></>
                     }
