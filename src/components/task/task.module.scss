@@ -1,0 +1,29 @@
+.task {
+    padding: 1rem 1.5rem;
+    border-left: 4px solid var(--task-color-primary);
+    background: var(--task-color-background);
+    border-radius: 2px;
+    margin: 1rem 0;
+
+    label {
+        cursor: pointer;
+        display: block;
+        display: flex;
+        align-items: center;
+
+        span {
+            padding-left: 0.6rem;
+        }
+    }
+
+    input {
+        cursor: pointer;
+        accent-color: var(--task-color-primary);
+        width: 20px; 
+        height: 20px;
+    }
+}
+
+.complete {
+    text-decoration: line-through;
+}

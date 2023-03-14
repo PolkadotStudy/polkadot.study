@@ -24,10 +24,10 @@ const sidebars = {
       type: 'category',
       label: 'Token Gated Website with polkadot.js',
       link: {
-        type: 'generated-index',
+        type: 'doc',
+        id: 'tutorials/tokengated-polkadotjs/intro',
       },
       items: [
-        'tutorials/tokengated-polkadotjs/intro',
         'tutorials/tokengated-polkadotjs/frontend',
         'tutorials/tokengated-polkadotjs/backend'
       ],
