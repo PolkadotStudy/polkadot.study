@@ -31,11 +31,10 @@ const sidebars = {
         id: 'authors/new-tutorial-on-polkadot-study/intro',
       },
       items: [ 
+        'authors/new-tutorial-on-polkadot-study/development-environment',
+        'authors/new-tutorial-on-polkadot-study/use-the-tutorial-template',
         'authors/new-tutorial-on-polkadot-study/structure-and-style',
         'authors/new-tutorial-on-polkadot-study/metadata',
-        'authors/new-tutorial-on-polkadot-study/use-the-tutorial-template',
-        'authors/new-tutorial-on-polkadot-study/local-dev-preview',
-        'authors/new-tutorial-on-polkadot-study/submitting-the-tutorial',
         'authors/new-tutorial-on-polkadot-study/funding',
         'authors/new-tutorial-on-polkadot-study/further-reading'
       ]
