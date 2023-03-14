@@ -30,7 +30,7 @@ export default function Layout(props) {
       <Head>
         <link rel="preconnect" href="https://fonts.googleapis.com"></link>
         <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin=""></link>
-        <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;700&family=Unbounded&display=swap" rel="stylesheet"></link>
+        <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;700&family=Unbounded&display=swap" rel="stylesheet" async></link>
       </Head>
       <PageMetadata title={title} description={description} />
 
