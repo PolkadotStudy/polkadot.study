@@ -44,9 +44,18 @@ nav.navbar {
     background: var(--ifm-background-color);
     border-bottom: var(--pd-border-style);
     box-shadow: none;
+    
+    
+    .navbar__logo {
+        height: 2rem;  
+    }
 
     .navbar__brand {
-        // font-family: 'Unbounded', cursive;
+        &:hover {
+            img {
+                animation: 4s rotate linear infinite;
+            }
+        }
     }
 }
 
@@ -93,3 +102,12 @@ main {
         }
     }
 }
+
+@keyframes rotate {
+    from {
+      transform: rotateY(0)
+    }
+    to {
+        transform: rotateZ(360deg);
+    }
+  }

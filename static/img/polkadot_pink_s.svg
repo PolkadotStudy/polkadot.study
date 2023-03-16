@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<svg viewBox="-75.655 0 1476.475 2537.277" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <style type="text/css">
+	.st0{fill:#E6007A;}
+</style>
+  </defs>
+  <ellipse class="st0" cx="663" cy="147.9" rx="254.3" ry="147.9"/>
+  <ellipse class="st0" cx="663" cy="1262.3" rx="254.3" ry="147.9"/>
+  <ellipse transform="matrix(0.5, -0.866, 0.866, 0.5, -279.151215, 369.591614)" class="st0" cx="180.5" cy="426.5" rx="254.3" ry="148"/>
+  <ellipse transform="matrix(0.866, -0.5, 0.5, 0.866, -467.67981, 222.044006)" class="st0" cx="180.5" cy="983.7" rx="148" ry="254.3"/>
+  <ellipse transform="matrix(0.866, -0.5, 0.5, 0.866, -59.800701, 629.925415)" class="st0" cx="1145.6" cy="426.6" rx="147.9" ry="254.3"/>
+  <ellipse class="st0" cx="662.18" cy="1274.977" rx="254.3" ry="147.9"/>
+  <ellipse class="st0" cx="662.18" cy="2389.377" rx="254.3" ry="147.9"/>
+  <ellipse transform="matrix(0.500011, -0.866019, 0.866019, 0.500011, -280.006897, 2611.039795)" class="st0" cx="1145.6" cy="983.7" rx="254.294" ry="147.897"/>
+  <ellipse transform="matrix(0.866019, -0.500011, 0.500011, 0.866019, -468.514343, 1349.104492)" class="st0" cx="180.5" cy="983.7" rx="147.997" ry="254.294"/>
+  <ellipse transform="matrix(0.866019, -0.500011, 0.500011, 0.866019, -60.647545, 1757.00708)" class="st0" cx="1145.6" cy="426.6" rx="147.897" ry="254.294"/>
+</svg>

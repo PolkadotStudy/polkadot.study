@@ -34,6 +34,3 @@ You are seeing a work in progress website that will hopefully be developed until
 - ~~Intro about the project on AAG~~
 - ~~Networking meeting with Parity Dev Rel Team~~
 - ~~Reachout to designers with a design document on the plans of polkadot.study~~
-
-
-

@@ -17,13 +17,15 @@ quickly.
 1. Go to the [polkadot.study github repository](https://github.com/PolkadotStudy/polkadot.study) and click the fork button at the top right.
 ![github fork button](/tutorials/new-tutorials-on-polkadot-study/github-fork.png)
 
-1. **important**: uncheck the "Copy the `main` branch only" checkbox. You will need the `staging` branch in the next step.
-![github fork all branches](/tutorials/new-tutorials-on-polkadot-study/github-fork-all-branches.png)
+1. Make settings adjustments if you want and click "Create Fork".
 
 1. Clone the forked repository to your machine in order to make changes. You can copy the **forked** repository address, by clicking the blue `Code` button and then
 ```
 git clone <your forked repo url>
 ```
+
+You now have everything to start writing / developing locally, as well as a setup for later making a Pull Request to our repository. You might have noticed that the default branch is set to `staging`.
+You can always see a preview of staging at [staging.polkadot.study](https://staging.polka.study/).
 
 :::info 
 
@@ -32,12 +34,7 @@ If you get lost, or if anything is unclear, please contact [authors@polkadot.stu
 :::
 
 ## Running Locally
-:::info
-
-If you do not have `node.js` and `npm` on your machine, please follow [this guide](https://docs.npmjs.com/downloading-and-installing-node-js-and-npm).
-:::
-
-After you have forked and cloned the repository to your machine, to run it you need to install some dependencies.
+After you have forked and cloned the repository to your machine, to run it you need to install the dependencies with `npm`.
 
 ```
 # go to the directory you cloned into, e.g.
@@ -45,6 +42,11 @@ cd polkadot.study
 # install dependencies
 npm install
 ```
+:::info
+
+If you do not have `node.js` and `npm` on your machine, please follow [this guide](https://docs.npmjs.com/downloading-and-installing-node-js-and-npm). We currently use node `v18`.
+:::
+
 
 ### Running the docusaurus development server
 To start the docusaurus dev server, do
@@ -52,9 +54,17 @@ To start the docusaurus dev server, do
 npm run start
 ```
 
-Then, navigate to [localhost:3000](http://localhost:3000/). If you did everything correct, you should be able to find your tutorial in the tutorials tab at the very top.
+Then, navigate to [localhost:3000](http://localhost:3000/). The dev server supports hot module loading and will automatically update when you change and save your tutorial files.
 
-The dev server supports hot module loading and will automatically update when you change and save your tutorial files.
+You cannot see any changes in the tutorial tab yet, just the ones others published, let's change that in the next step and wire your tutorial in.
 
 ### 
+
+## Publishing to polkadot.study
+
+
+
+## Updating your fork
+
+TODO
 
