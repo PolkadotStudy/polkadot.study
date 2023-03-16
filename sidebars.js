@@ -20,6 +20,20 @@ const sidebars = {
   tutorialSidebar: [
     'intro',
     //add your tutorial here
+    {
+      type: 'category',
+      label: 'Tokengated Website with polkadot.js and next.js',
+      link: {
+          type: 'doc',
+          id: 'tutorials/tokengated-polkadot-next-js/intro',
+      },
+      items: [
+          'tutorials/tokengated-polkadot-next-js/intro',
+          'tutorials/tokengated-polkadot-next-js/step1',
+          'tutorials/tokengated-polkadot-next-js/step2',
+          'tutorials/tokengated-polkadot-next-js/conclusion'
+      ],
+    },
   ],
 
   authorsSidebar: [
