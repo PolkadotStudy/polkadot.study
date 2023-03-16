@@ -5,6 +5,15 @@
     border-radius: 2px;
     margin: 1rem 0;
 
+    &:before { 
+        content: ''; 
+        display: block; 
+        position: relative; 
+        width: 0; 
+        height: 5em; 
+        margin-top: -5em
+    }
+
     label {
         cursor: pointer;
         display: block;
@@ -21,6 +30,8 @@
         accent-color: var(--task-color-primary);
         width: 20px; 
         height: 20px;
+
+
     }
 }
 

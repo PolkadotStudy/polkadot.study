@@ -5,6 +5,9 @@
     --polkadot-lime: #D3FF33;
     --polkadot-green: #56F39A;
 
+    --ifm-background-color: #fcfff1;
+    --ifm-navbar-background-color: #fcfff1;
+
     --ifm-color-primary: #e6007a;
     --ifm-color-primary-dark: #cf006e;
     --ifm-color-primary-darker: #c40068;
@@ -12,8 +15,15 @@
     --ifm-color-primary-light: #fd0086;
     --ifm-color-primary-lighter: #ff0a8c;
     --ifm-color-primary-lightest: #ff2c9c;
+
+    --ifm-navbar-height: 4.75rem;
+
     --ifm-code-font-size: 95%;
+
     --docusaurus-highlighted-code-line-bg: rgba(0, 0, 0, 0.1);
+    --docusaurus-collapse-button-bg: transparent;
+
+    --pd-border-style: 1px dashed #000;
   
     --quiz-color-primary: #552BBF;
     --quiz-color-background: #9992;
@@ -34,7 +44,10 @@
   }
 
   /* For readability concerns, you should choose a lighter palette in dark mode. */
-[data-theme='dark'] {
+[data-theme='dark']:root {
+    --ifm-background-color: #1b1b1b;
+    --ifm-navbar-background-color: #1b1b1b;
+
     --ifm-color-primary: #e6007a;
     --ifm-color-primary-dark: #cf006e;
     --ifm-color-primary-darker: #c40068;
@@ -44,6 +57,9 @@
     --ifm-color-primary-lightest: #ff2c9c;
   
     --docusaurus-highlighted-code-line-bg: rgba(0, 0, 0, 0.3);
+    --docusaurus-collapse-button-bg: transparent;
+
+    --pd-border-style: 0.5px dashed #999;
   
     --quiz-color-primary: #00B2FF;
   }

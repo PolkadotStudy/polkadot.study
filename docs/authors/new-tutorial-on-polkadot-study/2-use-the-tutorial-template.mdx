@@ -19,6 +19,12 @@ Let's say the tutorial name is `How to build a OpenGOV frontend with polkadot.js
 :::
 
 Make sure you *copy* the files and do not just rename the template folder, so authors coming after you can still use a fresh template for their tutorials.
+You can either do it in your OS or use this command from the root of your forked repo folder:
+
+```
+# Copy the tutorial template to a new folder
+cp -r docs/tutorials/tutorial-template docs/tutorials/your-folder-name
+```
 
 After you completed this step, the folder structure should e.g. look like the following
 
@@ -56,7 +62,7 @@ const sidebars = {
         'intro',
         {
             type: 'category',
-            label: 'Tutorial Template',
+            label: '[Your Sidebar Title]',
             link: {
                 type: 'doc',
                 id: 'tutorials/[your-folder-name]/intro',

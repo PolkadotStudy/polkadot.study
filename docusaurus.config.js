@@ -75,7 +75,7 @@ const config = {
       // Replace with your project's social card
       image: 'img/docusaurus-social-card.jpg',
       navbar: {
-        title: 'Polkadot Study - Work In Progress',
+        title: 'Polkadot Study',
         logo: {
           alt: 'Polkadot Study Logo',
           src: 'img/polkadot_pink.svg',

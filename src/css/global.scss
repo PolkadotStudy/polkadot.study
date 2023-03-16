@@ -1,23 +1,113 @@
+html {
+    scroll-behavior: smooth;
+    scroll-padding-top: 1rem;
+}
+
+body,
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+    font-family: 'DM Sans', sans-serif;
+}
+
+#__docusaurus {
+    padding: 0 1rem 0 1rem;
+
+    .theme-doc-sidebar-container {
+        border-right: none;
+    }
+
+    [class*='expandButton_'],
+    [class*='collapseSidebarButton_'] {
+        border: none;
+        background: none;
+
+        &:hover{
+            background: rgba(255,255,255,0.1);
+        }
+    }
+
+    .menu__link--active,
+    .menu__list-item-collapsible--active {
+        background: none;
+    }
+
+    .table-of-contents__left-border {
+        border-left: var(--pd-border-style);
+    }
+}
+
 nav.navbar {
-    backdrop-filter: blur(10px);
-    background: #fffa;
-    background: linear-gradient(90deg, #fff9 0%, #fbfbfb99 100%); 
-    border-bottom: 1px solid var(--ifm-color-primary);
+    background: var(--ifm-background-color);
+    border-bottom: var(--pd-border-style);
+    box-shadow: none;
+    
+    
+    .navbar__logo {
+        height: 2rem;  
+    }
+
+    .navbar__brand {
+        &:hover {
+            img {
+                animation: 4s rotate linear infinite;
+            }
+        }
+    }
+}
+
+nav.menu {
+    border-right: var(--pd-border-style);
+    margin-top: 1rem;
+    padding: 0;
+}
+
+main {
+    padding-left: 1rem;
+}
+
+.footer {
+    margin-top: 2rem;
+    margin-left: -1rem;
+    width: 100vw;
 }
   
 .docSidebar {
     flex: 1;
 }
 
-[data-theme='dark'] {
-    #__docusaurus,
-    main {
-    background: #090909;
-    }
+[class*='docPage_'] {
+    flex: 1;
+}
 
+
+[data-theme='dark'] {
     nav.navbar {
-    background: #151515aa;
-    background: linear-gradient(90deg, #222a 0%, #151515aa 100%); 
-    border-bottom: 1px solid var(--ifm-color-primary);
+        // background: #444;
     }
 }
+
+@media (min-width: 997px) {
+    nav.navbar {
+        backdrop-filter: blur(5px);
+        background: #fcfff199;
+    }
+
+    [data-theme='dark'] {
+        nav.navbar {
+            background: #1b1b1b99;
+        }
+    }
+}
+
+@keyframes rotate {
+    from {
+      transform: rotateY(0)
+    }
+    to {
+        transform: rotateZ(360deg);
+    }
+  }

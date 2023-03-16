@@ -3,6 +3,7 @@
     border-left: 4px solid var(--quiz-color-primary);
     background: var(--quiz-color-background);
     border-radius: 2px;
+    margin: 1rem 0;
 }
 
 .question {
@@ -64,11 +65,14 @@
 
 .feedback {
     padding: 1rem;
-    font-weight: 700;
     display: flex;
     align-items: center;
     border-left: 4px solid;
     border-radius: 2px;
+
+    span {
+        font-weight: 700;
+    }
 
     &.isWrong {
         background: var(--quiz-color-wrong);
