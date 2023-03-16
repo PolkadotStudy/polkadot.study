@@ -1,5 +1,5 @@
 ---
-title: Structure and style
+title: Structure and Style
 ---
 
 import Task from '../../../src/components/task';
@@ -104,6 +104,10 @@ Every command or code a reader needs for the final result of a tutorial should e
 Interactive elements like quizzes and tasks can help to make a tutorial more fun and help in understanding learned concepts.
 A reader can self asses if they understood the concepts.
 
+:::info
+Javascript code only works in `.mdx` files not in `.md` files, so make sure to name your tutorial file accordingly.
+:::
+
 #### Quizzes
 
 <Quiz quizItem={ question } />
@@ -130,7 +134,7 @@ export const question = {
 }
 ```
 
-Then use the quiz component in your code.
+Then use the quiz component anywhere in your tutorial.
 
 ```js
 <Quiz quizItem={ question } />
@@ -138,4 +142,10 @@ Then use the quiz component in your code.
 
 #### Tasks
 
-TODO
+```js
+import Task from '../../../src/components/task';
+```
+
+```js
+<Task caption="I have completed this task" />
+```
