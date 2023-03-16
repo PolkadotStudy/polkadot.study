@@ -20,21 +20,13 @@ export default function Task( { caption }: { caption: string } ): JSX.Element {
         setChecked(!checked)
     }
 
-    const onNextHover = () => {
-        // const tasksRemaining = 0;
-        // const values = Array
-        //     .from(document.querySelectorAll('input[type="checkbox"]'))
-        //     .filter((checkbox) => ! checkbox.checked)
-        //     .map((checkbox) => checkbox);
-        // console.log( values );
-    }
-
     return (
         <div 
             className={ clsx( 'ps-task', styles.task, checked && styles.complete ) }
             ref={ ref }
             id={ string_to_slug( caption ) }
         >
+            <div className={ styles.title }>Task!</div>
             <label className="">
                 <input 
                     type="checkbox"
