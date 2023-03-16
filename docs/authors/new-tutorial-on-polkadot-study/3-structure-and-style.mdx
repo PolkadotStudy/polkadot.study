@@ -1,7 +1,22 @@
-import Task from '../../../src/components/task';
-import Quiz from '../../../src/components/task';
+---
+title: Structure and style
+---
 
-# Structure and Style
+import Task from '../../../src/components/task';
+import Quiz from '../../../src/components/quiz';
+
+export const question = { 
+  question: "Why should I insert quizzes in my tutorial?", 
+  answers: [ 
+    "It's fun", 
+    "You can provide feedback on a learned concept in the `explanation` field", 
+    "It might encourage a reader to read more closely in order to get the quiz correct"
+  ],
+  correctAnswerIdx: [0,2],
+  msgCorrect: "Correct answer. Good job.",
+  msgIncorrect: "Incorrect answer. Please try again.",
+  explanation: "Some extra explanation that will appear when the user answered the questioin correctly."
+}
 
 ## Tutorial Structure
 
@@ -90,8 +105,8 @@ A reader can self asses if they understood the concepts.
 
 #### Quizzes
 
-Quizzes can be used to verify a understanding. 
-
-
+<Quiz quizItem={ question } />
 
 #### Tasks
+
+TODO
