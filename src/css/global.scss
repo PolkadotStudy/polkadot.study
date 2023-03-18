@@ -19,10 +19,20 @@ h6 {
     [class*='collapseSidebarButton_'] {
         border: none;
         background: none;
+        margin-top: -3rem;
+        margin-bottom: 1rem;
 
         &:hover{
             background: rgba(255,255,255,0.1);
         }
+    }
+
+    [class*='tocCollapsibleButton_']::after {
+        background-size: contain;
+    }
+
+    .menu__caret::before { 
+        background-size: contain;
     }
 
     .menu__link--active,
@@ -97,7 +107,6 @@ main {
 }
 
 .footer {
-    margin-top: 2rem;
     margin-left: -1rem;
     width: 100vw;
 }
