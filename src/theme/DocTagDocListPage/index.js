@@ -30,7 +30,6 @@ function useNDocsTaggedPlural() {
     );
 }
 function DocItem({doc, tag}) {
-  console.log( 'doc', tag );
   return (
     <TutorialCard
       category={ tag.label }

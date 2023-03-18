@@ -8,7 +8,6 @@ export default function CategoryMDX( { category } ): JSX.Element{
     const categoryFile = category.permalink.replace('/tags/', '/category/')
 
     useEffect(() => {
-        console.log( 'useeffect' )
 		fetch(`${categoryFile}.mdx`).then(res => res.text()).then(text => setMdxContent(text))
 	})
 

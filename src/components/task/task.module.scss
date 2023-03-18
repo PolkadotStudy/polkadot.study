@@ -1,4 +1,5 @@
 .task {
+    transition: all 0.3s;
     padding: 1rem 1.5rem;
     border-left: 4px solid var(--task-color-primary);
     background: var(--task-color-background);
@@ -26,15 +27,32 @@
     }
 
     input {
+        transition: all 0.3s;
         cursor: pointer;
         accent-color: var(--task-color-primary);
         width: 20px; 
         height: 20px;
-
-
     }
 }
 
-.complete {
+.title {
+    transition: all 0.3s;
+    color: var(--task-color-primary);
+    font-weight: bold;
+}
+
+.complete span {
     text-decoration: line-through;
+}
+
+.complete {
+    border-left: 4px solid var(--task-color-complete);
+
+    .title {
+        color: var(--task-color-complete);
+    }
+
+    input {
+        accent-color: var(--task-color-complete);
+    }
 }
