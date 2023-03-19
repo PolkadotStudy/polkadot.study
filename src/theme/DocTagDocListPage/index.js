@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import clsx from 'clsx';
 import Link from '@docusaurus/Link';
 import {
@@ -12,6 +12,11 @@ import Layout from '@theme/Layout';
 import SearchMetadata from '@theme/SearchMetadata';
 import TutorialCard from '@site/src/components/tutorial/tutorial-card';
 import CategoryMDX from '@site/src/components/tutorial/category-mdx';
+
+import PolkadotJs from '/docs/category/polkadot-js.mdx';
+import substrate from '/docs/category/substrate.mdx';
+import Contribute from '/docs/category/contribute.mdx';
+
 // Very simple pluralization: probably good enough for now
 function useNDocsTaggedPlural() {
   const {selectMessage} = usePluralForm();
@@ -22,8 +27,8 @@ function useNDocsTaggedPlural() {
         {
           id: 'theme.docs.tagDocListPageTitle.nDocsTagged',
           description:
-            'Pluralized label for "{count} docs tagged". Use as much plural forms (separated by "|") as your language support (see https://www.unicode.org/cldr/cldr-aux/charts/34/supplemental/language_plural_rules.html)',
-          message: 'One tutorial tagged|{count} docs tagged',
+            'Pluralized label for "{count} tutorials tagged". Use as much plural forms (separated by "|") as your language support (see https://www.unicode.org/cldr/cldr-aux/charts/34/supplemental/language_plural_rules.html)',
+          message: 'One Tutorial tagged|{count} Tutorials tagged',
         },
         {count},
       ),
@@ -39,7 +44,23 @@ function DocItem({doc, tag}) {
     />
   );
 }
+
 export default function DocTagDocListPage({tag}) {
+
+
+  function TagPageContent() {
+    switch( tag.label ) {
+      case 'polkadot.js':
+        return <PolkadotJs/>
+      case 'contribute':
+        return <Contribute/>
+      case 'substrate':
+        return <substrate/>
+      default:
+        return <></>
+    }
+  }
+
   const nDocsTaggedPlural = useNDocsTaggedPlural();
   const title = translate(
     {
@@ -58,12 +79,10 @@ export default function DocTagDocListPage({tag}) {
       <PageMetadata title={title} />
       <SearchMetadata tag="doc_tag_doc_list" />
       <Layout>
-
         <div className="container margin-vert--lg">
           <div className="row">
             <main className="col col--8 col--offset-2">
-              hello
-              <CategoryMDX category={ tag } />
+              { TagPageContent() }
               <header className="margin-bottom--xl">
                 <h1>{title}</h1>
                 <Link href={tag.allTagsPath}>
