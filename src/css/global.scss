@@ -102,10 +102,6 @@ nav.menu {
     padding: 0;
 }
 
-main {
-    padding-left: 1rem;
-}
-
 .footer {
     margin-left: -1rem;
     width: 100vw;
@@ -137,6 +133,10 @@ main {
             background: #1b1b1b99;
         }
     }
+
+    main {
+        padding-left: 1rem;
+    }
 }
 
 @keyframes rotate {
@@ -147,3 +147,18 @@ main {
         transform: rotateZ(360deg);
     }
   }
+
+
+.ps-tag-beginner {
+    background-color: var(--ps-beginner-tag-color);
+    color: #333;
+}
+
+.ps-tag-intermediate {
+    background-color: var(--ps-intermediate-tag-color);
+    color: #333;
+}
+.ps-tag-expert {
+    background-color: var(--ps-expert-tag-color);
+    color: #fff;
+}
