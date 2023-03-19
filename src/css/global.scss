@@ -147,3 +147,18 @@ nav.menu {
         transform: rotateZ(360deg);
     }
   }
+
+
+.ps-tag-beginner {
+    background-color: var(--ps-beginner-tag-color);
+    color: #333;
+}
+
+.ps-tag-intermediate {
+    background-color: var(--ps-intermediate-tag-color);
+    color: #333;
+}
+.ps-tag-expert {
+    background-color: var(--ps-expert-tag-color);
+    color: #fff;
+}
