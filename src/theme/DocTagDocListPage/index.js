@@ -16,6 +16,8 @@ import CategoryMDX from '@site/src/components/tutorial/category-mdx';
 import PolkadotJs from '/docs/category/polkadot-js.mdx';
 import substrate from '/docs/category/substrate.mdx';
 import Contribute from '/docs/category/contribute.mdx';
+import EditThisPage from '@theme/EditThisPage';
+
 
 // Very simple pluralization: probably good enough for now
 function useNDocsTaggedPlural() {
@@ -46,8 +48,6 @@ function DocItem({doc, tag}) {
 }
 
 export default function DocTagDocListPage({tag}) {
-
-
   function TagPageContent() {
     switch( tag.label ) {
       case 'polkadot.js':
