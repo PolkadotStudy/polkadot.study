@@ -10,7 +10,13 @@ export default function PaginatorNavLink(props) {
   const location = useLocation()
 
   const tasks = useContext(DocTaskContext);
-  const unfinishedTasks = tasks?.filter( t => t.page === location.pathname && !t.checked )
+  const unfinishedTasks = tasks?.filter( t => 
+    t.page === location.pathname && 
+    !t.checked 
+    // &&
+    // t.classList.includes( 'ps-task-mandatory' )
+  )
+  console.log( 'tasks', tasks )
   const tasksRemaining = unfinishedTasks?.length
 
   const arrowTitle = isNext 
