@@ -1,4 +1,4 @@
-import React, { useEffect, useReducer, useState } from 'react';
+import React, { useEffect, useReducer, useState, version } from 'react';
 import clsx from 'clsx';
 import {
   HtmlClassNameProvider,
@@ -18,6 +18,7 @@ import { DocTaskContext, DocTaskDispatchContext } from '@site/src/components/tas
 
 function DocPageMetadata(props) {
   const {versionMetadata} = props;
+  
   return (
     <>
       <SearchMetadata
@@ -38,6 +39,7 @@ function DocPageMetadata(props) {
 export default function DocPage(props) {
   const {versionMetadata} = props;
   const currentDocRouteMetadata = useDocRouteMetadata(props);
+
   if (!currentDocRouteMetadata) {
     return <NotFound />;
   }
