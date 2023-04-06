@@ -45,6 +45,13 @@ const config = {
         disableInDev: false,
       },
     ],
+    [
+      '@docusaurus/plugin-google-gtag',
+      {
+        trackingID: 'G-SDWBSJ1B4F',
+        anonymizeIP: true,
+      },
+    ],
   ],
 
   presets: [
@@ -64,10 +71,6 @@ const config = {
         },
         theme: {
           customCss: require.resolve('./src/css/custom.scss'),
-        },
-        gtag: {
-          trackingID: 'G-SDWBSJ1B4F',
-          anonymizeIP: true,
         },
       }),
     ],
