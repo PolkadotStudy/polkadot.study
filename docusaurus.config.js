@@ -55,12 +55,12 @@ const config = {
         docs: {
           sidebarPath: require.resolve('./sidebars.js'),
           editUrl:
-            'https://github.com/PolkadotStudy/website/tree/main/',
+            'https://github.com/PolkadotStudy/website/tree/staging/',
         },
         blog: {
           showReadingTime: true,
           editUrl:
-            'https://github.com/PolkadotStudy/website/tree/main/',
+            'https://github.com/PolkadotStudy/website/tree/staging/',
         },
         theme: {
           customCss: require.resolve('./src/css/custom.scss'),

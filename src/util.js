@@ -1,5 +1,9 @@
 
 export function string_to_slug (str) {
+    if (typeof str === undefined || "" === str) {
+        return ""
+    }
+
     str = str.replace(/^\s+|\s+$/g, ''); // trim
     str = str.toLowerCase();
   

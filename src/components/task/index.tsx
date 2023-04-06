@@ -1,42 +1,51 @@
-import React, { ChangeEvent, useEffect, useRef, useState } from "react";
+import React, { ChangeEvent, useContext, useEffect, useRef, useState } from "react";
 import clsx from "clsx";
 
 import styles from "./task.module.scss";
 import { string_to_slug } from "@site/src/util";
+import { DocTaskContext, DocTaskDispatchContext } from "./doc-task-context";
+import useDocusaurusContext from "@docusaurus/useDocusaurusContext";
+import { useLocation } from "@docusaurus/router";
 
 export default function Task( { caption }: { caption: string } ): JSX.Element {
 
-    const [checked, setChecked] = useState(false);
     const ref = useRef()
+    const location = useLocation()
+    const dispatch = useContext(DocTaskDispatchContext);
+
+    const taskId = string_to_slug( caption )
+
+    const tasks = useContext(DocTaskContext);
+    const task = tasks.find( t => t.id === taskId )
+    const checked = task ? task.checked : false
 
     useEffect(() => {
-        //if we are the first task component in the dom, we handle things
-        // console.log( 'ref', ref )
-
-        // document.querySelector('.pagination-nav__link--next')?.addEventListener( 'mouseenter', onNextHover );
+        dispatch({
+            type: 'added',
+            page: location.pathname,
+            id: taskId,
+            checked: false,
+        });
     }, []);
 
     const onChangeInput = () => {
-        setChecked(!checked)
-    }
-
-    const onNextHover = () => {
-        // const tasksRemaining = 0;
-        // const values = Array
-        //     .from(document.querySelectorAll('input[type="checkbox"]'))
-        //     .filter((checkbox) => ! checkbox.checked)
-        //     .map((checkbox) => checkbox);
-        // console.log( values );
+        dispatch({
+            type: 'changed',
+            id: taskId,
+            page: location.pathname,
+        })
     }
 
     return (
         <div 
             className={ clsx( 'ps-task', styles.task, checked && styles.complete ) }
             ref={ ref }
-            id={ string_to_slug( caption ) }
         >
+            <div className={ styles.title }>Task!</div>
             <label className="">
-                <input 
+                <input
+                    id={ taskId }
+                    className="task-checkbox"
                     type="checkbox"
                     checked={ checked }
                     onChange={ onChangeInput }

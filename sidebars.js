@@ -50,6 +50,7 @@ const sidebars = {
         'authors/new-tutorial-on-polkadot-study/structure-and-style',
         'authors/new-tutorial-on-polkadot-study/metadata',
         'authors/new-tutorial-on-polkadot-study/funding',
+        'authors/new-tutorial-on-polkadot-study/submitting-the-tutorial',
         'authors/new-tutorial-on-polkadot-study/further-reading'
       ]
     },    

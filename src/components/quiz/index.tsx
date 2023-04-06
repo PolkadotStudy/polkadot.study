@@ -20,7 +20,7 @@ export default function Quiz( { quizItem }: { quizItem: quizItemType } ): JSX.El
         correctAnswerIdx,
         msgCorrect,
         msgIncorrect,
-        explanation,
+        explanation = "",
         tries = 3,
     } = quizItem;
 
@@ -33,11 +33,12 @@ export default function Quiz( { quizItem }: { quizItem: quizItemType } ): JSX.El
 
     const onSubmitAnswer = () => {
         setSubmitted( true );
-        setIsCorrect( isAnswerCorrect() );
-        if ( ! isAnswerCorrect() ) {
-            setUserTries( userTries + 1 );
+        let answerCorrect = isAnswerCorrect()
+        setIsCorrect( answerCorrect )
+        if ( ! answerCorrect ) {
+            setUserTries( userTries + 1 )
         } else {
-            setUserTries( 0 );
+            setUserTries( 0 )
         }
     }
 
@@ -74,15 +75,22 @@ export default function Quiz( { quizItem }: { quizItem: quizItemType } ): JSX.El
     const isAnswerCorrect = () => {
         if ( ! correctAnswerIdx ) return false;
 
+        let correctAnswerIdxArray : Array<number>;
+
+        if ( typeof correctAnswerIdx === 'number' ) {
+            correctAnswerIdxArray = [correctAnswerIdx]
+        } else {
+            correctAnswerIdxArray = correctAnswerIdx
+        }
+
         let res = checkedState.reduce(
             (prev, curr, idx) => {
                 let correct = false;
-                correct = idx === correctAnswerIdx ? curr : curr === false
+                correct = (correctAnswerIdxArray as Array<number>).includes( idx ) ? curr : curr == false
                 return prev && correct
             }, 
         true
         )
-
         return res;
     }
 
