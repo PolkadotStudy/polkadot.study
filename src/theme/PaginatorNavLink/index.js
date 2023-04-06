@@ -59,7 +59,7 @@ export default function PaginatorNavLink(props) {
           tasksRemaining > 0 && 'tasks-remaining'
         )}
         to={ btnLink }
-        onClick={ tasksRemaining !== 0 ? handleClick : () => {}}
+        onClick={ tasksRemaining && tasksRemaining > 0 ? handleClick : () => {}}
         style={ { cursor: 'pointer' } }
       >
         { 
