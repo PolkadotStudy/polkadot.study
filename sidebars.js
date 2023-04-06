@@ -56,7 +56,7 @@ const sidebars = {
         'authors/new-tutorial-on-polkadot-study/further-reading'
       ]
     },    
-    'authors/contribution-cheatsheet',
+    'authors/contribution-checklist',
     'authors/components-cheatsheet',
   ],
 };

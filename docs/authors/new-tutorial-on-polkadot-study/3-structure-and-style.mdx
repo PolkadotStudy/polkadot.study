@@ -75,7 +75,7 @@ The style for *polkadot.study* articles reflects our purpose in publishing them:
 - Technically detailed and correct
 - Practical, useful, and self-contained
 - Friendly but formal
-- No discrimination against the following, but not limited to: age, disablity, ethnicity, gender identity, level of experience, nationality, religion, political affiliation, sexual orientation, socioeconomics, technology choices
+- No discrimination against the following, but not limited to: age, disability, ethnicity, gender identity, level of experience, nationality, religion, political affiliation, sexual orientation, socioeconomics, technology choices
 - Favor second person ("You will build ...") over first person ("I think")
 
 These principles guide authors to create articles, tutorials, and other learning materials that help people solve their problems and grow as developers.
@@ -88,9 +88,26 @@ Every command or code a reader needs for the final result of a tutorial should e
 > We avoid words like "simple,” "straightforward,” “easy,” “simply,” “obviously,” and “just,” as these words make assumptions about the reader’s knowledge. While authors use these words to encourage and motivate readers to push through challenging topics, they often have the opposite effect; a reader who hears that something is “easy” may be frustrated when they encounter an issue. Instead, we encourage our readers by providing the explanations they need to be successful.
 > Technically detailed and correct
 >
-> [(DigitalOcen Technical Contribution Guidelines)](https://www.digitalocean.com/community/tutorials/digitalocean-s-technical-writing-guidelines)
+> [(DigitalOcean Technical Contribution Guidelines)](https://www.digitalocean.com/community/tutorials/digitalocean-s-technical-writing-guidelines)
 
-<Task caption="I will try my best to stick to the style guidelines" />
+<Task>I will try my best to stick to the style guidelines</Task>
+
+### Images in your tutorial
+
+Most likely you will like to add images to your tutorial. It is best to put them in a subfolder of your main tutorial repository.
+The name of the folder should be `/assets`. When you copied the tutorial template, you will already have that folder.
+
+Now you can add images by adding the markdown.
+
+```md
+![Alt Text](./assets/<your-filename.png>)
+```
+
+:::info
+
+Please remember to use alt text for your images.
+
+:::
 
 ### Code Blocks in your Tutorial
 
@@ -142,18 +159,23 @@ Then use the quiz component anywhere in your tutorial.
 
 #### Tasks
 
-To create the following Task component
+Tasks are interactive elements, that ask the user to check a box. When a user wants to proceed to the next part of the tutorial
+and not all *mandatory* tasks on the page are checked, the next button will be disabled and instead take them to the first unfinished task
+they need to do before proceeding.
 
-<Task caption="I have completed this task" />
+<Task>I have completed this task</Task>
 
 use the code below
 
 ```js
 import Task from '/src/components/task';
+...
+<Task>I have completed this task</Task>
 ```
 
+Tasks are mandatory by default, if you want to create a task that is optional, use the following code
 ```js
-<Task caption="I have completed this task" />
+<Task mandatory={ false }>I have completed this task</Task>
 ```
 
 :::info

@@ -96,6 +96,15 @@ nav.navbar {
     }
 }
 
+img {
+    width: 100%;
+    max-width: 600px;
+}
+
+div.markdown img {
+    padding: 1rem 0;
+}
+
 nav.menu {
     border-right: var(--pd-border-style);
     margin-top: 1rem;

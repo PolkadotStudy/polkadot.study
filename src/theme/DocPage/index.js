@@ -59,6 +59,7 @@ export default function DocPage(props) {
           : [...tasks, {
             id: action.id,
             page: action.page,
+            mandatory: action.mandatory,
             checked: false
           }]
 

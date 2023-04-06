@@ -6,4 +6,9 @@
     "activityBarBadge.background": "#552BBF",
     "activityBar.inactiveForeground": "#e6007a"
   },
+  "cSpell.words": [
+    "clsx",
+    "polkadot",
+    "Polkadot"
+  ],
 }

@@ -1,3 +1,4 @@
+import React, { ReactNode } from "react";
 
 export function string_to_slug (str) {
     if (typeof str === undefined || "" === str) {
@@ -20,3 +21,15 @@ export function string_to_slug (str) {
 
     return str;
 }
+
+export const getLabelFromChildren = (children: ReactNode) => {
+    let label = '';
+
+    React.Children.map(children, (child) => {
+        if (typeof child === 'string') {
+            label += child;
+        }
+    });
+
+    return label;
+};
