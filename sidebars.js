@@ -19,7 +19,23 @@ const sidebars = {
   // But you can create a sidebar manually
   tutorialSidebar: [
     'intro',
-    //add your tutorial here
+    {
+      type: 'category',
+      label: 'Basic Wallet with Polkadot-js and React with Typescript',
+      link: {
+          type: 'doc',
+          id: 'tutorials/wallet-with-polkadot-js-and-react-with-typescript/intro',
+      },
+      items: [
+          'tutorials/wallet-with-polkadot-js-and-react-with-typescript/intro',
+          'tutorials/wallet-with-polkadot-js-and-react-with-typescript/step1',
+          'tutorials/wallet-with-polkadot-js-and-react-with-typescript/step2',
+          'tutorials/wallet-with-polkadot-js-and-react-with-typescript/step3',
+          'tutorials/wallet-with-polkadot-js-and-react-with-typescript/step4',
+          'tutorials/wallet-with-polkadot-js-and-react-with-typescript/step5',
+          'tutorials/wallet-with-polkadot-js-and-react-with-typescript/conclusion'
+      ],
+  },
   ],
 
   authorsSidebar: [
