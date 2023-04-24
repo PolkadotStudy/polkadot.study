@@ -38,7 +38,7 @@
     position: absolute;
     filter: blur(95px);
     transform: translateZ(0);
-    z-index: 0;
+    // z-index: -10;
   }
 }
 
@@ -48,8 +48,8 @@
   max-width: 80vw;
 
   h1 {
-    font-size: 44px;
-    // font-family: 'Unbounded', cursive;
+    font-size: 10vw;
+    font-family: 'Unbounded', cursive;
     text-align: center;
     color: #000;
     transition: 0.5s ease-in-out;
@@ -58,10 +58,12 @@
     }
   }
 
-  p {
+  > p {
     margin-top: 2rem;
     font-size: 1.2rem;
     font-weight: 700;
+    mix-blend-mode: normal;
+    max-width: 100% !important;
   }
 
   a {
@@ -71,13 +73,22 @@
 }
 
 [data-theme='dark'] {
-  .logoTitle h1 {
+  .logoTitle {
+    // z-index: 100;
     color: #fff;
-    mix-blend-mode: difference;
+
+    h1 {
+      color: #fff;
+      mix-blend-mode: difference;
+    }
+
+    a {
+      color: #fff;
+    }
   }
 
   .logoTitle a {
-    color: #fff;
+    // color: #fff;
   }
 }
 
@@ -86,16 +97,12 @@
   transition: transform 3s;
   position: absolute;
 }
-.polkadotLogo2 {
-  animation: 28s rotate linear infinite;
-  mix-blend-mode: difference;
-}
 
-@media screen and (min-width: 996px) {
-  .logoTitle h1 {
-    font-size: 90px;
-  }
-}
+// @media screen and (min-width: 996px) {
+//   .logoTitle h1 {
+//     font-size: 90px;
+//   }
+// }
 
 @keyframes rotate {
   from {
@@ -104,4 +111,48 @@
   to {
     transform: rotate(0deg);
   }
+}
+
+
+.mainHome {
+  & > section {
+    min-height: 80vh;
+    padding: 0 var(--ps-page-margin);
+
+    p {
+      max-width: 40rem;
+    }
+  }
+
+  h2 {
+    font-family: 'Unbounded', cursive;
+    letter-spacing: 3px;
+    font-size: 36px;
+    margin-bottom: 2rem;
+    margin-top: 2rem;
+  }
+
+  h3 {
+    font-size: 30px;
+  }
+}
+
+.sectionIntro {
+
+}
+
+.sectionTutorials {
+
+}
+
+.sectionAbout {
+
+}
+
+.sectionStudyPaths {
+
+}
+
+.sectionParticipate {
+
 }

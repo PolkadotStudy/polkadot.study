@@ -1,3 +1,15 @@
+.tag {
+    padding: 1px 4px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    margin-right: 5px;
+    color: #000;
+
+    a, a:hover {
+        text-decoration: none;
+    }
+}
+
 .tag-contribute {
     
 }
@@ -6,12 +18,14 @@
 
 }
 
-.tag-polkadotjs a {
-    background: var(--polkadot-pink);
-    color: #eee;
-    border-color: #c9117a;
+[data-theme='dark'] {
+    .tag {
+        background: var(--polkadot-pink);
+        color: #eee;
+        border-color: #c9117a;
 
-    &:hover {
-        background: #c9117a;
+        &:hover {
+            background: #c9117a;
+        }
     }
 }

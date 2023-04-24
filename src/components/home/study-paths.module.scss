@@ -1,0 +1,36 @@
+.studyPaths {
+    display: flex;
+}
+
+.left {
+    font-size: larger;
+    display: flex;
+    flex-wrap: wrap;
+    width: 20vw;
+    justify-content: space-around;
+    flex-shrink: 0;
+}
+
+.right {
+    padding-left: 5rem;
+    padding-right: 2rem;
+    width: calc( 100vw - 20vw - 7rem - var(--ps-page-margin));
+}
+
+.tag {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-width: 100%;
+    text-align: center;
+    padding: 1rem 1rem;
+    margin-bottom: 0.5rem;
+    border-radius: 2rem;
+    border: 2px solid #000;
+    cursor: pointer;
+}
+
+.tag.selected {
+    background-color: var(--polkadot-purple);
+    color: #fff;
+}

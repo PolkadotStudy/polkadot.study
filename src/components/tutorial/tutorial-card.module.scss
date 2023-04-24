@@ -1,9 +1,36 @@
 .tutorialCard {
-    border: 1px solid #fff;
-    padding: 1.5rem 2rem;
-    border-radius: 1rem;
-    max-width: 50%;
-    background: #0033;
+    border: 2px solid var(--polkadot-cyan);
+    padding: 1rem 1.5rem;
+    border-radius: 0.4rem;
+    cursor: pointer;
+    overflow: visible;
+    background: var(--ifm-background-color);
+
+    &::after {
+        content: "";
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background-color: var(--polkadot-purple);
+        z-index: -1;
+        transition: all 0.3s;
+        border-radius: 0.4rem;
+    }
+
+    &::before {
+        content: "";
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background-color: var(--polkadot-pink);
+        z-index: -1;
+        transition: all 0.3s;
+        border-radius: 0.4rem;
+    }
 
     p {
         padding-bottom: 0;
@@ -12,6 +39,14 @@
 
     img {
         max-height: 150px;
+    }
+
+    &:hover::after {
+        transform: translate3d(-10px, -10px, 0);
+    }
+
+    &:hover::before {
+        transform: translate3d(10px, 10px, 0);
     }
 }
 
@@ -26,4 +61,35 @@
     border: 1px solid #eee;
     border-radius: 2px;
     background: var(--ifm-background-color);
+}
+
+.description {
+    margin-bottom: 1rem;
+}
+
+.tags,
+.level {
+    padding: 0.4rem 0;
+    border-top: 1px dotted #000;
+}
+
+.meta {
+    font-size: 0.9rem;
+    svg {
+        margin-right: 0.5rem;
+    }
+}
+
+[data-theme='dark'] {
+    .tutorialCard {
+        border: 1px solid #fff;
+        background: #000;
+        border: 1px solid #000;
+        color: #fff;
+    }
+
+    .tags,
+    .level {
+        border-top: 1px dotted #eee;
+    }
 }
