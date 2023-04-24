@@ -146,6 +146,15 @@
 }
 
 .sectionAbout {
+  display: flex;
+
+  .aboutLeft {
+    width: 60%;
+  }
+
+  .aboutRight {
+    width: 40%;
+  }
 
 }
 

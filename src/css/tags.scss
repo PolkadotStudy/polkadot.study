@@ -20,12 +20,11 @@
 
 [data-theme='dark'] {
     .tag {
-        background: var(--polkadot-pink);
         color: #eee;
-        border-color: #c9117a;
+        border-color: var(--polkadot-cyan);
 
         &:hover {
-            background: #c9117a;
+            background: var(--polkadot-cyan);
         }
     }
 }

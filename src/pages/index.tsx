@@ -10,6 +10,7 @@ import Head from "@docusaurus/Head";
 import TutorialSlider from "../components/tutorial/tutorial-slider";
 import { ArrowDown } from "../components/icons/icons";
 import { StudyPaths } from "../components/home/study-paths";
+import Dots from "../components/three/dots";
 
 export default function Home(): JSX.Element {
   const { siteConfig } = useDocusaurusContext();
@@ -68,35 +69,32 @@ export default function Home(): JSX.Element {
           <TutorialSlider></TutorialSlider>
         </section>
         <section className={styles.sectionAbout}>
-          <div>
-            <div className={styles.aboutLeft}>
-              <h2>About</h2>
-              <p>
-                Polkadot.study is an open educational platform for developers by
-                developers and is aiming to provide good educational content in
-                the form of tutorials / videos with interactive learning
-                exercises.
-              </p>
-              <p>
-                It provides the infrastructure for submitting tutorials in a
-                well organized, accessible way as well as fund the creation of
-                professional tutorials. It allows readers to learn about
-                concepts relevant to the Dotsama ecosystem by providing an entry
-                point for tutorials, documentation and repositories for
-                studying.
-              </p>
-              <p>
-                New content can easily be submitted by anyone with knowledge of
-                git in the form of Pull Requests that can be authored by the
-                repository team. The platform aims to be open to anyone: with a
-                different skill level of the readers as well as a multitude of
-                authors. It was first funded by the Kusama treasury in March
-                2023 after a a successful referendum.
-              </p>
-            </div>
-            <div className={styles.aboutRight}>
-              <canvas></canvas>
-            </div>
+          <div className={styles.aboutLeft}>
+            <h2>About</h2>
+            <p>
+              Polkadot.study is an open educational platform for developers by
+              developers and is aiming to provide good educational content in
+              the form of tutorials / videos with interactive learning
+              exercises.
+            </p>
+            <p>
+              It provides the infrastructure for submitting tutorials in a well
+              organized, accessible way as well as fund the creation of
+              professional tutorials. It allows readers to learn about concepts
+              relevant to the Dotsama ecosystem by providing an entry point for
+              tutorials, documentation and repositories for studying.
+            </p>
+            <p>
+              New content can easily be submitted by anyone with knowledge of
+              git in the form of Pull Requests that can be authored by the
+              repository team. The platform aims to be open to anyone: with a
+              different skill level of the readers as well as a multitude of
+              authors. It was first funded by the Kusama treasury in March 2023
+              after a a successful referendum.
+            </p>
+          </div>
+          <div className={styles.aboutRight}>
+            <Dots />
           </div>
         </section>
         <section className={styles.sectionStudyPaths}>
