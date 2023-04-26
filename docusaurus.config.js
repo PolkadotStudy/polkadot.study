@@ -45,6 +45,7 @@ const config = {
         disableInDev: false,
       },
     ],
+    'docusaurus-plugin-tutorials'
   ],
 
   presets: [
@@ -166,6 +167,9 @@ const config = {
         //   },
         // ],
         copyright: `Copyleft ${new Date().getFullYear()} Polkadot.study - Built with Docusaurus - This is a community site and in no way incorporated with Parity or Polkadot`,
+      },
+      goatcounter: {
+        code: 'your-goatcounter-code',
       },
       prism: {
         theme: lightCodeTheme,
