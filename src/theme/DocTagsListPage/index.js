@@ -10,6 +10,7 @@ import Layout from '@theme/Layout';
 import TagsListByLetter from '@theme/TagsListByLetter';
 import SearchMetadata from '@theme/SearchMetadata';
 export default function DocTagsListPage({tags}) {
+  console.log( 'tags', tags )
   const title = translateTagsPageTitle();
   return (
     <HtmlClassNameProvider

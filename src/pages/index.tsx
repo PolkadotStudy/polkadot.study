@@ -4,6 +4,7 @@ import Link from "@docusaurus/Link";
 import useDocusaurusContext from "@docusaurus/useDocusaurusContext";
 import Layout from "@theme/Layout";
 import HomepageFeatures from "@site/src/components/home";
+import { listTagsByLetters } from "@docusaurus/theme-common";
 
 import styles from "./index.module.scss";
 import Head from "@docusaurus/Head";
@@ -11,9 +12,12 @@ import TutorialSlider from "../components/tutorial/tutorial-slider";
 import { ArrowDown, ArrowRight } from "../components/icons/icons";
 import { StudyPaths } from "../components/home/study-paths";
 import Dots from "../components/three/dots";
+import useGlobalData from "@docusaurus/useGlobalData";
 
 export default function Home(): JSX.Element {
-  const { siteConfig } = useDocusaurusContext();
+  const { siteConfig, siteMetadata } = useDocusaurusContext();
+  const globalData = useGlobalData();
+
   return (
     <Layout
       title={`Polkadot Study`}
@@ -33,6 +37,7 @@ export default function Home(): JSX.Element {
         ></link>
       </Head>
       <main className={styles.mainHome}>
+        <pre>{JSON.stringify(globalData, null, 2)}</pre>
         <section className={styles.sectionIntro}>
           <div className={styles.logoWrap}>
             <img
@@ -60,11 +65,11 @@ export default function Home(): JSX.Element {
         <section className={styles.sectionTutorials}>
           <h2 id="tutorials">Tutorials</h2>
           <p>
-            Learn how to navigate the polkadot ecosystem in our step-by-step
-            tutorials. All tutorials are written by developers from the polkadot
-            community. Polkadot.study is the perfect place to start your
-            Polkadot journey as a developer. We cover many different subjects
-            from both frontend and backend development.
+            Learn how to navigate the polkadot ecosystem as a developer in our
+            step-by-step tutorials. All tutorials are written by developers from
+            the polkadot community. Polkadot.study is the perfect place to start
+            your Polkadot journey as a developer. We cover many different
+            subjects from both frontend and blockchain development.
           </p>
           <TutorialSlider></TutorialSlider>
         </section>

@@ -93,7 +93,7 @@ export default function DocTagDocListPage({tag}) {
                   </Translate>
                 </Link>
               </header>
-              <section className="margin-vert--lg">
+              <section className="margin-vert--lg" style={{position: 'relative'}}>
                 {tag?.items?.map((doc) => (
                   <DocItem key={doc.id} doc={doc} tag={tag}/>
                 ))}
