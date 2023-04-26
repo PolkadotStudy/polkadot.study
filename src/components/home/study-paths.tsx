@@ -48,6 +48,7 @@ export function StudyPaths() {
               [styles.selected]: tag.tag === selectedTag,
             })}
             onClick={() => setSelectedTag(tag.tag)}
+            key={tag.tag}
           >
             {tag.tag}
           </div>

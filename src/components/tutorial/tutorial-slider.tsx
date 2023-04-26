@@ -1,6 +1,8 @@
-import React from "react";
+import React, { useCallback, useRef } from "react";
 import { Navigation, Pagination, Scrollbar, A11y } from "swiper";
 import { Swiper, SwiperSlide } from "swiper/react";
+
+import styles from "./tutorial-slider.module.scss";
 
 import "swiper/css";
 import "swiper/scss/navigation";
@@ -8,6 +10,7 @@ import "swiper/scss/pagination";
 import "swiper/scss/scrollbar";
 
 import TutorialCard from "./tutorial-card";
+import { ArrowLeft, ArrowRight } from "../icons/icons";
 
 const demoSlides = [
   {
@@ -53,33 +56,53 @@ const demoSlides = [
 ];
 
 export default function TutorialSlider({ slides, swiper }) {
+  const sliderRef = useRef(null);
+
+  const handlePrev = useCallback(() => {
+    if (!sliderRef.current) return;
+    sliderRef.current.swiper.slidePrev();
+  }, []);
+
+  const handleNext = useCallback(() => {
+    if (!sliderRef.current) return;
+    sliderRef.current.swiper.slideNext();
+  }, []);
   return (
-    <Swiper
-      style={{
-        padding: "10px",
-      }}
-      modules={[Navigation, Scrollbar, A11y]}
-      spaceBetween={20}
-      slidesPerView={1}
-      navigation
-      onSwiper={(swiper) => console.log(swiper)}
-      onSlideChange={() => console.log("slide change")}
-      breakpoints={{
-        740: {
-          slidesPerView: 2,
-        },
-        // when window width is >= 640px
-        1080: {
-          slidesPerView: 3,
-        },
-      }}
-      {...swiper}
-    >
-      {demoSlides?.map((slide) => (
-        <SwiperSlide>
-          <TutorialCard {...slide} />
-        </SwiperSlide>
-      ))}
-    </Swiper>
+    <div className={styles.tutorialSliderWrap}>
+      <Swiper
+        ref={sliderRef}
+        style={{
+          padding: "10px",
+        }}
+        className={styles.tutorialSwiper}
+        modules={[Navigation, Scrollbar, A11y]}
+        spaceBetween={20}
+        slidesPerView={1}
+        loop={true}
+        onSwiper={(swiper) => console.log(swiper)}
+        onSlideChange={() => console.log("slide change")}
+        breakpoints={{
+          740: {
+            slidesPerView: 2,
+          },
+          1080: {
+            slidesPerView: 3,
+          },
+        }}
+        {...swiper}
+      >
+        {demoSlides?.map((slide) => (
+          <SwiperSlide key={slide.title}>
+            <TutorialCard {...slide} />
+          </SwiperSlide>
+        ))}
+      </Swiper>
+      <div className={styles.arrowPrev} onClick={handlePrev}>
+        <ArrowLeft />
+      </div>
+      <div className={styles.arrowNext} onClick={handleNext}>
+        <ArrowRight />
+      </div>
+    </div>
   );
 }

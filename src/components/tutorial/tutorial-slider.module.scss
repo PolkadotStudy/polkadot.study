@@ -1,0 +1,26 @@
+.tutorialSliderWrap {
+    position: relative;
+
+    .arrowNext,
+    .arrowPrev {
+        cursor: pointer;
+        position: absolute;
+        top: 50%;
+        z-index: 100;
+        top: 50%;
+    }
+
+    .arrowNext {
+        right: 0;
+        transform: translate3d(30px, -50%, 0);
+    }
+
+    .arrowPrev {
+        left: 0;
+        transform: translate3d(-30px, -50%, 0);
+    }
+}
+
+.tutorialSwiper {
+    padding: 10px;
+}
