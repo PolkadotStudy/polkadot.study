@@ -31,8 +31,11 @@ export default function TutorialCard({
       <div className={styles.meta}>
         <div className={styles.tags}>
           <FontAwesomeIcon icon={icon({ name: "tags" })} />
-          {tags.map((tag) => (
-            <Link to={`/tags/${string_to_slug(tag)}`} className="tag">
+          {tags?.map((tag) => (
+            // <Link to={`/tags/${string_to_slug(tag)}`} className="tag">
+            //   {tag}
+            // </Link>
+            <Link to={`#`} className="tag">
               {tag}
             </Link>
           ))}

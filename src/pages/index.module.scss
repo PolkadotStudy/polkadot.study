@@ -113,11 +113,27 @@
   }
 }
 
+.updown {
+  animation: 2s updown infinite;
+}
+
+@keyframes updown {
+  0% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-10px);
+  }
+  100% {
+    transform: translateY(0);
+  }
+}
+
 
 .mainHome {
   & > section {
     min-height: 80vh;
-    padding: 0 var(--ps-page-margin);
+    padding: 4rem var(--ps-page-margin);
 
     p {
       max-width: 40rem;
@@ -163,5 +179,13 @@
 }
 
 .sectionParticipate {
+  display: flex;
 
+  .participateLeft {
+    width: 60%;
+  }
+
+  .participateRight {
+    width: 40%;
+  }
 }

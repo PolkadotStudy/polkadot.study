@@ -8,7 +8,7 @@ import HomepageFeatures from "@site/src/components/home";
 import styles from "./index.module.scss";
 import Head from "@docusaurus/Head";
 import TutorialSlider from "../components/tutorial/tutorial-slider";
-import { ArrowDown } from "../components/icons/icons";
+import { ArrowDown, ArrowRight } from "../components/icons/icons";
 import { StudyPaths } from "../components/home/study-paths";
 import Dots from "../components/three/dots";
 
@@ -52,7 +52,7 @@ export default function Home(): JSX.Element {
               </h2> */}
               <p>Educational hub for developers by developers</p>
               <Link to="#tutorials">
-                <ArrowDown strokeWidth="3" />
+                <ArrowDown className={styles.updown} strokeWidth="3" />
               </Link>
             </div>
           </div>
@@ -71,6 +71,9 @@ export default function Home(): JSX.Element {
         <section className={styles.sectionAbout}>
           <div className={styles.aboutLeft}>
             <h2>About</h2>
+            <p className="subheading">
+              Tutorials by the community for the community
+            </p>
             <p>
               Polkadot.study is an open educational platform for developers by
               developers and is aiming to provide good educational content in
@@ -102,7 +105,41 @@ export default function Home(): JSX.Element {
           <StudyPaths />
         </section>
         <section className={styles.sectionParticipate}>
-          <h2>Participate</h2>
+          <div className={styles.participateLeft}>
+            <h2>Participate</h2>
+            <p className="subheading">
+              Are you a developer? Have you learned something new while working
+              with Polkadot? Why not share it with the community?
+            </p>
+            <p>
+              All the code of this platform, as well as the tutorials and
+              documentation is open sourced on github. New content can easily be
+              submitted by anyone with knowledge of git in the form of Pull
+              Requests that can be authored by the repository team. The platform
+              aims to be open to anyone: with a different skill level of the
+              readers as well as a multitude of authors.
+            </p>
+            <p>
+              You can also receive funding for your work by submitting a
+              referendum to Kusama or Polkadot treasury.
+            </p>
+            <p>
+              It is very easy to participate. Just fork the repository, add your
+              tutorial and wait until it is merged.
+            </p>
+
+            <Link to="/docs/authors/new-tutorial-on-polkadot-study/intro">
+              <button className="button button--primary">
+                Learn how to contribute
+                <span>
+                  <ArrowRight strokeWidth="3" />
+                </span>
+              </button>
+            </Link>
+          </div>
+          <div className={styles.participateRight}>
+            <Dots />
+          </div>
         </section>
       </main>
     </Layout>

@@ -75,7 +75,7 @@ export default function TutorialSlider({ slides, swiper }) {
       }}
       {...swiper}
     >
-      {demoSlides.map((slide) => (
+      {demoSlides?.map((slide) => (
         <SwiperSlide>
           <TutorialCard {...slide} />
         </SwiperSlide>

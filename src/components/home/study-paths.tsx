@@ -42,7 +42,7 @@ export function StudyPaths() {
   return (
     <div className={styles.studyPaths}>
       <div className={styles.left}>
-        {allTagsWithDescription.map((tag) => (
+        {allTagsWithDescription?.map((tag) => (
           <div
             className={clsx(styles.tag, "tag", {
               [styles.selected]: tag.tag === selectedTag,

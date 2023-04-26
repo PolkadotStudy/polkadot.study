@@ -1,0 +1,28 @@
+.button {
+    display: flex;
+    align-items: center;
+
+    a,
+    a:hover {
+        
+    }
+
+    svg {
+        height: 20px;
+    }
+
+    span {
+        margin-left: 0.5rem;
+        display: flex;
+        vertical-align: center;
+        transition: all 0.3s;
+    }
+
+    &:hover span {
+        transform: translateX(5px);
+    }
+}
+
+.button--primary {
+    font-size: 20px;
+}
