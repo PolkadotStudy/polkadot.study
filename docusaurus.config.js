@@ -125,11 +125,7 @@ const config = {
         },
       },
       tutorials: {
-        sidebarPath: require.resolve('./sidebars.js'),
-        editUrl:
-          'https://github.com/PolkadotStudy/website/tree/staging/',
-          showLastUpdateAuthor: true,
-          showLastUpdateTime: true,
+        path: '/tutorials',
       },
       showLastUpdateAuthor: true,
       showLastUpdateTime: true,
