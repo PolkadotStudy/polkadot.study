@@ -45,7 +45,10 @@ const config = {
         disableInDev: false,
       },
     ],
-    'docusaurus-plugin-tutorials'
+    ['@niklasp/plugin-content-tutorials', {
+      id: 'tutorials',
+      path: 'tutorials',
+    }],
   ],
 
   presets: [
@@ -120,6 +123,13 @@ const config = {
           hideable: true,
           autoCollapseCategories: true,
         },
+      },
+      tutorials: {
+        sidebarPath: require.resolve('./sidebars.js'),
+        editUrl:
+          'https://github.com/PolkadotStudy/website/tree/staging/',
+          showLastUpdateAuthor: true,
+          showLastUpdateTime: true,
       },
       showLastUpdateAuthor: true,
       showLastUpdateTime: true,
