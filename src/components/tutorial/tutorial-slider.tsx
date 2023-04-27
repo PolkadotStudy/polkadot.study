@@ -78,7 +78,6 @@ export default function TutorialSlider({ slides, swiper }) {
         modules={[Navigation, Scrollbar, A11y]}
         spaceBetween={20}
         slidesPerView={1}
-        loop={true}
         onSwiper={(swiper) => console.log(swiper)}
         onSlideChange={() => console.log("slide change")}
         breakpoints={{
@@ -91,18 +90,22 @@ export default function TutorialSlider({ slides, swiper }) {
         }}
         {...swiper}
       >
-        {demoSlides?.map((slide) => (
+        {slides?.map((slide) => (
           <SwiperSlide key={slide.title}>
             <TutorialCard {...slide} />
           </SwiperSlide>
         ))}
       </Swiper>
-      <div className={styles.arrowPrev} onClick={handlePrev}>
-        <ArrowLeft />
-      </div>
-      <div className={styles.arrowNext} onClick={handleNext}>
-        <ArrowRight />
-      </div>
+      {slides.length > 2 && (
+        <>
+          <div className={styles.arrowPrev} onClick={handlePrev}>
+            <ArrowLeft />
+          </div>
+          <div className={styles.arrowNext} onClick={handleNext}>
+            <ArrowRight />
+          </div>
+        </>
+      )}
     </div>
   );
 }

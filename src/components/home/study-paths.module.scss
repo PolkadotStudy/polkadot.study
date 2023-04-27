@@ -7,8 +7,8 @@
     display: flex;
     flex-wrap: wrap;
     width: 20vw;
-    justify-content: space-around;
     flex-shrink: 0;
+    flex-direction: column;
 }
 
 .right {

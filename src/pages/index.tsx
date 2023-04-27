@@ -12,11 +12,16 @@ import TutorialSlider from "../components/tutorial/tutorial-slider";
 import { ArrowDown, ArrowRight } from "../components/icons/icons";
 import { StudyPaths } from "../components/home/study-paths";
 import Dots from "../components/three/dots";
-import useGlobalData from "@docusaurus/useGlobalData";
+import useGlobalData, { usePluginData } from "@docusaurus/useGlobalData";
 
 export default function Home(): JSX.Element {
   const { siteConfig, siteMetadata } = useDocusaurusContext();
   const globalData = useGlobalData();
+
+  const allTags = usePluginData(
+    "docusaurus-plugin-content-tutorials",
+    "tutorials"
+  ).tags;
 
   return (
     <Layout
@@ -37,7 +42,7 @@ export default function Home(): JSX.Element {
         ></link>
       </Head>
       <main className={styles.mainHome}>
-        <pre>{JSON.stringify(globalData, null, 2)}</pre>
+        {/* <pre>{JSON.stringify(globalData, null, 2)}</pre> */}
         <section className={styles.sectionIntro}>
           <div className={styles.logoWrap}>
             <img
@@ -71,7 +76,7 @@ export default function Home(): JSX.Element {
             your Polkadot journey as a developer. We cover many different
             subjects from both frontend and blockchain development.
           </p>
-          <TutorialSlider></TutorialSlider>
+          {/* <TutorialSlider slides={allTags} /> */}
         </section>
         <section className={styles.sectionAbout}>
           <div className={styles.aboutLeft}>

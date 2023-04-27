@@ -35,8 +35,8 @@ export default function TutorialCard({
             // <Link to={`/tags/${string_to_slug(tag)}`} className="tag">
             //   {tag}
             // </Link>
-            <Link to={`#`} className="tag" key={`${tag.title}-${idx}`}>
-              {tag}
+            <Link to={`#`} className="tag" key={`${tag.label}-${idx}`}>
+              {tag.label}
             </Link>
           ))}
         </div>

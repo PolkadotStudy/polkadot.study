@@ -126,6 +126,8 @@ const config = {
       },
       tutorials: {
         path: '/tutorials',
+        showLastUpdateAuthor: true,
+        showLastUpdateTime: true,
       },
       showLastUpdateAuthor: true,
       showLastUpdateTime: true,
