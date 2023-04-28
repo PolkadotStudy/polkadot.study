@@ -3,6 +3,13 @@ html {
     scroll-padding: 6rem;
 }
 
+body {
+    // background: url('/bg-light.svg');
+    height: unset !important;
+    background-size: cover;
+    font-size: 18px;
+}
+
 body,
 h1,
 h2,
@@ -90,10 +97,9 @@ h6 {
 }
 
 nav.navbar {
-    background: var(--ifm-background-color);
+    background: transparent;
     border-bottom: var(--pd-border-style);
     box-shadow: none;
-    
     
     .navbar__logo {
         height: 2rem;  
@@ -145,8 +151,8 @@ nav.menu {
 
 @media (min-width: 997px) {
     nav.navbar {
-        backdrop-filter: blur(5px);
-        background: #fcfff199;
+        backdrop-filter: blur(8px);
+        background: transparent;
     }
 
     [data-theme='dark'] {
@@ -185,5 +191,9 @@ nav.menu {
 }
 
 .swiper-wrapper {
-    align-items: center;
+    align-items: stretch;
+
+    .swiper-slide {
+        height: unset;
+    }
 }

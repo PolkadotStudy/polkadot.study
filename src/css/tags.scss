@@ -1,12 +1,23 @@
 .tag {
     padding: 1px 4px;
-    border: 1px solid #ccc;
     border-radius: 4px;
     margin-right: 5px;
-    color: #000;
+    color: var(--ifm-font-color-base);
+    display: inline-flex;
+    align-items: center;
+
+    &:hover {
+        color: var(--ifm-font-color-base);
+        text-decoration: none;
+    }
 
     a, a:hover {
         text-decoration: none;
+        color: var(--ifm-font-color-base);
+    }
+
+    svg {
+        height: 18px;
     }
 }
 

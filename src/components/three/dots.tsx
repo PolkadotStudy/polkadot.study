@@ -1,13 +1,23 @@
 import * as THREE from "three";
-import { Canvas, useFrame, ThreeElements } from "@react-three/fiber";
+import {
+  Canvas,
+  useFrame,
+  ThreeElements,
+  extend,
+  useThree,
+} from "@react-three/fiber";
+import { RenderPixelatedPass } from "three/addons/postprocessing/RenderPixelatedPass.js";
 import {
   AccumulativeShadows,
   RandomizedLight,
   Center,
   Environment,
   OrbitControls,
+  Effects,
 } from "@react-three/drei";
 import React, { useRef, useState } from "react";
+
+extend({ RenderPixelatedPass });
 
 function Box(props: ThreeElements["mesh"] & { index: number }) {
   const ref = useRef<THREE.Mesh>(null!);
@@ -32,15 +42,28 @@ function Box(props: ThreeElements["mesh"] & { index: number }) {
   );
 }
 
+function Scene() {
+  const { scene, camera } = useThree();
+
+  return (
+    <>
+      <Effects renderIndex={1} disableGamma={true} disableRenderPass={true}>
+        <renderPixelatedPass pixelSize={22} scene={scene} camera={camera} a />
+      </Effects>
+      <Box position={[0, 1.5, 0]} index={0} />
+      <Box position={[-1.2, 0, 0]} index={1} />
+      <Box position={[1.2, 0, 0]} index={2} />
+    </>
+  );
+}
+
 export default function Dots() {
   const ref = useRef<THREE.PointLight>(null!);
   return (
     <Canvas>
-      <ambientLight />
+      <Scene />
       <pointLight ref={ref} position={[10, 10, 10]} />
-      <Box position={[0, 1.5, 0]} index={0} />
-      <Box position={[-1.2, 0, 0]} index={1} />
-      <Box position={[1.2, 0, 0]} index={2} />
+      <ambientLight intensity={2.0} />
       <OrbitControls
         autoRotate
         autoRotateSpeed={3}

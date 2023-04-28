@@ -66,7 +66,7 @@ export function StudyPaths() {
       </div>
       <div className={styles.right}>
         <h3>{selectedTag}</h3>
-        <p>{JSON.stringify(allTags[selectedTag])}</p>
+        {/* <p>{JSON.stringify(allTags[selectedTag])}</p> */}
         {/* <p>{description}</p> */}
         {/* <pre>{JSON.stringify(allTags, null, 2)}</pre> */}
         {/* <pre>{JSON.stringify(selectedTagItems, null, 2)}</pre> */}

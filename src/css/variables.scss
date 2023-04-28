@@ -10,6 +10,8 @@
     --ifm-background-color: #fcfff1;
     --ifm-navbar-background-color: #fcfff1;
 
+    --ifm-font-color-base: #000;
+
     --ifm-color-primary: #e6007a;
     --ifm-color-primary-dark: #cf006e;
     --ifm-color-primary-darker: #c40068;
@@ -57,6 +59,8 @@
 [data-theme='dark']:root {
     --ifm-background-color: #1b1b1b;
     --ifm-navbar-background-color: #1b1b1b;
+
+    --ifm-font-color-base: #fff;
 
     --ifm-color-primary: #e6007a;
     --ifm-color-primary-dark: #cf006e;

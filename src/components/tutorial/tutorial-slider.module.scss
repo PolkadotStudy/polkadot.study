@@ -23,8 +23,6 @@
 
 .tutorialSwiper {
     padding: 10px;
-
-    #swiperWrapper {
-        justify-content: center;
-    }
+    display: flex;
+    align-items: stretch;
 }

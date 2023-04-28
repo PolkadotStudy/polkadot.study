@@ -6,7 +6,7 @@ keywords: [tutorial, polkadot]
 description: Learn how to write a tokengated website with polkadot and next.js
 image: https://i.imgur.com/mErPwqL.png
 duration: 3h
-level: Beginner
+level: easy
 ---
 
 # Tokengated Website Tutorial with Polkadot and nextjs
