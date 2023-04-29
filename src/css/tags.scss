@@ -21,6 +21,13 @@
     }
 }
 
+.tag.selected {
+    border-color: var(--polkadot-purple);
+    background: #f2f;
+    color: #fff;
+
+}
+
 .tag-contribute {
     
 }
@@ -32,10 +39,10 @@
 [data-theme='dark'] {
     .tag {
         color: #eee;
-        border-color: var(--polkadot-cyan);
+        border-color: #fff;
 
         &:hover {
-            background: var(--polkadot-cyan);
+            border-color: var(--polkadot-purple);
         }
     }
 }

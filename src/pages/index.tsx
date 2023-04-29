@@ -15,11 +15,9 @@ import Dots from "../components/three/dots";
 import useGlobalData, { usePluginData } from "@docusaurus/useGlobalData";
 
 import { uniqBy } from "lodash";
+import PageHead from "../components/PageHead";
 
 export default function Home(): JSX.Element {
-  const { siteConfig, siteMetadata } = useDocusaurusContext();
-  const globalData = useGlobalData();
-
   const allTags = usePluginData(
     "docusaurus-plugin-content-tutorials",
     "tutorials"
@@ -45,18 +43,7 @@ export default function Home(): JSX.Element {
       description="Developer Tutorials for Navigating the Polkadot Ecosystem"
     >
       {/* <HomepageHeader /> */}
-      <Head>
-        <link rel="preconnect" href="https://fonts.googleapis.com"></link>
-        <link
-          rel="preconnect"
-          href="https://fonts.gstatic.com"
-          crossOrigin=""
-        ></link>
-        <link
-          href="https://fonts.googleapis.com/css2?family=DM+Sans&family=Unbounded&display=swap"
-          rel="stylesheet"
-        ></link>
-      </Head>
+      <PageHead />
       <main className={styles.mainHome}>
         {/* <pre>{JSON.stringify(globalData, null, 2)}</pre> */}
         <section className={styles.sectionIntro}>

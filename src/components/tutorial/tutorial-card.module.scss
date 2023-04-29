@@ -29,7 +29,7 @@
         left: 0.5%;
         width: 99%;
         height: 99%;
-        background-color: var(--polkadot-purple);
+        background-color: var(--polkadot-cyan);
         z-index: -1;
         transition: all 0.3s;
         border-radius: 30px;
@@ -58,11 +58,11 @@
     }
 
     &:hover::after {
-        transform: translate3d(-10px, -10px, 0);
+        transform: translate3d(-10px, 10px, 0);
     }
 
     &:hover::before {
-        transform: translate3d(10px, 10px, 0);
+        transform: translate3d(10px, -10px, 0);
     }
 }
 
@@ -113,7 +113,8 @@
 
 [data-theme='dark'] {
     .tutorialCard {
-        background: #000;
+        background: var(--polkadot-purple);
         color: #fff;
+        border: none;
     }
 }

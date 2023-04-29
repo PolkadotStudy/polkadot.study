@@ -100,7 +100,6 @@ export default function TutorialSlider({ slides, swiper, style }) {
         modules={[Navigation, A11y]}
         spaceBetween={20}
         slidesPerView={1}
-        onSwiper={(swiper) => console.log(swiper)}
         style={style}
         breakpoints={{
           740: {
