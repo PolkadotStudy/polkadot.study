@@ -41,13 +41,13 @@ function Box(props: ThreeElements["mesh"] & { index: number }) {
 
     ref.current.material.color.lerp(
       hovered ? toColors[props.index] : pink,
-      0.05
+      0.1
     );
 
-    ref.current.scale.lerp(
-      hovered ? new THREE.Vector3(2, 1, 1) : new THREE.Vector3(1, 1, 1),
-      0.05
-    );
+    // ref.current.scale.lerp(
+    //   hovered ? new THREE.Vector3(2, 1, 1) : new THREE.Vector3(1, 1, 1),
+    //   0.05
+    // );
   });
   return (
     <mesh
