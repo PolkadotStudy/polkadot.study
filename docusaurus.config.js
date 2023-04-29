@@ -45,7 +45,7 @@ const config = {
         disableInDev: false,
       },
     ],
-    ['@niklasp/plugin-content-tutorials', {
+    ['@niklasp/docusaurus-plugin-content-tutorials', {
       id: 'tutorials',
       path: 'tutorials',
     }],
