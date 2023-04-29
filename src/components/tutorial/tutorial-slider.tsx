@@ -88,9 +88,6 @@ export default function TutorialSlider({ slides, swiper }) {
     <div className={styles.tutorialSliderWrap}>
       <Swiper
         ref={sliderRef}
-        style={{
-          padding: "10px",
-        }}
         // onReachEnd={() => {
         //   setPositionStatus("end");
         // }}

@@ -1,5 +1,6 @@
 .tutorialSliderWrap {
     position: relative;
+    margin-top: 2rem;
 
     .arrowNext,
     .arrowPrev {
@@ -19,9 +20,9 @@
         left: 0;
         transform: translate3d(-30px, -50%, 0);
     }
-}
 
-.tutorialSwiper {
-    padding: 10px;
-    margin: -10px;
+    .tutorialSwiper {
+        padding: 10px;
+        margin: -10px;
+    }    
 }

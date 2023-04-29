@@ -92,7 +92,16 @@ export default function Home(): JSX.Element {
             your Polkadot journey as a developer. We cover many different
             subjects from both frontend and blockchain development.
           </p>
+          <p>These are our latest tutorials:</p>
           <TutorialSlider slides={getAllTutorialsSorted()} />
+          <Link to="/tutorials" className={styles.btnViewAll}>
+            <button className="button button--primary">
+              View All Tutorials
+              <span>
+                <ArrowRight strokeWidth="3" />
+              </span>
+            </button>
+          </Link>
           {/* <pre>{JSON.stringify(allTutorialsSorted, null, 2)}</pre> */}
         </section>
         <section className={styles.sectionAbout}>
