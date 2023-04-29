@@ -93,7 +93,10 @@ export default function Home(): JSX.Element {
             subjects from both frontend and blockchain development.
           </p>
           <p>These are our latest tutorials:</p>
-          <TutorialSlider slides={getAllTutorialsSorted()} />
+          <TutorialSlider
+            slides={getAllTutorialsSorted()}
+            style={{ marginTop: "2rem" }}
+          />
           <Link to="/tutorials" className={styles.btnViewAll}>
             <button className="button button--primary">
               View All Tutorials
