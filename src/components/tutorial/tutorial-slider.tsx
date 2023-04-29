@@ -60,7 +60,7 @@ const demoSlides = [
 
 export default function TutorialSlider({ slides, swiper }) {
   const sliderRef = useRef(null);
-  const [positionStatus, setPositionStatus] = useState<string>("beginning");
+  const [positionStatus, setPositionStatus] = useState<string>("all");
 
   const handlePrev = useCallback(() => {
     if (!sliderRef.current) return;
@@ -72,6 +72,18 @@ export default function TutorialSlider({ slides, swiper }) {
     sliderRef.current.swiper.slideNext();
   }, []);
 
+  const updateStatus = (swiper) => {
+    if (swiper.isBeginning && swiper.isEnd) {
+      setPositionStatus("all");
+    } else if (swiper.isEnd) {
+      setPositionStatus("end");
+    } else if (swiper.isBeginning) {
+      setPositionStatus("beginning");
+    } else {
+      setPositionStatus("");
+    }
+  };
+
   return (
     <div className={styles.tutorialSliderWrap}>
       <Swiper
@@ -79,12 +91,14 @@ export default function TutorialSlider({ slides, swiper }) {
         style={{
           padding: "10px",
         }}
-        onReachEnd={() => {
-          setPositionStatus("end");
-        }}
-        onReachBeginning={() => {
-          setPositionStatus("beginning");
-        }}
+        // onReachEnd={() => {
+        //   setPositionStatus("end");
+        // }}
+        // onReachBeginning={() => {
+        //   setPositionStatus("beginning");
+        // }}
+        onInit={updateStatus}
+        onSlideChange={updateStatus}
         className={styles.tutorialSwiper}
         modules={[Navigation, A11y]}
         spaceBetween={20}
@@ -108,7 +122,7 @@ export default function TutorialSlider({ slides, swiper }) {
       </Swiper>
       {slides.length > 2 && (
         <>
-          {positionStatus !== "beginning" && (
+          {positionStatus !== "beginning" && positionStatus !== "all" && (
             <div
               className={clsx(styles.arrowPrev, "swiper-prev")}
               onClick={handlePrev}
@@ -116,7 +130,7 @@ export default function TutorialSlider({ slides, swiper }) {
               <ActionLeft stroke="currentColor" />
             </div>
           )}
-          {positionStatus !== "end" && (
+          {positionStatus !== "end" && positionStatus !== "all" && (
             <div
               className={clsx(styles.arrowNext, "swiper-next")}
               onClick={handleNext}

@@ -14,6 +14,8 @@ import { StudyPaths } from "../components/home/study-paths";
 import Dots from "../components/three/dots";
 import useGlobalData, { usePluginData } from "@docusaurus/useGlobalData";
 
+import { uniqBy } from "lodash";
+
 export default function Home(): JSX.Element {
   const { siteConfig, siteMetadata } = useDocusaurusContext();
   const globalData = useGlobalData();
@@ -22,6 +24,20 @@ export default function Home(): JSX.Element {
     "docusaurus-plugin-content-tutorials",
     "tutorials"
   ).tags;
+
+  const getAllTutorialsSorted = () => {
+    let allTutorialsSorted = [];
+
+    Object.keys(allTags).map((key) => {
+      const items = allTags[key].items[0];
+      allTutorialsSorted.push(items);
+    });
+
+    allTutorialsSorted = uniqBy(allTutorialsSorted, "permalink");
+    allTutorialsSorted.sort((a, b) => a.lastUpdatedAt - b.lastUpdatedAt);
+
+    return allTutorialsSorted;
+  };
 
   return (
     <Layout
@@ -76,7 +92,8 @@ export default function Home(): JSX.Element {
             your Polkadot journey as a developer. We cover many different
             subjects from both frontend and blockchain development.
           </p>
-          {/* <TutorialSlider slides={allTags} /> */}
+          <TutorialSlider slides={getAllTutorialsSorted()} />
+          {/* <pre>{JSON.stringify(allTutorialsSorted, null, 2)}</pre> */}
         </section>
         <section className={styles.sectionAbout}>
           <div className={styles.aboutLeft}>
