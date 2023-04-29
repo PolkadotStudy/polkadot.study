@@ -139,9 +139,20 @@
   h2 {
     font-family: 'Unbounded', cursive;
     letter-spacing: 3px;
+    margin-bottom: 30px;
+    margin-top: 100px;
+
+    font-weight: 500;
     font-size: 36px;
-    margin-bottom: 2rem;
-    margin-top: 2rem;
+    line-height: 28px;
+
+    span {
+      padding-top: 2rem;
+      font-family: 'DM Sans';
+      display: block;
+      font-weight: 100;
+      line-height: 38px;
+    }
   }
 
   h3 {

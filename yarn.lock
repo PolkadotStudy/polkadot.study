@@ -2439,6 +2439,11 @@
   dependencies:
     "@use-gesture/core" "10.2.26"
 
+"@w3f/polkadot-icons@^1.0.0":
+  version "1.0.0"
+  resolved "https://registry.yarnpkg.com/@w3f/polkadot-icons/-/polkadot-icons-1.0.0.tgz#66647e68076942a4f13221a09d9d2f809d3fc351"
+  integrity sha512-luwE3azUgv4wzUFsBMXQG+bIAsG6ozpBtD1fBPmkHRA7RIJQ7kxedBioIuAzw8EoNjyjUt8O+AHeKacaN5UJDg==
+
 "@webassemblyjs/ast@1.11.5", "@webassemblyjs/ast@^1.11.5":
   version "1.11.5"
   resolved "https://registry.yarnpkg.com/@webassemblyjs/ast/-/ast-1.11.5.tgz#6e818036b94548c1fb53b754b5cae3c9b208281c"

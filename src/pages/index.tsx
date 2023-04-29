@@ -80,10 +80,10 @@ export default function Home(): JSX.Element {
         </section>
         <section className={styles.sectionAbout}>
           <div className={styles.aboutLeft}>
-            <h2>About</h2>
-            <p className="subheading">
-              Tutorials by the community for the community
-            </p>
+            <h2>
+              About
+              <span>Tutorials by the community for the community</span>
+            </h2>
             <p>
               Polkadot.study is an open educational platform for developers by
               developers and is aiming to provide good educational content in

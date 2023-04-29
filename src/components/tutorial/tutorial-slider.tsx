@@ -1,6 +1,6 @@
-import React, { useCallback, useRef } from "react";
-import { Navigation, Pagination, Scrollbar, A11y } from "swiper";
-import { Swiper, SwiperSlide } from "swiper/react";
+import React, { useCallback, useRef, useState } from "react";
+import { Swiper, SwiperSlide, useSwiper } from "swiper/react";
+import SwiperCore, { Navigation, A11y } from "swiper";
 
 import styles from "./tutorial-slider.module.scss";
 
@@ -10,7 +10,10 @@ import "swiper/scss/pagination";
 import "swiper/scss/scrollbar";
 
 import TutorialCard from "./tutorial-card";
-import { ArrowLeft, ArrowRight } from "../icons/icons";
+
+import ActionLeft from "@w3f/polkadot-icons/keyline/ActionLeft";
+import ActionRight from "@w3f/polkadot-icons/keyline/ActionRight";
+import clsx from "clsx";
 
 const demoSlides = [
   {
@@ -57,6 +60,7 @@ const demoSlides = [
 
 export default function TutorialSlider({ slides, swiper }) {
   const sliderRef = useRef(null);
+  const [positionStatus, setPositionStatus] = useState<string>("beginning");
 
   const handlePrev = useCallback(() => {
     if (!sliderRef.current) return;
@@ -67,6 +71,7 @@ export default function TutorialSlider({ slides, swiper }) {
     if (!sliderRef.current) return;
     sliderRef.current.swiper.slideNext();
   }, []);
+
   return (
     <div className={styles.tutorialSliderWrap}>
       <Swiper
@@ -74,12 +79,17 @@ export default function TutorialSlider({ slides, swiper }) {
         style={{
           padding: "10px",
         }}
+        onReachEnd={() => {
+          setPositionStatus("end");
+        }}
+        onReachBeginning={() => {
+          setPositionStatus("beginning");
+        }}
         className={styles.tutorialSwiper}
-        modules={[Navigation, Scrollbar, A11y]}
+        modules={[Navigation, A11y]}
         spaceBetween={20}
         slidesPerView={1}
         onSwiper={(swiper) => console.log(swiper)}
-        onSlideChange={() => console.log("slide change")}
         breakpoints={{
           740: {
             slidesPerView: 2,
@@ -98,12 +108,22 @@ export default function TutorialSlider({ slides, swiper }) {
       </Swiper>
       {slides.length > 2 && (
         <>
-          <div className={styles.arrowPrev} onClick={handlePrev}>
-            <ArrowLeft />
-          </div>
-          <div className={styles.arrowNext} onClick={handleNext}>
-            <ArrowRight />
-          </div>
+          {positionStatus !== "beginning" && (
+            <div
+              className={clsx(styles.arrowPrev, "swiper-prev")}
+              onClick={handlePrev}
+            >
+              <ActionLeft stroke="currentColor" />
+            </div>
+          )}
+          {positionStatus !== "end" && (
+            <div
+              className={clsx(styles.arrowNext, "swiper-next")}
+              onClick={handleNext}
+            >
+              <ActionRight stroke="currentColor" />
+            </div>
+          )}
         </>
       )}
     </div>

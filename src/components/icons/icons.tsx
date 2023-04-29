@@ -149,15 +149,15 @@ export function CircleEmpty(props) {
       height="7"
       viewBox="0 0 7 7"
       fill="none"
+      stroke="currentColor"
       xmlns="http://www.w3.org/2000/svg"
     >
       <path
         d="M3.5498 5.49976C4.65437 5.49976 5.5498 4.60433 5.5498 3.49976C5.5498 2.39519 4.65437 1.49976 3.5498 1.49976C2.44524 1.49976 1.5498 2.39519 1.5498 3.49976C1.5498 4.60433 2.44524 5.49976 3.5498 5.49976Z"
-        stroke="black"
-        stroke-width="1.7143"
-        stroke-miterlimit="3.4286"
-        stroke-linecap="round"
-        stroke-linejoin="round"
+        strokeWidth="1.7143"
+        strokeMiterlimit="3.4286"
+        strokeLinecap="round"
+        strokeLinejoin="round"
       />
     </svg>
   );

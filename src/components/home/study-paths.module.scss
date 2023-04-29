@@ -25,12 +25,11 @@
     text-align: center;
     padding: 1rem 1rem;
     margin-bottom: 0.5rem;
-    border-radius: 2rem;
+    border-radius: 40px;
     border: 2px solid #000;
     cursor: pointer;
 }
 
 .tag.selected {
-    background-color: var(--polkadot-cyan);
-    color: #fff;
+    border-color: var(--polkadot-pink);
 }

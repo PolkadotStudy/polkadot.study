@@ -47,9 +47,9 @@ function Scene() {
 
   return (
     <>
-      <Effects renderIndex={1} disableGamma={true} disableRenderPass={true}>
-        <renderPixelatedPass pixelSize={22} scene={scene} camera={camera} a />
-      </Effects>
+      {/* <Effects renderIndex={1} disableGamma={true} disableRenderPass={true}>
+        <renderPixelatedPass pixelSize={50} scene={scene} camera={camera} a />
+      </Effects> */}
       <Box position={[0, 1.5, 0]} index={0} />
       <Box position={[-1.2, 0, 0]} index={1} />
       <Box position={[1.2, 0, 0]} index={2} />
@@ -63,10 +63,10 @@ export default function Dots() {
     <Canvas>
       <Scene />
       <pointLight ref={ref} position={[10, 10, 10]} />
-      <ambientLight intensity={2.0} />
+      <ambientLight intensity={1.0} />
       <OrbitControls
         autoRotate
-        autoRotateSpeed={3}
+        autoRotateSpeed={2}
         enableDamping={true}
         enableRotate={true}
         enablePan={true}
