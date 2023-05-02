@@ -85,10 +85,11 @@ const config = {
   ],
 
   themeConfig:
+  
     /** @type {import('@docusaurus/preset-classic').ThemeConfig} */
     ({
       // Replace with your project's social card
-      image: 'img/docusaurus-social-card.jpg',
+      image: 'polkadot-study.png',
       navbar: {
         title: 'Polkadot Study',
         logo: {
@@ -124,12 +125,12 @@ const config = {
           },
         ],
       },
-      // docs: {
-      //   sidebar: {
-      //     hideable: true,
-      //     autoCollapseCategories: true,
-      //   },
-      // },
+      docs: {
+        sidebar: {
+          hideable: true,
+          autoCollapseCategories: true,
+        },
+      },
       tutorials: {
         path: '/tutorials',
         showLastUpdateAuthor: true,
@@ -137,6 +138,10 @@ const config = {
         sidebarPath: require.resolve('./sidebars.js'),
         editUrl:
           'https://github.com/PolkadotStudy/website/tree/staging/',
+        sidebar: {
+          hideable: true,
+          autoCollapseCategories: true,
+        },
       },
       showLastUpdateAuthor: true,
       showLastUpdateTime: true,
