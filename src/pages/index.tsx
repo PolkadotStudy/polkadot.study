@@ -45,7 +45,7 @@ export default function Home(): JSX.Element {
       {/* <HomepageHeader /> */}
       <PageHead />
       <main className={styles.mainHome}>
-        {/* <pre>{JSON.stringify(globalData, null, 2)}</pre> */}
+        {/* <pre>{JSON.stringify(oglobalData, null, 2)}</pre> */}
         <section className={styles.sectionIntro}>
           <div className={styles.logoWrap}>
             <img
@@ -79,7 +79,7 @@ export default function Home(): JSX.Element {
             your Polkadot journey as a developer. We cover many different
             subjects from both frontend and blockchain development.
           </p>
-          <p>These are our latest tutorials:</p>
+          <p>Here are our latest tutorials:</p>
           <TutorialSlider
             slides={getAllTutorialsSorted()}
             style={{ marginTop: "2rem" }}

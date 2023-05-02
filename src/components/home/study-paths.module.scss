@@ -1,5 +1,11 @@
 .studyPaths {
     display: flex;
+    flex-direction: column;
+}
+
+.content {
+    display: flex;
+    flex-direction: row;
 }
 
 .left {
@@ -35,4 +41,8 @@
     border-color: var(--polkadot-purple);
     background: var(--polkadot-purple);
     color: #fff;
+}
+
+.description {
+    min-height: 4rem;
 }

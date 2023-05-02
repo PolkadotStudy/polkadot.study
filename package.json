@@ -25,7 +25,6 @@
     "@fortawesome/free-solid-svg-icons": "^6.4.0",
     "@fortawesome/react-fontawesome": "^0.2.0",
     "@mdx-js/react": "^1.6.22",
-    "@niklasp/docusaurus-plugin-content-tutorials": "^2.4.0",
     "@react-three/drei": "^9.65.5",
     "@react-three/fiber": "^8.12.2",
     "@types/three": "^0.150.2",

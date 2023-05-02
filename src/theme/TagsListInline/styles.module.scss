@@ -6,3 +6,11 @@
   margin: 0 0.4rem 0.5rem 0;
   display: inline-block;
 }
+
+.tagText {
+  display: flex;
+  align-items: center;
+  svg {
+    margin-right: 10px;
+  }
+}

@@ -13,9 +13,9 @@ import SearchMetadata from '@theme/SearchMetadata';
 import TutorialCard from '@site/src/components/tutorial/tutorial-card';
 import CategoryMDX from '@site/src/components/tutorial/category-mdx';
 
-import PolkadotJs from '/docs/category/polkadot-js.mdx';
-import substrate from '/docs/category/substrate.mdx';
-import Contribute from '/docs/category/contribute.mdx';
+import PolkadotJs from '/tutorials/tags/polkadot-js.mdx';
+import substrate from '/tutorials/tags/substrate.mdx';
+import Contribute from '/tutorials/tags/contribute.mdx';
 import EditThisPage from '@theme/EditThisPage';
 
 

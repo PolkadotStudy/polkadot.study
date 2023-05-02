@@ -113,7 +113,8 @@ const config = {
           },
           {
             href: 'https://github.com/PolkadotStudy/website',
-            label: 'GitHub',
+            className: "header-github-link",
+            "aria-label": "GitHub repository",
             position: 'right',
           },
         ],

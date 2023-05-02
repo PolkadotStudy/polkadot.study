@@ -1,0 +1,37 @@
+.byLine {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    font-size: 14px;
+
+    padding: 2rem 4rem;
+
+    a {
+        padding-right: 1rem;
+        color: var(--ifm-color-content);
+    }
+}
+
+.footerTop {
+    display: flex;
+    background: #fff;
+    // border-top-left-radius: 40px;
+    // border-top-right-radius: 40px;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+
+    padding: 2rem 4rem;
+
+    a {
+        padding-right: 1rem;
+        color: #000;
+    }
+}
+
+.footerLogos {
+    svg {
+        transform: scale(0.5);
+    }
+}

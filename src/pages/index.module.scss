@@ -27,19 +27,19 @@
     max-width: 80vw;
   }
 
-  &::after {
-    background: var(--primary-glow);
-    width: 30%;
-    height: 40%;
+  // &::after {
+  //   background: var(--primary-glow);
+  //   width: 30%;
+  //   height: 40%;
 
-    content: '';
-    left: 30%;
-    top: 40%;
-    position: absolute;
-    filter: blur(95px);
-    transform: translateZ(0);
-    // z-index: -10;
-  }
+  //   content: '';
+  //   left: 30%;
+  //   top: 40%;
+  //   position: absolute;
+  //   filter: blur(95px);
+  //   transform: translateZ(0);
+  //   // z-index: -10;
+  // }
 }
 
 .logoTitle {
@@ -76,10 +76,11 @@
 
 [data-theme='dark'] {
   .logoTitle {
+    mix-blend-mode: normal;
 
     h1 {
       color: #fff;
-      mix-blend-mode: difference;
+      // mix-blend-mode: difference;
     }
 
     a {
