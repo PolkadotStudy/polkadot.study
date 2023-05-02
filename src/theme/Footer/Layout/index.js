@@ -21,7 +21,7 @@ export default function FooterLayout({style, links, logo, copyright}) {
       </div>
       <div className={ styles.byLine }>
         <div>
-          &copy; Polkadot Study. All rights reserved
+          &copy; {new Date().getFullYear()} Polkadot Study. All rights reserved
         </div>
         <div>Funded By the <Link to="https://guide.kusama.network/docs/learn-treasury/">Kusama Treasury</Link> This is a community site and in no way incorporated with Parity or Polkadot</div>
         <div>

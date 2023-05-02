@@ -48,6 +48,11 @@ const config = {
     ['@niklasp/docusaurus-plugin-content-tutorials', {
       id: 'tutorials',
       path: 'tutorials',
+      showLastUpdateAuthor: true,
+      showLastUpdateTime: true,
+      sidebarPath: require.resolve('./sidebars.js'),
+      editUrl:
+        'https://github.com/PolkadotStudy/website/tree/staging/',
     }],
   ],
 
@@ -56,13 +61,13 @@ const config = {
       '@docusaurus/preset-classic',
       /** @type {import('@docusaurus/preset-classic').Options} */
       {
-        docs: {
-          sidebarPath: require.resolve('./sidebars.js'),
-          editUrl:
-            'https://github.com/PolkadotStudy/website/tree/staging/',
-            showLastUpdateAuthor: true,
-            showLastUpdateTime: true,
-        },
+        // docs: {
+        //   sidebarPath: require.resolve('./sidebars.js'),
+        //   editUrl:
+        //     'https://github.com/PolkadotStudy/website/tree/staging/',
+        //     showLastUpdateAuthor: true,
+        //     showLastUpdateTime: true,
+        // },
         blog: {
           showReadingTime: true,
           editUrl:
@@ -92,13 +97,13 @@ const config = {
         },
         items: [
           {
-            type: 'doc',
+            href: '/tutorials/intro',
             docId: 'intro',
             position: 'left',
             label: 'Tutorials',
           },          
           {
-            type: 'doc',
+            href: '/tutorials/authors/new-tutorial-on-polkadot-study/intro',
             docId: 'authors/new-tutorial-on-polkadot-study/intro',
             position: 'left',
             label: 'For Authors',
@@ -119,66 +124,25 @@ const config = {
           },
         ],
       },
-      docs: {
-        sidebar: {
-          hideable: true,
-          autoCollapseCategories: true,
-        },
-      },
+      // docs: {
+      //   sidebar: {
+      //     hideable: true,
+      //     autoCollapseCategories: true,
+      //   },
+      // },
       tutorials: {
         path: '/tutorials',
         showLastUpdateAuthor: true,
         showLastUpdateTime: true,
+        sidebarPath: require.resolve('./sidebars.js'),
+        editUrl:
+          'https://github.com/PolkadotStudy/website/tree/staging/',
       },
       showLastUpdateAuthor: true,
       showLastUpdateTime: true,
       footer: {
         style: 'dark',
-        // links: [
-        //   {
-        //     title: 'Docs',
-        //     items: [
-        //       {
-        //         label: 'Tutorial',
-        //         to: '/docs/intro',
-        //       },
-        //     ],
-        //   },
-        //   {
-        //     title: 'Community',
-        //     items: [
-        //       {
-        //         label: 'Stack Overflow',
-        //         href: 'https://stackoverflow.com/questions/tagged/docusaurus',
-        //       },
-        //       {
-        //         label: 'Discord',
-        //         href: 'https://discordapp.com/invite/docusaurus',
-        //       },
-        //       {
-        //         label: 'Twitter',
-        //         href: 'https://twitter.com/docusaurus',
-        //       },
-        //     ],
-        //   },
-        //   {
-        //     title: 'More',
-        //     items: [
-        //       {
-        //         label: 'Blog',
-        //         to: '/blog',
-        //       },
-        //       {
-        //         label: 'GitHub',
-        //         href: 'https://github.com/facebook/docusaurus',
-        //       },
-        //     ],
-        //   },
-        // ],
         copyright: `Copyleft ${new Date().getFullYear()} Polkadot.study - Built with Docusaurus - This is a community site and in no way incorporated with Parity or Polkadot`,
-      },
-      goatcounter: {
-        code: 'your-goatcounter-code',
       },
       prism: {
         theme: lightCodeTheme,
