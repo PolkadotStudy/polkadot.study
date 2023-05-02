@@ -59,10 +59,7 @@ export default function Home(): JSX.Element {
               <h1>
                 Polkadot<span>Study</span>
               </h1>
-              {/* <h2>
-                Work in Progress -{" "}
-                <a href="/docs/authors">Looking for Authors</a>
-              </h2> */}
+
               <p>Educational hub for developers by developers</p>
               <Link to="#tutorials">
                 <ArrowDown className={styles.updown} strokeWidth="3" />
@@ -154,7 +151,7 @@ export default function Home(): JSX.Element {
               tutorial and wait until it is merged.
             </p>
 
-            <Link to="/docs/authors/new-tutorial-on-polkadot-study/intro">
+            <Link to="/tutorials/authors/new-tutorial-on-polkadot-study/intro">
               <button className="button button--primary">
                 Learn how to contribute
                 <span>
