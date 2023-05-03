@@ -1,0 +1,233 @@
+---
+title: Structure and Style
+---
+
+import Task from "/src/components/task";
+import Quiz from "/src/components/quiz";
+
+export const question = {
+  question: "Why should I insert quizzes in my tutorial?",
+  answers: [
+    "It's fun",
+    "You can provide feedback on a learned concept in the `explanation` field",
+    "It might encourage a reader to read more closely in order to get the quiz correct",
+    "You just shouldn't",
+  ],
+  correctAnswerIdx: [0, 1, 2],
+  msgCorrect: "Correct answer. Good job.",
+  msgIncorrect: "Incorrect answer. Please try again.",
+  explanation:
+    "Some extra explanation that will appear when the user answered the questioin correctly.",
+};
+
+## Tutorial Structure
+
+polkadot.study tutorials should have a consistent structure, to create a stable
+learning environment which makes it easy to follow.
+
+Our tutorials should be procedural, which walk the reader through accomplishing
+a task or understanding a complex concept step-by-step. The tutorial should be
+divided in different parts, also mirrored in the file structure. The structure
+for a procedural tutorial should orientate itself on the following structure:
+
+### File intro.mdx
+
+- **Title** (Level 1 heading)
+  - When you write your title, think about what the reader will accomplish by
+    following your tutorial. Try to include the goal of the tutorial in the
+    title, not just the tool(s) the reader will use to accomplish that goal.
+    Ideally, titles will be under 60 characters long.
+  - A typical title for a procedural tutorial follows this format: **How To
+    \{Accomplish a Task\} with \{Software\}**.
+  - [Title Capitalization](https://capitalizemytitle.com/)
+- **Introduction** (Text below the title)
+  - What is the tutorial about (software, components, concepts)
+  - Why should the reader read the tutorial
+  - What will the reader do / create
+  - What new skills will the reader have after the tutorial
+- **Time of completion** (Level 2 heading)
+  - How long does it normally take to finish the tutorial including the time for
+    reading and coding
+- **What you'll learn** (Level 2 heading)
+  - List of concepts the reader will learn
+- **Prerequisites** (Level 2 heading)
+  - In the form of a checklist, the requirements / knowledge to complete the
+    tutorial
+  - If possible links to learning those requirements
+- **Author** (Level 2 heading - optional)
+  - If you want to add a paragraph about yourself, your story, your developer
+    path, your current position or research - this is the place. You can also
+    add links to your profile(s).
+
+### File: 1-first-step.mdx
+
+:::info You can choose any file name you like. You can also prefix every
+filename with a number in order to keep things organized. This very file you are
+reading is e.g. named `1-structure-and-style.mdx`. Have a look
+[in the repo](https://github.com/PolkadotStudy/website/tree/staging/tutorials/authors/new-tutorial-on-polkadot-study)
+to see how file naming can be handled. :::
+
+- **Step 1 / Subtopic 1 — Doing the First Thing or expaining the first thing**
+  (Level 2 heading)
+  - What will the reader build / learn in this step
+  - [Title Capitalization](https://capitalizemytitle.com/)
+
+### File: 2-another-step.mdx
+
+- **Step 2 / Subtopic 2 — Doing the Next Thing or expaining the next thing**
+  (Level 2 heading)
+- …
+
+### File: 3-conclusion.mdx
+
+- **Conclusion** (Level 2 heading)
+  - What was learned
+- **further study** (Level 2 heading)
+  - What can the reader do next, where can they deepen their aquired knowledge
+
+:::note todo Link and explain the tutorial template. You can add as many steps
+as you wish to your tutorial. :::
+
+## Tutorial Style
+
+The style for _polkadot.study_ articles reflects our purpose in publishing them:
+to provide quality learning information for developers inside and outside the
+Polkadot and Kusama ecosystem. We aim tu ensure our tutorials are:
+
+- Comprehensive and written for all experience levels
+- Technically detailed and correct
+- Practical, useful, and self-contained
+- Friendly but formal
+- No discrimination against the following, but not limited to: age, disability,
+  ethnicity, gender identity, level of experience, nationality, religion,
+  political affiliation, sexual orientation, socioeconomics, technology choices
+- Favor second person ("You will build ...") over first person ("I think")
+
+These principles guide authors to create articles, tutorials, and other learning
+materials that help people solve their problems and grow as developers.
+Comprehensive and written for all experience levels
+
+We encourage and help our authors to submit clear and detailed as possible
+articles without making too much assumptions about the reader’s or writer's
+background knowledge.
+
+Every command or code a reader needs for the final result of a tutorial should
+explicitly been included (or be the solution of a quiz). Any needed background
+information to complete the background tutorial should be noted (in
+Prerequisites) and in the best case also Links should be given to learn these
+prerequisites. **The goal is to have tutorials that teach the concepts of
+something, not to deliver copy and paste code.**
+
+> We avoid words like "simple,” "straightforward,” “easy,” “simply,”
+> “obviously,” and “just,” as these words make assumptions about the reader’s
+> knowledge. While authors use these words to encourage and motivate readers to
+> push through challenging topics, they often have the opposite effect; a reader
+> who hears that something is “easy” may be frustrated when they encounter an
+> issue. Instead, we encourage our readers by providing the explanations they
+> need to be successful. Technically detailed and correct
+>
+> [(DigitalOcean Technical Contribution Guidelines)](https://www.digitalocean.com/community/tutorials/digitalocean-s-technical-writing-guidelines)
+
+<Task>I will try my best to stick to the style guidelines</Task>
+
+### Images in your tutorial
+
+Most likely you will like to add images to your tutorial. It is best to put them
+in a subfolder of your main tutorial repository. The name of the folder should
+be `/assets`. When you copied the tutorial template, you will already have that
+folder.
+
+Now you can add images by adding the markdown.
+
+```md
+![Alt Text](./assets/<your-filename.png>)
+```
+
+:::info
+
+Please remember to use alt text for your images.
+
+:::
+
+### Code Blocks in your Tutorial
+
+- provide more details than just code
+- do not provide large code blocks in the tutorial, if there is need for larger
+  code blocks, use gists, or link to a github repo that can be cloned
+- every code example should be followed by an explanation of what it does and
+  why it works that way - help readers understand what they do and learn
+- every code example should be tested by the author at the time of writing
+
+### Interactive Elements in your Tutorial
+
+Interactive elements like quizzes and tasks can help to make a tutorial more fun
+and help in understanding learned concepts. A reader can self asses if they
+understood the concepts.
+
+:::info Javascript code only works in `.mdx` files not in `.md` files, so make
+sure to name your tutorial file accordingly. :::
+
+#### Quizzes
+
+<Quiz quizItem={question} />
+
+The above quiz component is generated by the following code parts. You put both
+of them in your .mdx file.
+
+First, import the required component and set it up.
+
+```js
+import Quiz from "/src/components/quiz";
+
+export const question = {
+  question: "Why should I insert quizzes in my tutorial?",
+  answers: [
+    "It's fun",
+    "You can provide feedback on a learned concept in the `explanation` field",
+    "It might encourage a reader to read more closely in order to get the quiz correct",
+    "You just shouldn't",
+  ],
+  correctAnswerIdx: [0, 2],
+  msgCorrect: "Correct answer. Good job.",
+  msgIncorrect: "Incorrect answer. Please try again.",
+  explanation:
+    "Some extra explanation that will appear when the user answered the questioin correctly.",
+};
+```
+
+Then use the quiz component anywhere in your tutorial.
+
+```js
+<Quiz quizItem={question} />
+```
+
+#### Tasks
+
+Tasks are interactive elements, that ask the user to check a box. When a user
+wants to proceed to the next part of the tutorial and not all _mandatory_ tasks
+on the page are checked, the next button will be disabled and instead take them
+to the first unfinished task they need to do before proceeding.
+
+<Task>I have completed this task</Task>
+
+use the code below
+
+```js
+import Task from '/src/components/task';
+...
+<Task>I have completed this task</Task>
+```
+
+Tasks are mandatory by default, if you want to create a task that is optional,
+use the following code
+
+```js
+<Task mandatory={false}>I have completed this task</Task>
+```
+
+:::info
+
+The Task component is still being worked on, the goal is to have a UI flow like
+[here](https://www.apollographql.com/tutorials/lift-off-part1/01-feature-overview-and-setup)
+
+:::

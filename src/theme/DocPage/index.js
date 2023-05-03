@@ -66,7 +66,7 @@ export default function DocPage(props) {
         return ret
       }
       case 'changed': {
-        return tasks.map(t => {
+        return tasks?.map(t => {
           if (t.id === action.id && t.page === action.page ) {
             return {
               ...t,

@@ -1,0 +1,38 @@
+.button {
+    display: flex;
+    align-items: center;
+    border-radius: 40px;
+    padding: 1rem 2rem;
+    color: #fff;
+    text-decoration: none;
+
+    &:hover {
+        text-decoration: none;
+        color: #fff;
+    }
+
+    a,
+    a:hover {
+        text-decoration: none;
+        color: #fff;
+    }
+
+    svg {
+        height: 20px;
+    }
+
+    span {
+        margin-left: 0.5rem;
+        display: flex;
+        vertical-align: center;
+        transition: all 0.3s;
+    }
+
+    &:hover span {
+        transform: translateX(5px);
+    }
+}
+
+.button--primary {
+    font-size: 20px;
+}

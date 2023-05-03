@@ -1,5 +1,11 @@
 .studyPaths {
     display: flex;
+    flex-direction: column;
+}
+
+.content {
+    display: flex;
+    flex-direction: row;
 }
 
 .left {
@@ -7,8 +13,8 @@
     display: flex;
     flex-wrap: wrap;
     width: 20vw;
-    justify-content: space-around;
     flex-shrink: 0;
+    flex-direction: column;
 }
 
 .right {
@@ -25,12 +31,18 @@
     text-align: center;
     padding: 1rem 1rem;
     margin-bottom: 0.5rem;
-    border-radius: 2rem;
+    border-radius: 40px;
     border: 2px solid #000;
     cursor: pointer;
+    transition: all 0.25s;
 }
 
 .tag.selected {
-    background-color: var(--polkadot-cyan);
+    border-color: var(--polkadot-purple);
+    background: var(--polkadot-purple);
     color: #fff;
+}
+
+.description {
+    min-height: 4rem;
 }

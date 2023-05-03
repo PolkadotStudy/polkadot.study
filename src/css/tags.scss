@@ -1,12 +1,24 @@
 .tag {
     padding: 1px 4px;
-    border: 1px solid #ccc;
-    border-radius: 4px;
+    border-radius: px;
     margin-right: 5px;
-    color: #000;
+    color: var(--ifm-font-color-base);
+    display: inline-flex;
+    align-items: center;
+
+    &:hover {
+        color: var(--ifm-font-color-base);
+        border-color: var(--polkadot-purple);
+        text-decoration: none;
+    }
 
     a, a:hover {
         text-decoration: none;
+        color: var(--ifm-font-color-base);
+    }
+
+    svg {
+        height: 18px;
     }
 }
 
@@ -21,10 +33,10 @@
 [data-theme='dark'] {
     .tag {
         color: #eee;
-        border-color: var(--polkadot-cyan);
+        border-color: #fff;
 
         &:hover {
-            background: var(--polkadot-cyan);
+            border-color: var(--polkadot-purple);
         }
     }
 }
