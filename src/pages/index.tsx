@@ -1,24 +1,28 @@
-import React from 'react';
-import clsx from 'clsx';
-import Link from '@docusaurus/Link';
-import useDocusaurusContext from '@docusaurus/useDocusaurusContext';
-import Layout from '@theme/Layout';
-import HomepageFeatures from '@site/src/components/HomepageFeatures';
+import React from "react";
+import clsx from "clsx";
+import Link from "@docusaurus/Link";
+import useDocusaurusContext from "@docusaurus/useDocusaurusContext";
+import Layout from "@theme/Layout";
+import HomepageFeatures from "@site/src/components/HomepageFeatures";
 
-import styles from './index.module.scss';
-import Head from '@docusaurus/Head';
+import styles from "./index.module.scss";
+import Head from "@docusaurus/Head";
+import useGlobalData from "@docusaurus/useGlobalData";
+import globalData from "@generated/globalData";
 
 function HomepageHeader() {
-  const {siteConfig} = useDocusaurusContext();
+  const { siteConfig } = useDocusaurusContext();
+  const globalData = useGlobalData();
   return (
-    <header className={clsx('hero hero--primary', styles.heroBanner)}>
+    <header className={clsx("hero hero--primary", styles.heroBanner)}>
       <div className="container">
         <h1 className="hero__title">{siteConfig.title}</h1>
         <p className="hero__subtitle">{siteConfig.tagline}</p>
         <div className={styles.buttons}>
           <Link
             className="button button--secondary button--lg"
-            to="/docs/intro">
+            to="/docs/intro"
+          >
             Docusaurus Tutorial - 5min ⏱️
           </Link>
         </div>
@@ -28,18 +32,27 @@ function HomepageHeader() {
 }
 
 export default function Home(): JSX.Element {
-  const {siteConfig} = useDocusaurusContext();
+  const { siteConfig } = useDocusaurusContext();
   return (
     <Layout
       title={`Hello from ${siteConfig.title}`}
-      description="Description will go into a meta tag in <head />">
+      description="Description will go into a meta tag in <head />"
+    >
       {/* <HomepageHeader /> */}
       <Head>
         <link rel="preconnect" href="https://fonts.googleapis.com"></link>
-        <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin=""></link>
-        <link href="https://fonts.googleapis.com/css2?family=DM+Sans&family=Unbounded&display=swap" rel="stylesheet"></link>
+        <link
+          rel="preconnect"
+          href="https://fonts.gstatic.com"
+          crossOrigin=""
+        ></link>
+        <link
+          href="https://fonts.googleapis.com/css2?family=DM+Sans&family=Unbounded&display=swap"
+          rel="stylesheet"
+        ></link>
       </Head>
       <main>
+        <pre>{JSON.stringify(globalData, null, 2)}</pre>
         <div className={styles.logoWrap}>
           <img
             className={styles.polkadotLogo}
@@ -49,8 +62,12 @@ export default function Home(): JSX.Element {
             height={500}
           />
           <div className={styles.logoTitle}>
-            <h1>Polkadot<span>Study</span></h1>
-            <h2>Work in Progress - <a href="/docs/authors">Looking for Authors</a></h2>
+            <h1>
+              Polkadot<span>Study</span>
+            </h1>
+            <h2>
+              Work in Progress - <a href="/docs/authors">Looking for Authors</a>
+            </h2>
             <p>Educational hub for developers by developers</p>
           </div>
         </div>
