@@ -22,11 +22,8 @@ As we just began creating polkadot.study, everything is just being created, as y
 
 :::
 
-
-
 ## Planned Tutorials
-- An introduction to merkle trees and proofs
-- How to Buid a Tokengated website with polkadot.js and next.js
-- 
+
+To view the currently planned tutorials and their status, please see the [corresponding github issue tag](https://github.com/PolkadotStudy/polkadot.study/issues?q=is%3Aissue+label%3A%22%F0%9F%93%8B+New+Tutorial%22+)
 
 If you want to learn more about polkadot.study, read the [about section](/about)

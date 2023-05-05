@@ -1,8 +1,3 @@
-html {
-    scroll-behavior: smooth;
-    scroll-padding-top: 1rem;
-}
-
 body,
 h1,
 h2,
@@ -24,10 +19,20 @@ h6 {
     [class*='collapseSidebarButton_'] {
         border: none;
         background: none;
+        margin-top: -3rem;
+        margin-bottom: 1rem;
 
         &:hover{
             background: rgba(255,255,255,0.1);
         }
+    }
+
+    [class*='tocCollapsibleButton_']::after {
+        background-size: contain;
+    }
+
+    .menu__caret::before { 
+        background-size: contain;
     }
 
     .menu__link--active,
@@ -38,6 +43,38 @@ h6 {
     .table-of-contents__left-border {
         border-left: var(--pd-border-style);
     }
+
+    .pagination-nav__link {
+        display: flex;
+        flex-direction: column;
+    }
+
+    .pagination-nav__label {
+        display: flex;
+        align-items: center;
+        flex: 1;
+    }
+
+    .pagination-nav__link--next .pagination-nav__label {
+        justify-content: end;
+    }
+
+    .pagination-nav__link--next .pagination-nav__label svg {
+        margin-left: 0.4rem;
+    }
+
+    .pagination-nav__link--prev .pagination-nav__label svg {
+        margin-right: 0.4rem;
+    }
+
+    .pagination-nav__link--next .pagination-nav__label::after {
+        content: '';
+    }
+
+    .pagination-nav__link--prev .pagination-nav__label::before {
+        content: '';
+    }
+
 }
 
 nav.navbar {
@@ -65,12 +102,7 @@ nav.menu {
     padding: 0;
 }
 
-main {
-    padding-left: 1rem;
-}
-
 .footer {
-    margin-top: 2rem;
     margin-left: -1rem;
     width: 100vw;
 }
@@ -101,6 +133,10 @@ main {
             background: #1b1b1b99;
         }
     }
+
+    main {
+        padding-left: 1rem;
+    }
 }
 
 @keyframes rotate {
@@ -111,3 +147,18 @@ main {
         transform: rotateZ(360deg);
     }
   }
+
+
+.ps-tag-beginner {
+    background-color: var(--ps-beginner-tag-color);
+    color: #333;
+}
+
+.ps-tag-intermediate {
+    background-color: var(--ps-intermediate-tag-color);
+    color: #333;
+}
+.ps-tag-expert {
+    background-color: var(--ps-expert-tag-color);
+    color: #fff;
+}
