@@ -62,38 +62,29 @@ the numbers as you can see in the next step.
 
 :::
 
+When you now navigate to [localhost:3000](http://localhost:3000), you should see
+your new tutorial on the frontpage. Before you start, there is one more thing
+todo: sidebars.
+
 ## Adding your Tutorial to the Tutorial Sidebar
 
 After copying the tutorial template and renaming it, you want to wire it to a
-sidebar in order for readers to find your tutorial when navigating the page.
-Polkadot.study uses two different sidebar definitions in the file `sidebars.js`.
-The array you want to add your navigation item to is called `tutorialSidebar`.
-Add the following code to index 1 of the array, directly after `intro`.
+sidebar in order for readers to navigate your tutorial. When you click, the
+frontpage link to your tutorial at the moment, you will notice that it has no
+sidebar. Docusaurus lets us define sidebars in `sidebars.js`. You can create a
+sidebar for your tutorial with the following code:
 
 ```js title="/sidebars.js"
 const sidebars = {
-    tutorialSidebar: [
-        'intro',
-        {
-            type: 'category',
-            label: '[Your Sidebar Title]',
-            link: {
-                type: 'doc',
-                id: 'tutorials/[your-folder-name]/intro',
-            },
-            items: [
-                'tutorials/[your-folder-name]/step1',
-                'tutorials/[your-folder-name]/step2',
-                'tutorials/[your-folder-name]/conclusion'
-            ],
-        },
-        ...
-    ]
+  //...other sidebars
+  yourTutorialSidebar: [
+    "your-folder-name/intro",
+    "your-folder-name/step1",
+    "your-folder-name/step2",
+    "your-folder-name/conclusion",
+  ],
 ```
 
-It will place your new tutorial at the top, the most prominent position of the
-sidebar to make it well visible for readers. Then **replace** the `label` with
-the title of your tutorial, or if it is too long, a shorter title that will be
-displayed in the sidebar. Also, in the `link` and `items` attributes, make sure
-to set the correct folder name, by replacing `[your-folder-name]` with the
-folder name you chose above.
+🎉 You have now successfully integrated a tutorial template with polkadot.study.
+Now you can go ahead to write your tutorial. Remember to update the sidebar,
+when you update your file structure.
