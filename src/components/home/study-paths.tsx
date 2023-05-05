@@ -4,6 +4,7 @@ import React, { useState } from "react";
 import styles from "./study-paths.module.scss";
 import TutorialSlider from "../tutorial/tutorial-slider";
 import useGlobalData, { usePluginData } from "@docusaurus/useGlobalData";
+import Link from "@docusaurus/Link";
 
 export function StudyPaths() {
   // const description = allTagsWithDescription.find(
@@ -17,10 +18,21 @@ export function StudyPaths() {
 
   // const tutorials = globalData["docusaurus-plugin-content-tutorials"].tutorials;
   const [selectedTag, setSelectedTag] = useState(
-    allTags[Object.keys(allTags)[0]].tag
+    allTags[Object.keys(allTags)[0]]?.tag
   );
 
   const selectedTagItems = selectedTag ? allTags[selectedTag.label]?.items : [];
+
+  if (Object.keys(allTags).length === 0) {
+    return (
+      <>
+        No tutorials found.{" "}
+        <Link to="docs/authors/new-tutorial-on-polkadot-study/intro">
+          Create one!
+        </Link>
+      </>
+    );
+  }
 
   return (
     <div className={styles.studyPaths}>
