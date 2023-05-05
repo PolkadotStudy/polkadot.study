@@ -97,7 +97,7 @@ const config = {
         },
         items: [
           {
-            href: "/tutorials/intro",
+            href: "/tutorials",
             docId: "intro",
             position: "left",
             label: "Tutorials",
