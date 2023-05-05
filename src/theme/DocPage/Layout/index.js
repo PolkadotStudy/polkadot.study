@@ -9,10 +9,6 @@ export default function DocPageLayout({children}) {
   const sidebar = useDocsSidebar();
   const [hiddenSidebarContainer, setHiddenSidebarContainer] = useState(false);
 
-
-  useEffect(() => {
-    console.log( 'new page' )
-  }, [])
   return (
     <Layout wrapperClassName={styles.docsWrapper}>
       <BackToTopButton />

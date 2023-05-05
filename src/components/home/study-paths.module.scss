@@ -1,0 +1,48 @@
+.studyPaths {
+    display: flex;
+    flex-direction: column;
+}
+
+.content {
+    display: flex;
+    flex-direction: row;
+}
+
+.left {
+    font-size: larger;
+    display: flex;
+    flex-wrap: wrap;
+    width: 20vw;
+    flex-shrink: 0;
+    flex-direction: column;
+}
+
+.right {
+    padding-left: 5rem;
+    padding-right: 2rem;
+    width: calc( 100vw - 20vw - 7rem - var(--ps-page-margin));
+}
+
+.tag {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-width: 100%;
+    text-align: center;
+    padding: 1rem 1rem;
+    margin-bottom: 0.5rem;
+    border-radius: 40px;
+    border: 2px solid #000;
+    cursor: pointer;
+    transition: all 0.25s;
+}
+
+.tag.selected {
+    border-color: var(--polkadot-purple);
+    background: var(--polkadot-purple);
+    color: #fff;
+}
+
+.description {
+    min-height: 4rem;
+}

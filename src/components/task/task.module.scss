@@ -19,10 +19,10 @@
         cursor: pointer;
         display: block;
         display: flex;
-        align-items: center;
 
         span {
             padding-left: 0.6rem;
+            flex-grow: 1;
         }
     }
 
@@ -30,6 +30,7 @@
         transition: all 0.3s;
         cursor: pointer;
         accent-color: var(--task-color-primary);
+        min-width: 20px;
         width: 20px; 
         height: 20px;
     }
@@ -39,6 +40,10 @@
     transition: all 0.3s;
     color: var(--task-color-primary);
     font-weight: bold;
+}
+
+.taskContent {
+    display: flex;
 }
 
 .complete span {

@@ -10,7 +10,11 @@ export default function PaginatorNavLink(props) {
   const location = useLocation()
 
   const tasks = useContext(DocTaskContext);
-  const unfinishedTasks = tasks?.filter( t => t.page === location.pathname && !t.checked )
+  const unfinishedTasks = tasks?.filter( t => 
+    t.page === location.pathname && 
+    !t.checked &&
+    t.mandatory
+  )
   const tasksRemaining = unfinishedTasks?.length
 
   const arrowTitle = isNext 
@@ -55,7 +59,7 @@ export default function PaginatorNavLink(props) {
           tasksRemaining > 0 && 'tasks-remaining'
         )}
         to={ btnLink }
-        onClick={ tasksRemaining !== 0 ? handleClick : () => {}}
+        onClick={ tasksRemaining && tasksRemaining > 0 ? handleClick : () => {}}
         style={ { cursor: 'pointer' } }
       >
         { 

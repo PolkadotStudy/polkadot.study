@@ -1,19 +1,29 @@
-import React, { ChangeEvent, useContext, useEffect, useRef, useState } from "react";
+import React, { ReactNode, useContext, useEffect, useRef } from "react";
 import clsx from "clsx";
+import { v4 as uuidv4 } from 'uuid';
 
 import styles from "./task.module.scss";
-import { string_to_slug } from "@site/src/util";
+import { getLabelFromChildren, string_to_slug } from "@site/src/util";
 import { DocTaskContext, DocTaskDispatchContext } from "./doc-task-context";
 import useDocusaurusContext from "@docusaurus/useDocusaurusContext";
 import { useLocation } from "@docusaurus/router";
 
-export default function Task( { caption }: { caption: string } ): JSX.Element {
-
+export default function Task( 
+    { 
+        caption,
+        mandatory = true,
+        children,
+    }: { 
+        caption?: string, 
+        mandatory: boolean,
+        children: ReactNode,
+    },
+): JSX.Element {
     const ref = useRef()
     const location = useLocation()
     const dispatch = useContext(DocTaskDispatchContext);
 
-    const taskId = string_to_slug( caption )
+    const taskId = children ? string_to_slug( getLabelFromChildren( children ) ) : uuidv4()
 
     const tasks = useContext(DocTaskContext);
     const task = tasks.find( t => t.id === taskId )
@@ -25,6 +35,7 @@ export default function Task( { caption }: { caption: string } ): JSX.Element {
             page: location.pathname,
             id: taskId,
             checked: false,
+            mandatory
         });
     }, []);
 
@@ -38,11 +49,12 @@ export default function Task( { caption }: { caption: string } ): JSX.Element {
 
     return (
         <div 
-            className={ clsx( 'ps-task', styles.task, checked && styles.complete ) }
+            className={ 
+                clsx( 'ps-task flex', mandatory && 'ps-task-mandatory', styles.task, checked && styles.complete ) }
             ref={ ref }
         >
             <div className={ styles.title }>Task!</div>
-            <label className="">
+            <label className={ styles.taskContent }>
                 <input
                     id={ taskId }
                     className="task-checkbox"
@@ -50,7 +62,7 @@ export default function Task( { caption }: { caption: string } ): JSX.Element {
                     checked={ checked }
                     onChange={ onChangeInput }
                 />
-                <span>{ caption }</span>
+                <span>{ children }</span>
             </label>
         </div>
     )

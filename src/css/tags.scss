@@ -1,3 +1,27 @@
+.tag {
+    padding: 1px 4px;
+    border-radius: px;
+    margin-right: 5px;
+    color: var(--ifm-font-color-base);
+    display: inline-flex;
+    align-items: center;
+
+    &:hover {
+        color: var(--ifm-font-color-base);
+        border-color: var(--polkadot-purple);
+        text-decoration: none;
+    }
+
+    a, a:hover {
+        text-decoration: none;
+        color: var(--ifm-font-color-base);
+    }
+
+    svg {
+        height: 18px;
+    }
+}
+
 .tag-contribute {
     
 }
@@ -6,12 +30,13 @@
 
 }
 
-.tag-polkadotjs a {
-    background: var(--polkadot-pink);
-    color: #eee;
-    border-color: #c9117a;
+[data-theme='dark'] {
+    .tag {
+        color: #eee;
+        border-color: #fff;
 
-    &:hover {
-        background: #c9117a;
+        &:hover {
+            border-color: var(--polkadot-purple);
+        }
     }
 }

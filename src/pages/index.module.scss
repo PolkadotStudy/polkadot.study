@@ -17,67 +17,76 @@
 }
 
 .logoWrap {
-  min-height: 90vh;
+  min-height: 70vh;
   display: flex;
   justify-content: center;
-  align-items: center;
   position: relative;
+  padding-top: 2rem;
 
   img {
     max-width: 80vw;
   }
 
-  &::after {
-    background: var(--primary-glow);
-    width: 30%;
-    height: 40%;
+  // &::after {
+  //   background: var(--primary-glow);
+  //   width: 30%;
+  //   height: 40%;
 
-    content: '';
-    left: 30%;
-    top: 40%;
-    position: absolute;
-    filter: blur(95px);
-    transform: translateZ(0);
-    z-index: 0;
-  }
+  //   content: '';
+  //   left: 30%;
+  //   top: 40%;
+  //   position: absolute;
+  //   filter: blur(95px);
+  //   transform: translateZ(0);
+  //   // z-index: -10;
+  // }
 }
 
 .logoTitle {
+  color: #fff;
   position: absolute;
   text-align: center;
   max-width: 80vw;
+  mix-blend-mode: difference;
 
   h1 {
-    font-size: 44px;
-    // font-family: 'Unbounded', cursive;
+    font-size: 10vw;
+    font-family: 'Unbounded', cursive;
     text-align: center;
-    color: #000;
+    color: #fff;
     transition: 0.5s ease-in-out;
+    text-shadow: 0 0 3px var(--ifm-color-content);
     span {
       display: block;
     }
   }
 
-  p {
+  > p {
     margin-top: 2rem;
     font-size: 1.2rem;
     font-weight: 700;
+    max-width: 100% !important;
+    color: #fff;
   }
 
   a {
-    color: #000;
+    color: #fff;
     z-index: 100;
   }
 }
 
 [data-theme='dark'] {
-  .logoTitle h1 {
-    color: #fff;
-    mix-blend-mode: difference;
-  }
+  .logoTitle {
+    mix-blend-mode: normal;
 
-  .logoTitle a {
-    color: #fff;
+    h1 {
+      color: #fff;
+      // mix-blend-mode: difference;
+    }
+
+    a {
+      color: #fff;
+    }
   }
 }
 
@@ -86,16 +95,12 @@
   transition: transform 3s;
   position: absolute;
 }
-.polkadotLogo2 {
-  animation: 28s rotate linear infinite;
-  mix-blend-mode: difference;
-}
 
-@media screen and (min-width: 996px) {
-  .logoTitle h1 {
-    font-size: 90px;
-  }
-}
+// @media screen and (min-width: 996px) {
+//   .logoTitle h1 {
+//     font-size: 90px;
+//   }
+// }
 
 @keyframes rotate {
   from {
@@ -104,4 +109,98 @@
   to {
     transform: rotate(0deg);
   }
+}
+
+.updown {
+  animation: 2s updown infinite;
+}
+
+@keyframes updown {
+  0% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-10px);
+  }
+  100% {
+    transform: translateY(0);
+  }
+}
+
+
+.mainHome {
+  & > section {
+    min-height: 80vh;
+    padding: 4rem var(--ps-page-margin);
+
+    p {
+      max-width: 40rem;
+    }
+  }
+
+  h2 {
+    font-family: 'Unbounded', cursive;
+    margin-bottom: 30px;
+    margin-top: 100px;
+
+    font-weight: 500;
+    font-size: 36px;
+    line-height: 28px;
+
+    span {
+      padding-top: 2rem;
+      font-family: 'DM Sans';
+      display: block;
+      font-weight: 400;
+      font-size: 34px;
+      line-height: 32px;
+    }
+  }
+
+  h3 {
+    font-size: 30px;
+  }
+}
+
+.sectionIntro {
+
+}
+
+.sectionTutorials {
+
+}
+
+.sectionAbout {
+  display: flex;
+
+  .aboutLeft {
+    width: 60%;
+  }
+
+  .aboutRight {
+    width: 40%;
+  }
+
+}
+
+.sectionStudyPaths {
+
+}
+
+.sectionParticipate {
+  display: flex;
+
+  .participateLeft {
+    width: 60%;
+  }
+
+  .participateRight {
+    width: 40%;
+  }
+}
+
+.btnViewAll {
+  display: flex;
+  justify-content: flex-end;
+  margin-top: 1.5rem;
 }
