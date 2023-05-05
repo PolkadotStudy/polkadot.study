@@ -151,7 +151,7 @@ export default function Home(): JSX.Element {
               tutorial and wait until it is merged.
             </p>
 
-            <Link to="/tutorials/authors/new-tutorial-on-polkadot-study/intro">
+            <Link to="/docs/authors/new-tutorial-on-polkadot-study/intro">
               <button className="button button--primary">
                 Learn how to contribute
                 <span>

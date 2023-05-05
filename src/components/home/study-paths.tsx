@@ -16,9 +16,6 @@ export function StudyPaths() {
   ).tags;
 
   // const tutorials = globalData["docusaurus-plugin-content-tutorials"].tutorials;
-
-  console.log("aaaal tags", allTags);
-
   const [selectedTag, setSelectedTag] = useState(
     allTags[Object.keys(allTags)[0]].tag
   );

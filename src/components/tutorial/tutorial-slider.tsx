@@ -15,49 +15,6 @@ import ActionLeft from "@w3f/polkadot-icons/keyline/ActionLeft";
 import ActionRight from "@w3f/polkadot-icons/keyline/ActionRight";
 import clsx from "clsx";
 
-const demoSlides = [
-  {
-    title: "Demo Tutorial 1",
-    description:
-      "This is a short description of Demo Tutorial 1, here you will learn how to navigate the web3",
-    tags: ["polkadot-js"],
-    permalink: "",
-    level: "Beginner",
-  },
-  {
-    title: "Demo Tutorial 2",
-    description:
-      "This is a short description of Demo Tutorial 2, here you will learn how to navigate the web3",
-    tags: ["ink!"],
-    permalink: "",
-    level: "Expert",
-  },
-  {
-    title: "Demo Tutorial 3",
-    description:
-      "This is a short description of Demo Tutorial 3, here you will learn how to navigate the web3",
-    tags: ["substrate", "ink!"],
-    permalink: "",
-    level: "Intermediate",
-  },
-  {
-    title: "Demo Tutorial 4",
-    description:
-      "This is a short description of Demo Tutorial 4, here you will learn how to navigate the web3",
-    tags: ["polkadot-js", "nextjs"],
-    permalink: "",
-    level: "Expert",
-  },
-  {
-    title: "Demo Tutorial 5",
-    description:
-      "This is a short description of Demo Tutorial 5, here you will learn how to navigate the web3",
-    tags: ["ink!"],
-    permalink: "",
-    level: "Beginner",
-  },
-];
-
 export default function TutorialSlider({ slides, swiper, style }) {
   const sliderRef = useRef(null);
   const [positionStatus, setPositionStatus] = useState<string>("all");

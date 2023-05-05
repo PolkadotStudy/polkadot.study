@@ -63,13 +63,12 @@ const config = {
       "@docusaurus/preset-classic",
       /** @type {import('@docusaurus/preset-classic').Options} */
       {
-        // docs: {
-        //   sidebarPath: require.resolve('./sidebars.js'),
-        //   editUrl:
-        //     'https://github.com/PolkadotStudy/website/tree/staging/',
-        //     showLastUpdateAuthor: true,
-        //     showLastUpdateTime: true,
-        // },
+        docs: {
+          sidebarPath: require.resolve("./docs/docs-sidebars.js"),
+          editUrl: "https://github.com/PolkadotStudy/website/tree/staging/",
+          showLastUpdateAuthor: true,
+          showLastUpdateTime: true,
+        },
         blog: {
           showReadingTime: true,
           editUrl: "https://github.com/PolkadotStudy/website/tree/staging/",
@@ -104,7 +103,7 @@ const config = {
             label: "Tutorials",
           },
           {
-            href: "/tutorials/authors/new-tutorial-on-polkadot-study/intro",
+            href: "/docs/authors/new-tutorial-on-polkadot-study/intro",
             docId: "authors/new-tutorial-on-polkadot-study/intro",
             position: "left",
             label: "For Authors",
