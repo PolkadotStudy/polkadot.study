@@ -14,7 +14,7 @@
 const sidebars = {
   // But you can create a sidebar manually
   tutorialSidebar: [
-    "intro",
+    "index",
     //add your tutorial here
   ],
 
