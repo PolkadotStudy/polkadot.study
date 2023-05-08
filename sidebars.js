@@ -13,9 +13,10 @@
 
 const sidebars = {
   // But you can create a sidebar manually
-  tutorialSidebar: [
-    "index",
-    //add your tutorial here
+  tokengatedSidebar: [
+    "tokengated-polkadot-next-js/intro",
+    "tokengated-polkadot-next-js/step2",
+    "tokengated-polkadot-next-js/conclusion",
   ],
 
   // add a sidebar for your tutorial here like
