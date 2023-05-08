@@ -29,19 +29,21 @@
 }
 
 .logoTitle {
-  color: #fff;
+  color: #000;
   position: absolute;
   text-align: center;
   max-width: 80vw;
-  mix-blend-mode: difference;
+
 
   h1 {
-    font-size: 14vw;
+    font-size: 12vw;
     font-family: 'Unbounded', cursive;
     text-align: center;
     color: #fff;
     transition: 0.5s ease-in-out;
     text-shadow: 0 0 3px var(--ifm-color-content);
+    mix-blend-mode: difference;
+
     span {
       display: block;
     }
@@ -52,22 +54,22 @@
     font-size: 1.2rem;
     font-weight: 500;
     max-width: 100% !important;
-    color: #fff;
   }
 
   a {
-    color: #fff;
+    color: #000;
     z-index: 100;
   }
 }
 
 [data-theme='dark'] {
   .logoTitle {
+    color: #fff;
     mix-blend-mode: normal;
 
     h1 {
       color: #fff;
-      // mix-blend-mode: difference;
+      mix-blend-mode: normal;
     }
 
     a {

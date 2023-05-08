@@ -62,9 +62,16 @@ export function StudyPaths() {
           {/* <pre>{JSON.stringify(selectedTagItems, null, 2)}</pre> */}
           <TutorialSlider
             swiper={{
-              slidesPerView: 2,
-              breakpoints: {},
+              slidesPerView: 1,
               navigation: false,
+              breakpoints: {
+                740: {
+                  slidesPerView: 1,
+                },
+                1080: {
+                  slidesPerView: 2,
+                },
+              },
             }}
             slides={selectedTagItems ?? []}
           />
