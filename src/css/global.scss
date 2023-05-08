@@ -25,6 +25,7 @@ h6 {
 #__docusaurus {
     overflow: hidden;
     min-height: 100vh !important;
+    z-index: 1;
 
     .theme-doc-sidebar-container {
         border-right: none;

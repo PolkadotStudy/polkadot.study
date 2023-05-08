@@ -1,21 +1,23 @@
-.buttonLink {
-    position: absolute;
-    width: 100%;
-    height: 100%;
-    display: flex;
-    align-items: center;
-    border-radius: 40px;
-    padding: 1rem 2rem;
-}
-
 .button {
     color: var(--polkadot-pink);
     text-decoration: none;
     text-transform: uppercase;
-    background: #fff;
-    border: 2px solid var(--polkadot-pink);
     position: relative;
     z-index: 1;
+    display: inline-flex;
+    border-radius: 40px;
+    font-weight: 700;
+
+    .buttonLink {
+        width: 100%;
+        height: 100%;
+        display: flex;
+        align-items: center;
+        border-radius: 40px;
+        padding: 0.5rem 1rem;
+        background-color: #fff;
+        border: 2px solid var(--polkadot-pink);
+    }
 
     &:hover {
         text-decoration: none;
@@ -52,10 +54,11 @@
         background-color: var(--polkadot-pink);
         transition: all 0.3s;
         border-radius: 30px;
+        z-index: -1;
     }
 
     &:hover::after {
-        transform: translate3d(10px, 10px, 0);
+        transform: translate3d(5px, 5px, 0);
     }
 }
 

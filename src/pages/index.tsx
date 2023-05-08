@@ -16,6 +16,7 @@ import useGlobalData, { usePluginData } from "@docusaurus/useGlobalData";
 
 import { uniqBy } from "lodash";
 import PageHead from "../components/PageHead";
+import Button from "../components/button/Button";
 
 export default function Home(): JSX.Element {
   const allTags = usePluginData(
@@ -82,15 +83,9 @@ export default function Home(): JSX.Element {
             slides={getAllTutorialsSorted()}
             style={{ marginTop: "2rem" }}
           />
-          <Link to="/tutorials" className={styles.btnViewAll}>
-            <button className="button button--primary">
-              View All Tutorials
-              <span>
-                <ArrowRight strokeWidth="3" />
-              </span>
-            </button>
-          </Link>
-          {/* <pre>{JSON.stringify(allTutorialsSorted, null, 2)}</pre> */}
+          <div className={styles.btnViewAll}>
+            <Button to="/tutorials">View All Tutorials</Button>
+          </div>
         </section>
         <section className={styles.sectionAbout}>
           <div className={styles.left}>
@@ -152,14 +147,9 @@ export default function Home(): JSX.Element {
               tutorial and wait until it is merged.
             </p>
 
-            <Link to="/docs/authors/new-tutorial-on-polkadot-study/intro">
-              <button className="button button--primary">
-                Learn how to contribute
-                <span>
-                  <ArrowRight strokeWidth="3" />
-                </span>
-              </button>
-            </Link>
+            <Button to="/docs/authors/new-tutorial-on-polkadot-study/intro">
+              Learn how to contribute
+            </Button>
           </div>
           <div className={styles.right}>
             <Dots />
