@@ -23,7 +23,7 @@ h6 {
 }
 
 #__docusaurus {
-    padding: 0 1rem 0 1rem;
+    overflow: hidden;
     min-height: 100vh !important;
 
     .theme-doc-sidebar-container {
@@ -112,9 +112,23 @@ h6 {
 }
 
 nav.navbar {
+
+    &::before {
+        content: "";
+        background: transparent;
+        backdrop-filter: blur(8px);
+        position: absolute;
+        top: 0;
+        width: calc(100% + 2 * var(--ps-page-margin));
+        height: 100%;
+        left: calc( -1 * var(--ps-page-margin));
+        z-index: -1;
+    }
+
     background: transparent;
     border-bottom: var(--pd-border-style);
     box-shadow: none;
+    margin: 0 1rem;
     
     .navbar__logo {
         height: 2rem;  
@@ -151,7 +165,6 @@ nav.menu {
 }
 
 .footer {
-    margin-left: -1rem;
     width: 100vw;
     padding: 0;
     background: transparent;

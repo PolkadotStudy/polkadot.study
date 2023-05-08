@@ -40,18 +40,20 @@ export function StudyPaths() {
       <div className={styles.content}>
         <div className={styles.left}>
           {allTags &&
-            Object.keys(allTags)?.map((key, index) => (
-              <div
-                className={clsx(styles.tag, "tag", {
-                  [styles.selected]:
-                    allTags[key].tag.label === selectedTag?.label,
-                })}
-                onClick={() => setSelectedTag(allTags[key].tag)}
-                key={allTags[key].tag.label}
-              >
-                {allTags[key].tag.label}
-              </div>
-            ))}
+            Object.keys(allTags)
+              .slice(0, 4)
+              ?.map((key, index) => (
+                <div
+                  className={clsx(styles.tag, "tag", {
+                    [styles.selected]:
+                      allTags[key].tag.label === selectedTag?.label,
+                  })}
+                  onClick={() => setSelectedTag(allTags[key].tag)}
+                  key={allTags[key].tag.label}
+                >
+                  {allTags[key].tag.label}
+                </div>
+              ))}
         </div>
         <div className={styles.right}>
           {/* <pre>{JSON.stringify(selectedTag, null, 2)}</pre> */}

@@ -91,7 +91,7 @@ export default function Home(): JSX.Element {
           </Link>
           {/* <pre>{JSON.stringify(allTutorialsSorted, null, 2)}</pre> */}
         </section>
-        <section className={styles.sectionAbout}>
+        <section className={clsx(styles.sectionAbout, "row")}>
           <div className={styles.aboutLeft}>
             <h2>
               About

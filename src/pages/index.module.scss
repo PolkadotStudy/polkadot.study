@@ -26,20 +26,6 @@
   img {
     max-width: 80vw;
   }
-
-  // &::after {
-  //   background: var(--primary-glow);
-  //   width: 30%;
-  //   height: 40%;
-
-  //   content: '';
-  //   left: 30%;
-  //   top: 40%;
-  //   position: absolute;
-  //   filter: blur(95px);
-  //   transform: translateZ(0);
-  //   // z-index: -10;
-  // }
 }
 
 .logoTitle {
@@ -50,7 +36,7 @@
   mix-blend-mode: difference;
 
   h1 {
-    font-size: 10vw;
+    font-size: 14vw;
     font-family: 'Unbounded', cursive;
     text-align: center;
     color: #fff;
@@ -64,7 +50,7 @@
   > p {
     margin-top: 2rem;
     font-size: 1.2rem;
-    font-weight: 700;
+    font-weight: 500;
     max-width: 100% !important;
     color: #fff;
   }
@@ -129,9 +115,11 @@
 
 
 .mainHome {
+  margin: 0 var(--ps-page-margin);
+
   & > section {
     min-height: 80vh;
-    padding: 4rem var(--ps-page-margin);
+    padding: 4rem 0;
 
     p {
       max-width: 40rem;

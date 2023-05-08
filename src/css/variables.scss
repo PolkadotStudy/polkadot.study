@@ -1,3 +1,12 @@
+$grid-breakpoints: (
+  xs: 0,
+  sm: 576px,
+  md: 768px,
+  lg: 992px,
+  xl: 1200px,
+  xxl: 1400px
+) !default;
+
 :root {
     --polkadot-pink: #e6007a;
     --polkadot-purple: #552BBF;
@@ -34,7 +43,7 @@
     --ps-intermediate-tag-color: #ffd24d;
     --ps-expert-tag-color: #ff4141;
     
-    --ps-page-margin: 7rem;
+    --ps-page-margin: 1.2rem;
   
     --quiz-color-primary: #552BBF;
     --quiz-color-background: #9992;
@@ -53,6 +62,18 @@
       #f700ffb2 160deg,
       transparent 360deg
     );
+  }
+
+  @media screen and (min-width: #{map-get($grid-breakpoints, md)}) {
+    :root {
+      --ps-page-margin: 3rem;
+    }
+  }
+
+  @media screen and (min-width: #{map-get($grid-breakpoints, lg)}) {
+    :root {
+      --ps-page-margin: 7rem;
+    }
   }
 
   /* For readability concerns, you should choose a lighter palette in dark mode. */
