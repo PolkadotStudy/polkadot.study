@@ -59,12 +59,13 @@ export default function Home(): JSX.Element {
               <h1>
                 Polkadot<span>Study</span>
               </h1>
-
-              <p>Educational hub for developers by developers</p>
-              <Link to="#tutorials">
-                <ArrowDown className={styles.updown} strokeWidth="3" />
-              </Link>
             </div>
+          </div>
+          <div className={styles.logoSubTitle}>
+            <p>Educational hub for developers by developers</p>
+            <Link to="#tutorials">
+              <ArrowDown className={styles.updown} strokeWidth="3" />
+            </Link>
           </div>
         </section>
         <section className={styles.sectionTutorials}>
@@ -91,8 +92,8 @@ export default function Home(): JSX.Element {
           </Link>
           {/* <pre>{JSON.stringify(allTutorialsSorted, null, 2)}</pre> */}
         </section>
-        <section className={clsx(styles.sectionAbout, "row")}>
-          <div className={styles.aboutLeft}>
+        <section className={styles.sectionAbout}>
+          <div className={styles.left}>
             <h2>
               About
               <span>Tutorials by the community for the community</span>
@@ -119,7 +120,7 @@ export default function Home(): JSX.Element {
               after a a successful referendum.
             </p>
           </div>
-          <div className={styles.aboutRight}>
+          <div className={styles.right}>
             <Dots />
           </div>
         </section>
@@ -128,7 +129,7 @@ export default function Home(): JSX.Element {
           <StudyPaths />
         </section>
         <section className={styles.sectionParticipate}>
-          <div className={styles.participateLeft}>
+          <div className={styles.left}>
             <h2>Participate</h2>
             <p className="subheading">
               Are you a developer? Have you learned something new while working
@@ -160,7 +161,7 @@ export default function Home(): JSX.Element {
               </button>
             </Link>
           </div>
-          <div className={styles.participateRight}>
+          <div className={styles.right}>
             <Dots />
           </div>
         </section>

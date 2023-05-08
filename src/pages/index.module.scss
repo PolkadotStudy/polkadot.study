@@ -20,8 +20,8 @@
   min-height: 70vh;
   display: flex;
   justify-content: center;
+  margin-top: 1rem;
   position: relative;
-  padding-top: 2rem;
 
   img {
     max-width: 80vw;
@@ -33,10 +33,13 @@
   position: absolute;
   text-align: center;
   max-width: 80vw;
-
+  position: absolute;
+  top: 50%;
+  transform: translate3d(0,-50%,0);
+  mix-blend-mode: difference;
 
   h1 {
-    font-size: 12vw;
+    font-size: 11vw;
     font-family: 'Unbounded', cursive;
     text-align: center;
     color: #fff;
@@ -48,6 +51,13 @@
       display: block;
     }
   }
+}
+
+.logoSubTitle {
+  position: absolute;
+  bottom: 1rem;
+  text-align: center;
+  width: 100%;
 
   > p {
     margin-top: 2rem;
@@ -71,7 +81,9 @@
       color: #fff;
       mix-blend-mode: normal;
     }
+  }
 
+  .logoSubTitle {
     a {
       color: #fff;
     }
@@ -79,9 +91,12 @@
 }
 
 .polkadotLogo {
+  transform: translate3d(0,-50%,0);
+  transform-origin: center;
   animation: 40s rotate linear infinite reverse;
   transition: transform 3s;
   position: absolute;
+  max-height: 70vh;
 }
 
 // @media screen and (min-width: 996px) {
@@ -121,7 +136,7 @@
 
   & > section {
     min-height: 80vh;
-    padding: 4rem 0;
+    padding: 1rem 0;
 
     p {
       max-width: 40rem;
@@ -153,23 +168,11 @@
 }
 
 .sectionIntro {
-
+  min-height: calc(100vh - var(--ifm-navbar-height)) !important;
+  position: relative;
 }
 
 .sectionTutorials {
-
-}
-
-.sectionAbout {
-  display: flex;
-
-  .aboutLeft {
-    width: 60%;
-  }
-
-  .aboutRight {
-    width: 40%;
-  }
 
 }
 
@@ -177,15 +180,18 @@
 
 }
 
+.sectionAbout,
 .sectionParticipate {
   display: flex;
+  flex-wrap: wrap;
 
-  .participateLeft {
-    width: 60%;
+  .left {
+    width: 100%
   }
 
-  .participateRight {
-    width: 40%;
+  .right {
+    display: none;
+    width: 100%;
   }
 }
 
@@ -193,4 +199,48 @@
   display: flex;
   justify-content: flex-end;
   margin-top: 1.5rem;
+  text-decoration: none;
+}
+
+@media (min-width: 768px) {
+  .sectionAbout,
+  .sectionParticipate {
+    .left {
+        width: 60%;
+        margin-right: 2rem;
+    }
+
+    .right {
+        margin: 0;
+        width: calc(40% - 2rem);
+        display: block;
+    }
+  }
+  
+  .mainHome {
+    & > section {
+      min-height: 80vh;
+      padding: 3rem 0;
+  
+      p {
+        max-width: 40rem;
+      }
+    }
+  
+  }
+}
+
+// min width lg
+@media (min-width: 992px) {
+  .sectionParticipate {
+    .left {
+        width: 50%;
+        margin-right: 2rem;
+    }
+
+    .right {
+        margin: 0;
+        width: calc(50% - 2rem);
+    }
+  }
 }
