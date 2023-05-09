@@ -2,6 +2,7 @@ import React, { ChangeEvent, useEffect, useState } from "react";
 import cn from "classnames";
 import styles from "./index.module.scss";
 import clsx from "clsx";
+import Button from "../button/Button";
 
 type quizItemType = {
   question: string;
@@ -111,7 +112,7 @@ export default function Quiz({
   return (
     <div className={clsx("ps-quiz", styles.quiz)}>
       <div className={styles.question}>
-        <span className={styles.questionMark}>?</span>
+        {/* <span className={styles.questionMark}>?</span> */}
         <span>{question}</span>
       </div>
       <div className={styles.answers}>
@@ -128,10 +129,10 @@ export default function Quiz({
       </div>
       <div className={styles.interaction}>
         {(userTries < tries || !submitted) && !isCorrect && (
-          <button onClick={onSubmitAnswer}>Submit</button>
+          <Button onClick={onSubmitAnswer}>Submit</Button>
         )}
         {userTries >= tries && (
-          <button onClick={onShowSolution}>Show Solution</button>
+          <Button onClick={onShowSolution}>Show Solution</Button>
         )}
       </div>
       {submitted && (
@@ -143,7 +144,7 @@ export default function Quiz({
             </div>
           ) : (
             <>
-              <span className={styles.feedbackIcon}>!</span>
+              {/* <span className={styles.feedbackIcon}>!</span> */}
               <span>{incorrectFeedback}</span>
             </>
           )}

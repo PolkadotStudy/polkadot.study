@@ -20,7 +20,6 @@
   min-height: 70vh;
   display: flex;
   justify-content: center;
-  margin-top: 1rem;
   position: relative;
 
   img {
@@ -93,11 +92,12 @@
 
 .polkadotLogo {
   transform: translate3d(0,-50%,0);
-  transform-origin: center;
+  transform-origin: top center;
   animation: 40s rotate linear infinite reverse;
   transition: transform 3s;
   position: absolute;
   max-height: 70vh;
+  top: 50%;
 }
 
 // @media screen and (min-width: 996px) {
@@ -108,10 +108,10 @@
 
 @keyframes rotate {
   from {
-    transform: rotate(360deg);
+    transform: rotate(360deg) translate3d(0,-50%,0);
   }
   to {
-    transform: rotate(0deg);
+    transform: rotate(0deg) translate3d(0,-50%,0);
   }
 }
 

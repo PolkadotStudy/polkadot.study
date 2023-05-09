@@ -1,30 +1,20 @@
-.buttonLink {
-    position: absolute;
-    width: 100%;
-    height: 100%;
+.button {
     display: flex;
     align-items: center;
     border-radius: 40px;
     padding: 1rem 2rem;
-}
-
-.button {
-    color: var(--polkadot-pink);
+    color: #fff;
     text-decoration: none;
-    text-transform: uppercase;
-    background: #fff;
-    border: 2px solid var(--polkadot-pink);
-    position: relative;
-    z-index: 1;
 
     &:hover {
         text-decoration: none;
-        color: var(--polkadot-pink);
+        color: #fff;
     }
 
     a,
     a:hover {
         text-decoration: none;
+        color: #fff;
     }
 
     svg {
@@ -40,22 +30,6 @@
 
     &:hover span {
         transform: translateX(5px);
-    }
-
-    &::after {
-        content: "";
-        position: absolute;
-        top: 0.5%;
-        left: 0.5%;
-        width: 99%;
-        height: 99%;
-        background-color: var(--polkadot-pink);
-        transition: all 0.3s;
-        border-radius: 30px;
-    }
-
-    &:hover::after {
-        transform: translate3d(10px, 10px, 0);
     }
 }
 
