@@ -17,6 +17,7 @@
         padding: 0.5rem 1rem;
         background-color: #fff;
         border: 2px solid var(--polkadot-pink);
+        justify-content: center;
     }
 
     &:hover {
@@ -64,4 +65,21 @@
 
 .button--primary {
     font-size: 20px;
+}
+
+[data-theme='dark'] {
+    .button {
+        .buttonLink {
+            color: var(--polkadot-cyan);
+            border: 2px solid var(--polkadot-cyan);
+        }
+
+        &:hover {
+            color: var(--polkadot-cyan);
+        }
+
+        &::after {
+            background-color: var(--polkadot-cyan);
+        }
+    }
 }

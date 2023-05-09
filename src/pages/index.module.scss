@@ -46,6 +46,7 @@
     transition: 0.5s ease-in-out;
     text-shadow: 0 0 3px var(--ifm-color-content);
     mix-blend-mode: difference;
+    margin-bottom: 0;
 
     span {
       display: block;
@@ -55,7 +56,7 @@
 
 .logoSubTitle {
   position: absolute;
-  bottom: 1rem;
+  bottom: 2rem;
   text-align: center;
   width: 100%;
 
@@ -226,7 +227,10 @@
         max-width: 40rem;
       }
     }
-  
+  }
+
+  .logoSubTitle {
+    bottom: 1rem;
   }
 }
 

@@ -5,14 +5,22 @@ import clsx from "clsx";
 import styles from "./button.module.scss";
 import Link from "@docusaurus/Link";
 
-export default function Button({ to, children, className }) {
+export default function Button({
+  to,
+  arrow = true,
+  children,
+  className,
+  ...props
+}) {
   return (
     <div className={clsx(styles.button, className)}>
-      <Link to={to} className={styles.buttonLink}>
+      <Link to={to} className={styles.buttonLink} {...props}>
         {children}
-        <span>
-          <ArrowRight strokeWidth="3" />
-        </span>
+        {arrow && (
+          <span>
+            <ArrowRight strokeWidth="3" />
+          </span>
+        )}
       </Link>
     </div>
   );
