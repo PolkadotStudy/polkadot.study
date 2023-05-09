@@ -5,6 +5,7 @@
     background: var(--task-color-background);
     border-radius: 2px;
     margin: 1rem 0;
+    color: #000;
 
     &:before { 
         content: ''; 
@@ -40,6 +41,7 @@
     transition: all 0.3s;
     color: var(--task-color-primary);
     font-weight: bold;
+    font-size: larger;
 }
 
 .taskContent {

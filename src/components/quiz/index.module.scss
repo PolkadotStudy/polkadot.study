@@ -4,14 +4,16 @@
     background: var(--quiz-color-background);
     border-radius: 2px;
     margin: 1rem 0;
+    color: #000;
 }
 
 .question {
     padding-bottom: 1rem;
     font-size: larger;
-    color: var(--quiz-color-primary);
+    // color: var(--quiz-color-primary);
     display: flex;
     align-items: center;
+    font-weight: 700;
 }
 
 .questionMark {

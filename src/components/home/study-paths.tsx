@@ -5,6 +5,7 @@ import styles from "./study-paths.module.scss";
 import TutorialSlider from "../tutorial/tutorial-slider";
 import useGlobalData, { usePluginData } from "@docusaurus/useGlobalData";
 import Link from "@docusaurus/Link";
+import Button from "../button/Button";
 
 export function StudyPaths() {
   // const description = allTagsWithDescription.find(
@@ -40,18 +41,21 @@ export function StudyPaths() {
       <div className={styles.content}>
         <div className={styles.left}>
           {allTags &&
-            Object.keys(allTags)?.map((key, index) => (
-              <div
-                className={clsx(styles.tag, "tag", {
-                  [styles.selected]:
-                    allTags[key].tag.label === selectedTag?.label,
-                })}
-                onClick={() => setSelectedTag(allTags[key].tag)}
-                key={allTags[key].tag.label}
-              >
-                {allTags[key].tag.label}
-              </div>
-            ))}
+            Object.keys(allTags)
+              .slice(0, 4)
+              ?.map((key, index) => (
+                <Button
+                  className={clsx(styles.tag, {
+                    [styles.selected]:
+                      allTags[key].tag.label === selectedTag?.label,
+                  })}
+                  onClick={() => setSelectedTag(allTags[key].tag)}
+                  key={allTags[key].tag.label}
+                  arrow={false}
+                >
+                  {allTags[key].tag.label}
+                </Button>
+              ))}
         </div>
         <div className={styles.right}>
           {/* <pre>{JSON.stringify(selectedTag, null, 2)}</pre> */}
@@ -60,9 +64,16 @@ export function StudyPaths() {
           {/* <pre>{JSON.stringify(selectedTagItems, null, 2)}</pre> */}
           <TutorialSlider
             swiper={{
-              slidesPerView: 2,
-              breakpoints: {},
+              slidesPerView: 1,
               navigation: false,
+              breakpoints: {
+                740: {
+                  slidesPerView: 1,
+                },
+                1080: {
+                  slidesPerView: 2,
+                },
+              },
             }}
             slides={selectedTagItems ?? []}
           />

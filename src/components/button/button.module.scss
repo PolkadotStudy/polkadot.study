@@ -1,0 +1,86 @@
+.button {
+    color: var(--polkadot-pink);
+    text-decoration: none;
+    text-transform: uppercase;
+    position: relative;
+    z-index: 1;
+    display: inline-flex;
+    border-radius: 40px;
+    font-weight: 700;
+
+    .buttonLink {
+        cursor: pointer;
+        width: 100%;
+        height: 100%;
+        display: flex;
+        align-items: center;
+        border-radius: 40px;
+        padding: 0.5rem 1rem;
+        background-color: #fff;
+        border: 2px solid var(--polkadot-pink);
+        justify-content: center;
+    }
+
+    &:hover {
+        text-decoration: none;
+        color: var(--polkadot-pink);
+    }
+
+    a,
+    a:hover {
+        text-decoration: none;
+    }
+
+    svg {
+        height: 20px;
+    }
+
+    span {
+        margin-left: 0.5rem;
+        display: flex;
+        vertical-align: center;
+        transition: all 0.3s;
+    }
+
+    &:hover span {
+        transform: translateX(5px);
+    }
+
+    &::after {
+        content: "";
+        position: absolute;
+        top: 0.5%;
+        left: 0.5%;
+        width: 99%;
+        height: 99%;
+        background-color: var(--polkadot-pink);
+        transition: all 0.3s;
+        border-radius: 30px;
+        z-index: -1;
+    }
+
+    &:hover::after {
+        transform: translate3d(5px, 5px, 0);
+    }
+}
+
+.button--primary {
+    font-size: 20px;
+}
+
+[data-theme='dark'] {
+    .button {
+        .buttonLink {
+            color: var(--polkadot-cyan);
+            border: 2px solid var(--polkadot-cyan);
+        }
+
+        &:hover {
+            color: var(--polkadot-cyan);
+        }
+
+        &::after {
+            background-color: var(--polkadot-cyan);
+        }
+    }
+}

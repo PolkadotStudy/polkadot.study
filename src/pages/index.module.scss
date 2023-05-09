@@ -21,69 +21,69 @@
   display: flex;
   justify-content: center;
   position: relative;
-  padding-top: 2rem;
 
   img {
     max-width: 80vw;
   }
-
-  // &::after {
-  //   background: var(--primary-glow);
-  //   width: 30%;
-  //   height: 40%;
-
-  //   content: '';
-  //   left: 30%;
-  //   top: 40%;
-  //   position: absolute;
-  //   filter: blur(95px);
-  //   transform: translateZ(0);
-  //   // z-index: -10;
-  // }
 }
 
 .logoTitle {
-  color: #fff;
+  color: #000;
   position: absolute;
   text-align: center;
   max-width: 80vw;
+  position: absolute;
+  top: 50%;
+  transform: translate3d(0,-50%,0);
   mix-blend-mode: difference;
 
   h1 {
-    font-size: 10vw;
+    font-size: 11vw;
     font-family: 'Unbounded', cursive;
     text-align: center;
     color: #fff;
     transition: 0.5s ease-in-out;
     text-shadow: 0 0 3px var(--ifm-color-content);
+    mix-blend-mode: difference;
+    margin-bottom: 0;
+
     span {
       display: block;
     }
   }
+}
+
+.logoSubTitle {
+  position: absolute;
+  bottom: 2rem;
+  text-align: center;
+  width: 100%;
 
   > p {
     margin-top: 2rem;
     font-size: 1.2rem;
-    font-weight: 700;
+    font-weight: 500;
     max-width: 100% !important;
-    color: #fff;
   }
 
   a {
-    color: #fff;
+    color: #000;
     z-index: 100;
   }
 }
 
 [data-theme='dark'] {
   .logoTitle {
+    color: #fff;
     mix-blend-mode: normal;
 
     h1 {
       color: #fff;
-      // mix-blend-mode: difference;
+      mix-blend-mode: normal;
     }
+  }
 
+  .logoSubTitle {
     a {
       color: #fff;
     }
@@ -91,9 +91,13 @@
 }
 
 .polkadotLogo {
+  transform: translate3d(0,-50%,0);
+  transform-origin: top center;
   animation: 40s rotate linear infinite reverse;
   transition: transform 3s;
   position: absolute;
+  max-height: 70vh;
+  top: 50%;
 }
 
 // @media screen and (min-width: 996px) {
@@ -104,10 +108,10 @@
 
 @keyframes rotate {
   from {
-    transform: rotate(360deg);
+    transform: rotate(360deg) translate3d(0,-50%,0);
   }
   to {
-    transform: rotate(0deg);
+    transform: rotate(0deg) translate3d(0,-50%,0);
   }
 }
 
@@ -129,9 +133,11 @@
 
 
 .mainHome {
+  margin: 0 var(--ps-page-margin);
+
   & > section {
     min-height: 80vh;
-    padding: 4rem var(--ps-page-margin);
+    padding: 1rem 0;
 
     p {
       max-width: 40rem;
@@ -163,23 +169,11 @@
 }
 
 .sectionIntro {
-
+  min-height: calc(100vh - var(--ifm-navbar-height)) !important;
+  position: relative;
 }
 
 .sectionTutorials {
-
-}
-
-.sectionAbout {
-  display: flex;
-
-  .aboutLeft {
-    width: 60%;
-  }
-
-  .aboutRight {
-    width: 40%;
-  }
 
 }
 
@@ -187,15 +181,18 @@
 
 }
 
+.sectionAbout,
 .sectionParticipate {
   display: flex;
+  flex-wrap: wrap;
 
-  .participateLeft {
-    width: 60%;
+  .left {
+    width: 100%
   }
 
-  .participateRight {
-    width: 40%;
+  .right {
+    display: none;
+    width: 100%;
   }
 }
 
@@ -203,4 +200,51 @@
   display: flex;
   justify-content: flex-end;
   margin-top: 1.5rem;
+  text-decoration: none;
+}
+
+@media (min-width: 768px) {
+  .sectionAbout,
+  .sectionParticipate {
+    .left {
+        width: 60%;
+        margin-right: 2rem;
+    }
+
+    .right {
+        margin: 0;
+        width: calc(40% - 2rem);
+        display: block;
+    }
+  }
+  
+  .mainHome {
+    & > section {
+      min-height: 80vh;
+      padding: 3rem 0;
+  
+      p {
+        max-width: 40rem;
+      }
+    }
+  }
+
+  .logoSubTitle {
+    bottom: 1rem;
+  }
+}
+
+// min width lg
+@media (min-width: 992px) {
+  .sectionParticipate {
+    .left {
+        width: 50%;
+        margin-right: 2rem;
+    }
+
+    .right {
+        margin: 0;
+        width: calc(50% - 2rem);
+    }
+  }
 }

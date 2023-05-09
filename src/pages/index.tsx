@@ -16,6 +16,7 @@ import useGlobalData, { usePluginData } from "@docusaurus/useGlobalData";
 
 import { uniqBy } from "lodash";
 import PageHead from "../components/PageHead";
+import Button from "../components/button/Button";
 
 export default function Home(): JSX.Element {
   const allTags = usePluginData(
@@ -59,12 +60,13 @@ export default function Home(): JSX.Element {
               <h1>
                 Polkadot<span>Study</span>
               </h1>
-
-              <p>Educational hub for developers by developers</p>
-              <Link to="#tutorials">
-                <ArrowDown className={styles.updown} strokeWidth="3" />
-              </Link>
             </div>
+          </div>
+          <div className={styles.logoSubTitle}>
+            <p>Educational hub for developers by developers</p>
+            <Link to="#tutorials">
+              <ArrowDown className={styles.updown} strokeWidth="3" />
+            </Link>
           </div>
         </section>
         <section className={styles.sectionTutorials}>
@@ -81,18 +83,12 @@ export default function Home(): JSX.Element {
             slides={getAllTutorialsSorted()}
             style={{ marginTop: "2rem" }}
           />
-          <Link to="/tutorials" className={styles.btnViewAll}>
-            <button className="button button--primary">
-              View All Tutorials
-              <span>
-                <ArrowRight strokeWidth="3" />
-              </span>
-            </button>
-          </Link>
-          {/* <pre>{JSON.stringify(allTutorialsSorted, null, 2)}</pre> */}
+          <div className={styles.btnViewAll}>
+            <Button to="/tutorials">View All Tutorials</Button>
+          </div>
         </section>
         <section className={styles.sectionAbout}>
-          <div className={styles.aboutLeft}>
+          <div className={styles.left}>
             <h2>
               About
               <span>Tutorials by the community for the community</span>
@@ -119,7 +115,7 @@ export default function Home(): JSX.Element {
               after a a successful referendum.
             </p>
           </div>
-          <div className={styles.aboutRight}>
+          <div className={styles.right}>
             <Dots />
           </div>
         </section>
@@ -128,7 +124,7 @@ export default function Home(): JSX.Element {
           <StudyPaths />
         </section>
         <section className={styles.sectionParticipate}>
-          <div className={styles.participateLeft}>
+          <div className={styles.left}>
             <h2>Participate</h2>
             <p className="subheading">
               Are you a developer? Have you learned something new while working
@@ -151,16 +147,11 @@ export default function Home(): JSX.Element {
               tutorial and wait until it is merged.
             </p>
 
-            <Link to="/docs/authors/new-tutorial-on-polkadot-study/intro">
-              <button className="button button--primary">
-                Learn how to contribute
-                <span>
-                  <ArrowRight strokeWidth="3" />
-                </span>
-              </button>
-            </Link>
+            <Button to="/docs/authors/new-tutorial-on-polkadot-study/intro">
+              Learn how to contribute
+            </Button>
           </div>
-          <div className={styles.participateRight}>
+          <div className={styles.right}>
             <Dots />
           </div>
         </section>
