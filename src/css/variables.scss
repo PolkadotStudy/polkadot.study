@@ -45,7 +45,7 @@ $grid-breakpoints: (
     
     --ps-page-margin: 1.2rem;
   
-    --quiz-color-primary: #552BBF;
+    --quiz-color-primary: var(--polkadot-pink);
     --quiz-color-background: #fff;
     --quiz-color-wrong: rgba(255, 57, 57, 0.3);
     --quiz-color-correct: rgba(43, 206, 78, 0.3);
@@ -96,7 +96,7 @@ $grid-breakpoints: (
 
     --pd-border-style: 0.5px dashed #999;
   
-    --quiz-color-primary: #00B2FF;
+    --quiz-color-primary: var(--polkadot-pink);
   }
 
 

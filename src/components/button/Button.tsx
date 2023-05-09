@@ -10,10 +10,11 @@ export default function Button({
   arrow = true,
   children,
   className,
+  style,
   ...props
 }) {
   return (
-    <div className={clsx(styles.button, className)}>
+    <div className={clsx(styles.button, className)} style={style}>
       <Link to={to} className={styles.buttonLink} {...props}>
         {children}
         {arrow && (

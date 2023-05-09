@@ -129,7 +129,9 @@ export default function Quiz({
       </div>
       <div className={styles.interaction}>
         {(userTries < tries || !submitted) && !isCorrect && (
-          <Button onClick={onSubmitAnswer}>Submit</Button>
+          <Button onClick={onSubmitAnswer} style={{ marginRight: "1rem" }}>
+            Submit
+          </Button>
         )}
         {userTries >= tries && (
           <Button onClick={onShowSolution}>Show Solution</Button>

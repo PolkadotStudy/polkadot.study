@@ -1,9 +1,9 @@
 .task {
     transition: all 0.3s;
-    padding: 2rem 2.5rem;
-    // border-left: 4px solid var(--task-color-primary);
+    padding: 1rem 1.5rem;
+    border-left: 4px solid var(--task-color-primary);
     background: var(--task-color-background);
-    border-radius: 40px;
+    border-radius: 2px;
     margin: 1rem 0;
     color: #000;
 
@@ -30,7 +30,7 @@
     input {
         transition: all 0.3s;
         cursor: pointer;
-        accent-color: #fff;
+        accent-color: var(--task-color-primary);
         min-width: 20px;
         width: 20px; 
         height: 20px;
@@ -39,10 +39,9 @@
 
 .title {
     transition: all 0.3s;
+    color: var(--task-color-primary);
     font-weight: bold;
-    text-transform: uppercase;
-    font-size: 26px;
-    margin-bottom: 0.5rem;
+    font-size: larger;
 }
 
 .taskContent {
@@ -54,14 +53,13 @@
 }
 
 .complete {
-    background: #5EF19D;
-    // border-left: 4px solid var(--task-color-complete);
+    border-left: 4px solid var(--task-color-complete);
 
     .title {
-        // color: var(--task-color-complete);
+        color: var(--task-color-complete);
     }
 
     input {
-        accent-color: #fff;
+        accent-color: var(--task-color-complete);
     }
 }
