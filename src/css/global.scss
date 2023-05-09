@@ -23,7 +23,6 @@ h6 {
 }
 
 #__docusaurus {
-    overflow: hidden;
     min-height: 100vh !important;
     z-index: 1;
 
@@ -113,7 +112,7 @@ h6 {
 }
 
 nav.navbar {
-
+    overflow: hidden;
     &::before {
         content: "";
         background: transparent;
