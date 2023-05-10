@@ -33,12 +33,11 @@ h6 {
     [class*='expandButton_'],
     [class*='collapseSidebarButton_'] {
         border: none;
-        background: none;
-        margin-top: -3rem;
-        margin-bottom: 1rem;
+        border-right: var(--pd-border-style);
+        background: transparent;
 
         &:hover{
-            background: rgba(255,255,255,0.1);
+            background: rgba(255,255,255,0.2);
         }
     }
 
@@ -169,7 +168,6 @@ nav.menu {
     padding: 0;
     background: transparent;
     color: var(--ifm-color-content);
-    margin-top: 4rem;
 }
   
 .docSidebar {
