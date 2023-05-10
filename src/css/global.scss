@@ -41,6 +41,29 @@ h6 {
         }
     }
 
+    [class*='announcementBar_'] {
+        color: #fff;
+        position: fixed;
+        z-index: 1000;
+        bottom: 1rem;
+        right: 1rem;
+        max-width: 300px;
+        height: auto;
+        border-radius: 20px;
+        padding: 0.5rem;
+        padding-left: 1rem; 
+        box-shadow: 0 0 3px #95226b;
+        border: none;
+
+        [class*='announcementBarPlaceholder_'] {
+            display: none;
+        }
+
+        .close {
+            color: #fff;
+        }
+    }
+
     [class*='collapseSidebarButtonIcon'] {
         margin-top: -6px;
     }
@@ -65,6 +88,10 @@ h6 {
 
     .table-of-contents__left-border {
         border-left: var(--pd-border-style);
+    }
+
+    .table-of-contents__link:hover {
+        color: var(--ifm-link-hover-color);
     }
 
     .pagination-nav__link {
@@ -131,10 +158,12 @@ nav.navbar {
     
     .navbar__logo {
         height: 2rem;  
+        width: 2rem;
     }
 
     .navbar__brand {
         &:hover {
+            color: var(--ifm-color-content);
             img {
                 animation: 4s rotate linear infinite;
             }
@@ -161,6 +190,7 @@ nav.menu {
     border-right: var(--pd-border-style);
     margin-top: 1rem;
     padding: 0;
+    padding-left: 0.3rem;
 }
 
 .footer {

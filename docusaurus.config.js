@@ -127,12 +127,12 @@ const config = {
           src: "img/polkadot_pink.svg",
         },
         items: [
-          {
-            href: "/tutorials",
-            docId: "intro",
-            position: "left",
-            label: "Tutorials",
-          },
+          // {
+          //   href: "/tutorials",
+          //   docId: "intro",
+          //   position: "left",
+          //   label: "Tutorials",
+          // },
           {
             href: "/docs/authors/new-tutorial-on-polkadot-study/intro",
             docId: "authors/new-tutorial-on-polkadot-study/intro",
@@ -179,11 +179,24 @@ const config = {
           autoCollapseCategories: true,
         },
       },
+      announcementBar: {
+        id: "support_us",
+        content:
+          'We are looking for payed authors to write Polkadot developer tutorials<br><a rel="noopener noreferrer" href="/blog/looking-for-authors">Learn More</a>',
+        backgroundColor: "var(--polkadot-pink)",
+        textColor: "#eee",
+        isCloseable: true,
+      },
       showLastUpdateAuthor: true,
       showLastUpdateTime: true,
       footer: {
         style: "dark",
         copyright: `Copyleft ${new Date().getFullYear()} Polkadot.study - Built with Docusaurus - This is a community site and in no way incorporated with Parity or Polkadot`,
+      },
+      colorMode: {
+        // defaultMode: "light",
+        disableSwitch: false,
+        respectPrefersColorScheme: true,
       },
       prism: {
         theme: lightCodeTheme,
