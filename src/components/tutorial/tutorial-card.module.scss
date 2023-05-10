@@ -1,9 +1,58 @@
 .tutorialCard {
-    border: 1px solid #fff;
-    padding: 1.5rem 2rem;
-    border-radius: 1rem;
-    max-width: 50%;
-    background: #0033;
+    padding: 23px 31px;
+    border-radius: 30px;
+    cursor: pointer;
+    overflow: visible;
+    background: #fff;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    border: 2px solid;
+    position: relative;
+    transition: all 0.5s;
+
+    font-size: 18px;
+    font-weight: 500;
+    line-height: 24px;
+    letter-spacing: 0.1px;
+
+    a, >div, p, h3 {
+        transition: all 0.5s;
+    }
+
+    .title {
+        font-size: 26px;
+        line-height: 28px;
+        letter-spacing: -0.1px;
+        text-transform: uppercase;
+        margin-bottom: 23px;
+    }
+
+    &::after {
+        content: "";
+        position: absolute;
+        top: 0.5%;
+        left: 0.5%;
+        width: 99%;
+        height: 99%;
+        background-color: var(--polkadot-purple);
+        z-index: -1;
+        transition: all 0.3s;
+        border-radius: 30px;
+    }
+
+    // &::before {
+    //     content: "";
+    //     position: absolute;
+    //     top: 0.5%;
+    //     left: 0.5%;
+    //     width: 99%;
+    //     height: 99%;
+    //     background-color: var(--polkadot-pink);
+    //     z-index: -1;
+    //     transition: all 0.3s;
+    //     border-radius: 30px;
+    // }
 
     p {
         padding-bottom: 0;
@@ -12,6 +61,21 @@
 
     img {
         max-height: 150px;
+    }
+
+    &:hover::after {
+        transform: translate3d(10px, 10px, 0);
+    }
+
+    &:hover {
+        color: var(--polkadot-purple);
+        a, > div, h3 {
+            color: var(--polkadot-purple);
+        }
+        .level,
+        .duration {
+            border-color: var(--polkadot-purple);
+        }
     }
 }
 
@@ -26,4 +90,59 @@
     border: 1px solid #eee;
     border-radius: 2px;
     background: var(--ifm-background-color);
+}
+
+.description {
+    margin-bottom: 1rem;
+    flex: 1;
+}
+
+.tags {
+    padding: 6px 0;
+}
+
+.level {
+    display: flex;
+    align-items: center;
+    border-bottom: 1px dotted #000;
+    padding: 6px;
+}
+
+.duration {
+    display: flex;
+    align-items: center;
+    border-top: 1px dotted #000;
+    padding: 6px 0;
+    svg {
+        height: 22px;
+    }
+}
+
+.meta {
+    svg {
+        margin-right: 0.4rem;
+    }
+}
+
+[data-theme='dark'] {
+    .tutorialCard {
+        color: #000;
+
+        &:hover {
+            color: var(--polkadot-cyan);
+            a, > div, h3 {
+                color: var(--polkadot-cyan);
+            }
+            .level,
+            .duration {
+                border-color: var(--polkadot-cyan);
+            }
+        }
+
+        &::after {
+
+            background-color: var(--polkadot-cyan);
+
+        }
+    }
 }

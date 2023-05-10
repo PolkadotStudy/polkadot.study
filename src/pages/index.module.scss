@@ -17,51 +17,53 @@
 }
 
 .logoWrap {
-  min-height: 90vh;
+  min-height: 70vh;
   display: flex;
   justify-content: center;
-  align-items: center;
   position: relative;
 
   img {
     max-width: 80vw;
   }
-
-  &::after {
-    background: var(--primary-glow);
-    width: 30%;
-    height: 40%;
-
-    content: '';
-    left: 30%;
-    top: 40%;
-    position: absolute;
-    filter: blur(95px);
-    transform: translateZ(0);
-    z-index: 0;
-  }
 }
 
 .logoTitle {
+  color: #000;
   position: absolute;
   text-align: center;
   max-width: 80vw;
+  position: absolute;
+  top: 50%;
+  transform: translate3d(0,-50%,0);
+  mix-blend-mode: difference;
 
   h1 {
-    font-size: 44px;
-    // font-family: 'Unbounded', cursive;
+    font-size: 11vw;
+    font-family: 'Unbounded', cursive;
     text-align: center;
-    color: #000;
+    color: #fff;
     transition: 0.5s ease-in-out;
+    text-shadow: 0 0 3px var(--ifm-color-content);
+    mix-blend-mode: difference;
+    margin-bottom: 0;
+
     span {
       display: block;
     }
   }
+}
 
-  p {
+.logoSubTitle {
+  position: absolute;
+  bottom: 2rem;
+  text-align: center;
+  width: 100%;
+
+  > p {
     margin-top: 2rem;
     font-size: 1.2rem;
-    font-weight: 700;
+    font-weight: 500;
+    max-width: 100% !important;
   }
 
   a {
@@ -71,37 +73,178 @@
 }
 
 [data-theme='dark'] {
-  .logoTitle h1 {
+  .logoTitle {
     color: #fff;
-    mix-blend-mode: difference;
+    mix-blend-mode: normal;
+
+    h1 {
+      color: #fff;
+      mix-blend-mode: normal;
+    }
   }
 
-  .logoTitle a {
-    color: #fff;
+  .logoSubTitle {
+    a {
+      color: #fff;
+    }
   }
 }
 
 .polkadotLogo {
+  transform: translate3d(0,-50%,0);
+  transform-origin: top center;
   animation: 40s rotate linear infinite reverse;
   transition: transform 3s;
   position: absolute;
-}
-.polkadotLogo2 {
-  animation: 28s rotate linear infinite;
-  mix-blend-mode: difference;
+  max-height: 70vh;
+  top: 50%;
 }
 
-@media screen and (min-width: 996px) {
-  .logoTitle h1 {
-    font-size: 90px;
-  }
-}
+// @media screen and (min-width: 996px) {
+//   .logoTitle h1 {
+//     font-size: 90px;
+//   }
+// }
 
 @keyframes rotate {
   from {
-    transform: rotate(360deg);
+    transform: rotate(360deg) translate3d(0,-50%,0);
   }
   to {
-    transform: rotate(0deg);
+    transform: rotate(0deg) translate3d(0,-50%,0);
+  }
+}
+
+.updown {
+  animation: 2s updown infinite;
+}
+
+@keyframes updown {
+  0% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-10px);
+  }
+  100% {
+    transform: translateY(0);
+  }
+}
+
+
+.mainHome {
+  margin: 0 var(--ps-page-margin);
+
+  & > section {
+    min-height: 80vh;
+    padding: 1rem 0;
+
+    p {
+      max-width: 40rem;
+    }
+  }
+
+  h2 {
+    font-family: 'Unbounded', cursive;
+    margin-bottom: 30px;
+    margin-top: 100px;
+
+    font-weight: 500;
+    font-size: 36px;
+    line-height: 28px;
+
+    span {
+      padding-top: 2rem;
+      font-family: 'DM Sans';
+      display: block;
+      font-weight: 400;
+      font-size: 34px;
+      line-height: 32px;
+    }
+  }
+
+  h3 {
+    font-size: 30px;
+  }
+}
+
+.sectionIntro {
+  min-height: calc(100vh - var(--ifm-navbar-height)) !important;
+  position: relative;
+}
+
+.sectionTutorials {
+
+}
+
+.sectionStudyPaths {
+
+}
+
+.sectionAbout,
+.sectionParticipate {
+  display: flex;
+  flex-wrap: wrap;
+
+  .left {
+    width: 100%
+  }
+
+  .right {
+    display: none;
+    width: 100%;
+  }
+}
+
+.btnViewAll {
+  display: flex;
+  justify-content: flex-end;
+  margin-top: 1.5rem;
+  text-decoration: none;
+}
+
+@media (min-width: 768px) {
+  .sectionAbout,
+  .sectionParticipate {
+    .left {
+        width: 60%;
+        margin-right: 2rem;
+    }
+
+    .right {
+        margin: 0;
+        width: calc(40% - 2rem);
+        display: block;
+    }
+  }
+  
+  .mainHome {
+    & > section {
+      min-height: 80vh;
+      padding: 3rem 0;
+  
+      p {
+        max-width: 40rem;
+      }
+    }
+  }
+
+  .logoSubTitle {
+    bottom: 1rem;
+  }
+}
+
+// min width lg
+@media (min-width: 992px) {
+  .sectionParticipate {
+    .left {
+        width: 50%;
+        margin-right: 2rem;
+    }
+
+    .right {
+        margin: 0;
+        width: calc(50% - 2rem);
+    }
   }
 }

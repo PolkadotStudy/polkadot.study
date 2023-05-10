@@ -3,7 +3,8 @@
 }
 
 .tag {
-  border: 1px solid var(--docusaurus-tag-list-border);
+  border: 1px solid;
+  border-color: var(--ifm-font-color-base);
   transition: border var(--ifm-transition-fast);
 }
 
@@ -13,9 +14,10 @@
 }
 
 .tagRegular {
-  border-radius: var(--ifm-global-radius);
+  border-radius: 30px;
   padding: 0.2rem 0.5rem 0.3rem;
   font-size: 90%;
+  color: var(--ifm-font-color-base);
 }
 
 .tagWithCount {

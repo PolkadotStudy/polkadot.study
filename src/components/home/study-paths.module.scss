@@ -1,0 +1,73 @@
+.studyPaths {
+    display: flex;
+    flex-direction: column;
+}
+
+.content {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+}
+
+.left {
+    font-size: larger;
+    display: flex;
+    flex-wrap: wrap;
+    width: 100%;
+    flex-shrink: 0;
+    flex-direction: column;
+    padding-right: 1rem;
+}
+
+.right {
+    margin: 2rem 0;
+    width: 100%;
+}
+
+.tag {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-width: 100%;
+    text-align: center;
+    // padding: 1rem 1rem;
+    margin-bottom: 1rem;
+    // border-radius: 40px;
+    // border: 2px solid #000;
+    cursor: pointer;
+    transition: all 0.25s;
+}
+
+.tag.selected {
+    border-color: var(--polkadot-purple);
+    background: var(--polkadot-purple);
+    color: #fff;
+}
+
+.description {
+    min-height: 4rem;
+}
+
+@media (min-width: 576px) {
+    .left {
+        width: 30%;
+        margin-right: 2rem;
+    }
+
+    .right {
+        margin: 0;
+        width: calc(70% - 2rem);
+    }
+}
+
+@media (min-width: 768px) {
+    .left {
+        width: 30%;
+        margin-right: 2rem;
+    }
+
+    .right {
+        margin: 0;
+        width: calc(70% - 2rem);
+    }
+}
