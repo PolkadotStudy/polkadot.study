@@ -56,6 +56,37 @@ const config = {
         editUrl: "https://github.com/PolkadotStudy/website/tree/staging/",
       },
     ],
+    // [
+    //   "@docusaurus/plugin-client-redirects",
+    //   {
+    //     // fromExtensions: ["html", "htm"], // /myPage.html -> /myPage
+    //     // toExtensions: ["exe", "zip"], // /myAsset -> /myAsset.zip (if latter exists)
+    //     // redirects: [
+    //     //   // /docs/oldDoc -> /docs/newDoc
+    //     //   {
+    //     //     to: "/docs/newDoc",
+    //     //     from: "/docs/oldDoc",
+    //     //   },
+    //     //   // Redirect from multiple old paths to the new path
+    //     //   {
+    //     //     to: "/docs/newDoc2",
+    //     //     from: ["/docs/oldDocFrom2019", "/docs/legacyDocFrom2016"],
+    //     //   },
+    //     // ],
+    //     createRedirects(existingPath) {
+    //       if (existingPath.includes("/tutorials/substrate-in-bits/docs/")) {
+    //         // Redirect from /docs/team/X to /community/X and /docs/support/X to /community/X
+    //         return [
+    //           existingPath.replace(
+    //             "/tutorials/substrate-in-bits/docs/",
+    //             "/substrate-in-bits/"
+    //           ),
+    //         ];
+    //       }
+    //       return undefined; // Return a falsy value: no redirect created
+    //     },
+    //   },
+    // ],
   ],
 
   presets: [
@@ -107,6 +138,11 @@ const config = {
             docId: "authors/new-tutorial-on-polkadot-study/intro",
             position: "left",
             label: "For Authors",
+          },
+          {
+            to: "/tutorials/substrate-in-bits/",
+            position: "left",
+            label: "Substrate in Bits",
           },
           {
             to: "/blog",
