@@ -1,3 +1,3 @@
 [submodule "tutorials/substrate-in-bits"]
 	path = tutorials/substrate-in-bits
-	url = git@github.com:Chondria/SiB.git
+	url = https://github.com/Chondria/SiB.git
