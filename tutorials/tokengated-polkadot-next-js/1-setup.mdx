@@ -1,17 +1,31 @@
-# Setup and Beginning
+# Setup and the User Interface
 
-In the first part, you are going to setup the development environment for developing the dApp. It's a basic next.js setup with dependency installation.
+In the first part, you are going to setup the development environment for
+developing the dApp. It's a
+[basic next.js setup](https://nextjs.org/docs/getting-started) with additional
+dependency installations.
 
-- https://nextjs.org/docs/getting-started
+```bash
+npx create-next-app@latest
 ```
-npx create-next-app@lates
+
+As we will be using next-auth and polkadot-js, you will install those
+dependencies, too.
+
+```bash
+npm install next-auth
 ```
 
-- npm install next-auth
+## User Interface
+
+We are going to build two main UI components in this demo:
+
+1. The _Account Select_ Component, which will allow a user to select the wallet
+   they want to use for the dApp.
+
+### Account Select
+
+### Login Button
+
+-
 - https://realtakahashi-work.medium.com/astar-next-js-polkadot-js-5cbfe48515ad
-
-## Addon
-- use passport
-- http://www.passportjs.org/
-- https://github.com/vvo/iron-session
-- Cookie valid time: https://github.com/vvo/iron-session#session-cookies

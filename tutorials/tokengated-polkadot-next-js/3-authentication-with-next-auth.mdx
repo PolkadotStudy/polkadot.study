@@ -1,0 +1,166 @@
+# Authentication with next-auth and the Polkadot extension
+
+Authentication in webapps is a recurring task and can be solved in multiple
+ways. In nextjs serverless architectures without database access you can either
+rely on third party auth services like auth0, or you can use cookies and
+sessions to authenticate your users. Generally authentication should solve the
+issue of restricting access to users that meet certain criteria, while
+preserving usability, i.e. storing auth information in a secure way, without
+having to input your credentials / signature over and over.
+
+As authentication is a key to protected web resources, security is very
+important and many things can go wrong and must be taken care of. That is why
+this tutorial is based on the popular [next-auth](https://authjs.dev/), an _open
+source_ auth library that can handle user authentication with many different
+given authentication providers like github or Google. It supports databaseless,
+serverless architectures by utilizing encrypted JSON Web Tokens for
+authenticating users.
+
+- next js will pre render pages. pre-rendering. **Static generation** and
+  **Server-side** rendering
+- `/protected` is a server-side rendered page you will want to protect with the
+  authentication and only show its content to authorized users.
+- protecting either API routes of the next node js server or protecting
+- Typically, Static Generation is the better choice here, because it reduces the
+  Time To First Byte (TTI). It's only disadvantage is that it will flash
+  unauthorized content as long as a server request loads.
+- With Static Generation, (protected) user data is fetched from any endpoint.
+  This endpoint makes sure that the user requesting the data is authorized to do
+  so. Here, with nextjs case you will use a
+  [API Route](https://nextjs.org/docs/pages/building-your-application/routing/api-routes)
+  for fetching that user data. As the api route is server only functionality, it
+  is safe to check for proper authentication there. You will build all that now.
+
+- usually we get the user from the server side api. In web3 things are a little
+  bit different. The user data comes from the _client-side_, namely the browser
+  wallet extension that stores accounts with addresses and names. The
+  server-side API will only be used for authorizing the users, i.e. verifying a
+  signature and validating the signed data
+
+:::info
+
+If you need to refresh your knowledge about the difference between Server-Side
+Rendering and Static Generation, or have never heard of them.
+[Read along here](https://nextjs.org/learn/basics/data-fetching/two-forms)
+
+:::
+
+## Custom CredentialsProvider
+
+In this tutorial you will extend next-auth with a custom web3
+`CredentialsProvider` that checks that certain criteria are met:
+
+- the user has signed a message with their polkadot browser extension
+- the message signature is correct
+- the message nonce is correct (csrf protection)
+- the other message data is correct (domain)
+- **finally: the account passes the criteria of the token gate**
+
+That means, that you will need to ask the user to sign a message with all
+relevant data in the frontend, which will then be send to the server, where it
+must be verified.
+
+## Configuring next-auth
+
+-
+
+## The `authorize` function
+
+You need to provide your own logic in the `authorize` function, that takes the
+credentials submitted and returns either a object representing a user or value
+that is false/null if the credentials are invalid. In our case we want to return
+an object of the following form:
+
+```ts
+interface User {
+  id: string; //the account's substate address
+  name: string; //the account name
+  ksmAddress: string; // the account's Kusama Address
+  freeBalance: BN; // the free KSM balance of the account
+}
+```
+
+:::info
+
+You can return arbitrary data here. In our example we use `freeBalance` as the
+tokengate checks it anyway and can be populated easily. When you use a different
+token to check for, e.g. NFTs from a certain collection, you could e.g. store
+`nfts: number[]` with all the NFTs from that collection a user holds.
+
+:::
+
+The following code snippet shows the full authorize function with annotations.
+Have a look at it first and try to understand the parts for yourself, with a
+special focus on the highlighted lines. Afterwards they will be explained.
+
+```ts title="/pages/api/auth/[...nextauth].ts" showLineNumbers
+...
+async authorize(credentials): Promise<any | null> {
+    if (credentials === undefined) {
+        return null;
+    }
+
+    try {
+        const message = JSON.parse(credentials.message);
+
+        // verify the message is from the same domain
+        if (message.uri !== process.env.NEXTAUTH_URL) {
+            return Promise.reject(new Error('🚫 You shall not pass!'));
+        }
+
+        // verify the message was not compromised
+        if (message.nonce !== credentials.csrfToken) {
+            return Promise.reject(new Error('🚫 You shall not pass!'));
+        }
+
+        // verify signature of the message
+        // highlight-start
+        const { isValid } = signatureVerify(
+            credentials.message,
+            credentials.signature,
+            credentials.address,
+        );
+        // highlight-end
+
+        if (!isValid) {
+            return Promise.reject(new Error('🚫 Invalid Signature'));
+        }
+
+        // verify the account has the defined token
+        // highlight-start
+        const wsProvider = new WsProvider(
+            process.env.RPC_ENDPOINT ?? 'wss://kusama-rpc.dwellir.com',
+        );
+        const api = await ApiPromise.create({ provider: wsProvider });
+        await api.isReady;
+
+        if (credentials?.address) {
+            const ksmAddress = encodeAddress(credentials.address, 2);
+            const accountInfo = await api.query.system.account(ksmAddress);
+
+            if (accountInfo.data.free.gt(new BN(1_000_000_000_000))) {
+            // if the user has a free balance > 1 KSM, we let them in
+                return {
+                    id: credentials.address,
+                    name: credentials.name,
+                    freeBalance: accountInfo.data.free,
+                    ksmAddress,
+                };
+            } else {
+                return Promise.reject(new Error('🚫 The gate is closed for you'));
+            }
+        }
+        // highlight-end
+
+        return Promise.reject(new Error('🚫 API Error'));
+    } catch (e) {
+        return null;
+    }
+},
+...
+```
+
+So what is going on here? The interesting parts are the `signatureVerify`
+function and the usage of the polkadot API.
+
+1. `signatureVerify` is used to

@@ -15,7 +15,9 @@ const sidebars = {
   // But you can create a sidebar manually
   tokengatedSidebar: [
     "tokengated-polkadot-next-js/intro",
-    "tokengated-polkadot-next-js/step2",
+    "tokengated-polkadot-next-js/setup",
+    "tokengated-polkadot-next-js/connecting-to-the-wallet-browser-extension",
+    "tokengated-polkadot-next-js/authentication-with-next-auth",
     "tokengated-polkadot-next-js/conclusion",
   ],
 

@@ -1,0 +1,62 @@
+# Connecting to the wallet browser extension
+
+## Nextjs characteristics
+
+- what is different with nextjs?
+  - client side code
+  -
+
+## A ContextProvider for polkadot accounts
+
+While this is not a tutorial on react context, this demo dApp is a
+[paradigmatic example of when react context is useful](https://react.dev/learn/passing-data-deeply-with-context#use-cases-for-context).
+It will provide all components in the dApp with context: in our case, that is
+amongst others
+
+- the accounts that come from the browser extension
+- the selected account
+- the injector of the selected account (which can be used for signing data /
+  transactions with the browser extension )
+
+While everything in this dApp could be handled without react Context and a
+ContextProvider
+
+### Starting with a hook
+
+In modern react, the use of hooks is the state of the art. Hooks let you use
+different React features from your components. A `usePolkadotExtension` hook can
+be a means of providing data from the wallet browser extension to any component
+inside your dApp. While our demo dApp is small and you will only use it in two
+distinct components in this demo, you can imagine the usefullness in large
+applications.
+
+:::info
+
+There are many wallet browser extensions for the polkadot ecosystem. In this
+demo we use the basic
+[Polkadot{.js} "developer" extension](https://polkadot.js.org/extension/). Other
+popular extensions are [Talisman](https://www.talisman.xyz/) or
+[Subwallet](https://subwallet.app/). The tutorial works for any extension a user
+has installed due to the way the third party wallets are injected into the
+browser.
+
+:::
+
+Let's first think about the returned data and types from of the hook. As
+mentioned above it should be aware of
+
+1. `accounts` that hold an accounts substrate `address` as well as some
+   metadata, e.g. the `name` of an account.
+1. The `selectedAccountIdx` which will store the index of the account the user
+   has selected. Imagine having 10 accounts enabled in the browser extension.
+1.
+
+-
+
+## More Info
+
+- https://react.dev/learn/passing-data-deeply-with-context
+
+When using
+
+https://nextjs.org/docs/pages/building-your-application/optimizing/lazy-loading#with-external-libraries
