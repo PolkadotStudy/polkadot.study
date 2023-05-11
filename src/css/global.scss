@@ -137,24 +137,34 @@ h6 {
 
 }
 
+.navbar-sidebar__brand {
+    box-shadow: none;
+    border-bottom: var(--pd-border-style);
+}
+
 nav.navbar {
     overflow: hidden;
+    background: transparent;
+    
+    box-shadow: none;
+    margin: 0;
+
     &::before {
         content: "";
         background: transparent;
         backdrop-filter: blur(8px);
         position: absolute;
-        top: 0;
-        width: calc(100% + 2 * var(--ps-page-margin));
+        bottom: 0;
+        width: calc(100% - 2rem);
         height: 100%;
-        left: calc( -1 * var(--ps-page-margin));
+        left: 1rem;
         z-index: -1;
+        border-bottom: var(--pd-border-style);
     }
 
-    background: transparent;
-    border-bottom: var(--pd-border-style);
-    box-shadow: none;
-    margin: 0 1rem;
+    &::after {
+
+    }
     
     .navbar__logo {
         height: 2rem;  
@@ -239,6 +249,12 @@ nav.menu {
 
     main {
         padding-left: 1rem;
+    }
+}
+
+@media (max-width: 996px) { 
+    .navbar__items.navbar__items--right {
+        display: inline-block;
     }
 }
 
