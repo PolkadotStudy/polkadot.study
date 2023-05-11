@@ -14,6 +14,8 @@ $grid-breakpoints: (
     --polkadot-lime: #D3FF33;
     --polkadot-green: #56F39A;
 
+    --doc-sidebar-hidden-width: 48px !important;
+
     --ifm-h1-font-size: 3rem;
 
     --ifm-background-color: #fcfff1;
@@ -28,6 +30,12 @@ $grid-breakpoints: (
     --ifm-color-primary-light: #fd0086;
     --ifm-color-primary-lighter: #ff0a8c;
     --ifm-color-primary-lightest: #ff2c9c;
+
+    --ifm-menu-color-active: var(--polkadot-purple);
+    --ifm-link-color: var(--polkadot-purple);
+    --ifm-navbar-link-hover-color: var(--polkadot-purple);
+    --ifm-breadcrumb-color-active: var(--polkadot-purple);
+
 
     --ifm-navbar-height: 4.75rem;
     // --ifm-menu-link-sublist-icon: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="16px" height="16px" viewBox="0 0 24 24"><path fill="rgba(0,0,0,0.5)" d="M7.41 15.41L12 10.83l4.59 4.58L18 14l-6-6-6 6z"></path></svg>');
@@ -81,7 +89,7 @@ $grid-breakpoints: (
     --ifm-background-color: #1b1b1b;
     --ifm-navbar-background-color: #1b1b1b;
 
-    --ifm-font-color-base: #fff;
+    --ifm-font-color-base: #ddd;
 
     --ifm-color-primary: #e6007a;
     --ifm-color-primary-dark: #cf006e;
@@ -90,11 +98,16 @@ $grid-breakpoints: (
     --ifm-color-primary-light: #fd0086;
     --ifm-color-primary-lighter: #ff0a8c;
     --ifm-color-primary-lightest: #ff2c9c;
+
+    --ifm-menu-color-active: var(--polkadot-cyan);
+    --ifm-link-color: var(--polkadot-cyan);
+    --ifm-navbar-link-hover-color: var(--polkadot-cyan);
+    --ifm-breadcrumb-color-active: var(--polkadot-cyan);
   
     --docusaurus-highlighted-code-line-bg: rgba(0, 0, 0, 0.3);
     --docusaurus-collapse-button-bg: transparent;
 
-    --pd-border-style: 0.5px dashed #999;
+    --pd-border-style: 1px dashed #999;
   
     --quiz-color-primary: var(--polkadot-pink);
   }

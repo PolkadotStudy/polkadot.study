@@ -1,0 +1,3 @@
+[submodule "tutorials/substrate-in-bits"]
+	path = tutorials/substrate-in-bits
+	url = http://github.com/Chondria/SiB.git
