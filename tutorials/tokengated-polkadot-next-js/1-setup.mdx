@@ -16,14 +16,99 @@ dependencies, too.
 npm install next-auth
 ```
 
+You can run the development server at
+[http://localhost:3000](http://localhost:3000) by running
+
+```bash
+npm run dev
+```
+
+Great. Now that the dependencies and development environment are setup, you can
+build the UI in the next step.
+
 ## User Interface
 
 We are going to build two main UI components in this demo:
 
 1. The _Account Select_ Component, which will allow a user to select the wallet
-   they want to use for the dApp.
+   they want to use for the dApp. It will use `accounts` data from the hook we
+   will write in the
+1. The _Login Button_ Component, which will handle login state, call login
+   functionality, and display feedback on error and loading to the user.
 
 ### Account Select
+
+The Account Select component will be a simple dropdown that lets the user select
+the account they want to use for the website. It needs to interact with the
+browser wallet extension (we use the polkadot.js extension in this tutorial), in
+order to receive all `accounts`. It also stores the index of the currently
+selected account.
+
+First, create a new file, in `components`, named `account-select.tsx`. Next,
+import some styles / components to build a nice user interface (you can omit
+these if you just want the bare functionality).
+
+```js title="components/account-select.tsx"
+import { useState } from "react";
+
+import Identicon from "@polkadot/react-identicon";
+import "primereact/resources/themes/md-dark-indigo/theme.css";
+import "primereact/resources/primereact.min.css";
+import styles from "@/styles/Home.module.css";
+
+import { Dropdown } from "primereact/dropdown";
+```
+
+:::info
+
+The `Identicon` is the small colorful circle that gives the user a visual
+representation of their substrate address and helps identiying accounts.
+
+:::
+
+Next, let's write the component.
+
+```js showLineNumbers title="components/account-select.tsx"
+export default function AccountSelector() {
+  const [accounts, setAccounts] = useState([]);
+  const [actingAccountIdx, setActingAccountIdx] = useState(0);
+
+  const { accounts, actingAccount, setActingAccountIdx } =
+    usePolkadotExtensionWithContext();
+
+  return (
+    <Dropdown
+      options={accounts ?? undefined}
+      optionLabel="address"
+      placeholder="Select Account"
+      className={styles.dropdown}
+      value={actingAccount}
+      itemTemplate={accountOptionTemplate}
+      valueTemplate={accountValueTemplate}
+      //highlight-start
+      onChange={(event) => {
+        const accountIdx = accounts
+          ? accounts.findIndex(
+              (account) => account.address === event.target.value.address
+            )
+          : 0;
+        setActingAccountIdx(accountIdx);
+      }}
+      //highlight-end
+    />
+  );
+}
+```
+
+The most relevant part is the `onChange` function that updates the
+`actingAccountIdx` state variable, when the user changes the selected element
+from the dropdown.
+
+Now the only thing is missing is the `accounts`. In the next part of the
+tutorial you will code a react _ContextProvider_ that will provide all accounts
+(as well as other app state variables) to the `AccountSelect` component. You
+will afterwards update this component but leave it for now and look at the next
+UI component you need.
 
 ### Login Button
 
