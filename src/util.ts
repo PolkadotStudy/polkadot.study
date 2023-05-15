@@ -25,7 +25,7 @@ export function string_to_slug (str) {
 export const getLabelFromChildren = (children: ReactNode) => {
     let label = '';
 
-    React.Children.map(children, (child) => {
+    React.Children?.map(children, (child) => {
         if (typeof child === 'string') {
             label += child;
         }

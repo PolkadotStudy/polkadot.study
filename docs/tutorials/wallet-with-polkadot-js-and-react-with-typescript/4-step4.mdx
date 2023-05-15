@@ -1,6 +1,6 @@
 # Control and update balances on Polkadot and Kusama blockchains.
 
-In this section you will understand the basic concepts about Polkadot/Kusama testnets and we will add functionality a generic card component with a balance component.
+In this section you will understand the basic concepts about Polkadot/Kusama testnets and we will add functionality a generic card component with a ``Balance`` component.
 
 ## Basic concepts.
 
@@ -24,89 +24,69 @@ Polkadot's testnet is called Westend and you can obtain its native tokens (calle
 
 Rococo is a parachain testnet. Tokens are given directly to teams working on parachains or exploring the cross consensus message passing aspects of this testnet. General users can obtain ROC by posting !drip <ROCOCO_ADDRESS> in the Matrix chatroom #rococo-faucet:matrix.org. 
 
-## Add functionality to GenericCard graphic component using Polkadot-js API.
+## Exercises
 
+This exercise will consist of completing the code in the ``Balance`` functional component provided in the cloned example repository.
 
-In the previous section the GenericCard graphic component as shown below.
+### 3. Add functionality to GenericCard graphic component using Polkadot-js API.
 
-```ts
-import { Stack, Divider, Image,Card,CardBody, CardFooter } from '@chakra-ui/react';
+To add functionality to the GenericCard component we will add the Balance component. This component updates the available balances for a public address.
 
-const image='https://d33wubrfki0l68.cloudfront.net/6cc043f2cb1fa1b90cf3ae518f2d6b18bfbe2f4a/b22b3/static/hero-anim-token-1b2270fa949ba9dfbd9fcd8ec83da71b.png';
-
-
-function GenericCard() {
-
-    return(        
-<Card alignItems="center" w="300px" h="350px"
-      borderColor="gray.400"
-      borderRadius="md"
-      boxShadow="dark-lg"
-      >
-  <CardBody>
-    <Stack alignItems="center"  mt='6' spacing='3'>
-        <Image
-        boxSize="80px"
-        objectFit="cover"
-        alignItems="center" 
-        src={image}
-        borderRadius='lg'
-        />
-       
-    </Stack>
-  </CardBody>
-    <Divider />
-  <CardFooter  >
-    <Stack direction="row" alignItems="center"  spacing='10'>
-    
-    </Stack>
-  </CardFooter>
-</Card>  
-    )
-    
-    }
-    
-    export { GenericCard};
-```
-
-### Create Balance component.
+#### 1. Import library components
 
 The next step will be to build a new component that we will call balance and it can be used in the genericcard or in some other component of your own projects.
 
-To build the balance component we first import some necessary react elements, Chakra-ui widgets and finally the ApiPromise and WsProvider components of the polkadot-js API.
+To add functionality to the balance component we will need to import 2 components from the polkadot-js API, these are:
 
-```ts
+**WsProvider:** component is used to establish a WebSocket connection with a Polkadot network node.
 
+**ApiPromise:** component is used to interact with the blockchain node through the WebSocket connection established with WsProvider.
+
+To build the balance component we first import some necessary react elements and finally the ApiPromise and WsProvider components of the polkadot-js API.
+
+```ts title=src/pages/portfolio/Balance.tsx
 import { useState,useEffect } from 'react';
-import { 
-  Heading,
-  Flex, 
-  Spacer, 
-  Stack  
-  } from '@chakra-ui/react'
 import { ApiPromise, WsProvider} from '@polkadot/api';
-
 ```
 
-The second step will be to build the balance function that will receive the network and the token as properties. So we also add the necessary states to control the balance as mentioned in the code.
 
-```ts
+#### 2. Use local storage.
+In this example we use local storage to store the keys generated with the seed phrase.
 
-function Balance({wsEndpoint,token}:any) {
+In this step we will get the stored public key and get the balance associated with this public key.
 
+```ts title=src/pages/portfolio/Balance.tsx
   // Get the public key stored in local storage
   const publicKey= localStorage.getItem("Publickey");
-  
+```
+
+#### 3. Create states in React.
+
+We will now add the necessary states using the useState hook.
+
+```ts title=src/pages/portfolio/Balance.tsx
   // Store the public key in a state
   const [account, setAccount] = useState(publicKey);
 
   // Create a state for the balance.
   const [Balances, setBalances]= useState(0);
+```
+ 
+#### 4. Create an instance.
 
- // Create an instance of the Polkadot network provider
+We create an instance called wsProvider, this is a necessary element to obtain the connection with the node.
+
+```ts title=src/pages/portfolio/Balance.tsx
+  // Create an instance of the Polkadot network provider
   const wsProvider = new WsProvider(wsEndpoint);
+```
 
+#### 5. Add Balance function.
 
+In this step we will add the function balance which will create an api called instance of the Polkadot-js API using ApiPromise.
+This function will get the balances and update if necessary.
+
+```ts title=src/pages/portfolio/Balance.tsx
   const Balance = async function (account:any)  {
 
   // Create an instance of the Polkadot JS API
@@ -147,196 +127,27 @@ function Balance({wsEndpoint,token}:any) {
   
   }
 
-  // Update balance
+```
+Note that this component takes the public key stored in local storage and gets the balance.
+
+
+#### 6. useEffect in React.
+
+useEffect is a React hook that allows performing side effects in functional components. It is used to execute code in response to changes in state or the rendering of a component.
+
+Finally, we need to add useEffect for update the states in Balance function. 
+
+```ts title=src/pages/portfolio/Balance.tsx
+// Update balance
   useEffect(() => {
     
     Balance(account)
   });
-
-    return (
-    <Stack alignItems="center">
-      <Heading size="md"> Balance</Heading>
-        <Flex gap="30px">
-          <Heading size='md'>{token}</Heading>
-            <Spacer/>
-          <Heading  size='md'>{Balances}</Heading>
-        </Flex>
-    </Stack>
-     
-    )
-  }
-
-export {Balance};
-
-
-```
-Note that this component takes the public key stored in local storage and gets the balance. Finally the balance component would be built as shown below:
-
-
-```ts
-import { useState,useEffect } from 'react';
-import { 
-  Heading,
-  Flex, 
-  Spacer, 
-  Stack  
-  } from '@chakra-ui/react'
-import { ApiPromise, WsProvider} from '@polkadot/api';
-
-
-function Balance({wsEndpoint,token}:any) {
-
-  // Get the public key stored in local storage
-  const publicKey= localStorage.getItem("Publickey");
-  
-  // Store the public key in a state
-  const [account, setAccount] = useState(publicKey);
-
-  // Create a state for the balance.
-  const [Balances, setBalances]= useState(0);
-
- // Create an instance of the Polkadot network provider
-  const wsProvider = new WsProvider(wsEndpoint);
-
-
-  const Balance = async function (account:any)  {
-
-  // Create an instance of the Polkadot JS API
-  const api = await ApiPromise.create({ provider: wsProvider });
-  
-  // Get the public key stored in local storage
-  setAccount(localStorage.getItem("Publickey"));
-  
-  // Retrieve the initial balance. Since the call has no callback, it is simply a promise
-  // that resolves to the current on-chain value
-  let { data: { free: previousFree }, nonce: previousNonce }:any = await api.query.system.account(account);
-  
-  // Read balance on Network
-  const amount=Number(previousFree)/1000000000000;
-  setBalances(amount) 
-  
-  // Here we subscribe to any balance changes and update the on-screen value
-  api.query.system.account(account, ({ data: { free: currentFree } , nonce: currentNonce }: any) => {
-
-
-      // Calculate the delta
-      const change = currentFree.sub(previousFree  );
-  
-      // Only display positive value changes (Since we are pulling `previous` above already,
-      // the initial balance change will also be zero)
-      if (!change.isZero()) {
-        
-        previousFree = currentFree;
-        previousNonce = currentNonce;
-        
-      // Read balance on Network
-      const Newamount=Number(previousFree)/1000000000000;
-
-      // Update state
-      setBalances(Newamount) 
-      }
-    });
-  
-  }
-
-  // Update balance
-  useEffect(() => {
-    
-    Balance(account)
-  });
-
-    return (
-    <Stack alignItems="center">
-      <Heading size="md"> Balance</Heading>
-        <Flex gap="30px">
-          <Heading size='md'>{token}</Heading>
-            <Spacer/>
-          <Heading  size='md'>{Balances}</Heading>
-        </Flex>
-    </Stack>
-     
-    )
-  }
-
-export {Balance};
-
-```
-
-### Add Balance component on GenericCard component.
-
-In this section we will add the balance component to the genericcard component.
-
-For this we import the balance component with the appropriate path and add it to the body of the GenericCard. The GenericCard component would finally be as follows:
-
-
-```ts
-
-import { Stack, Divider, Image,Card,CardBody, CardFooter } from '@chakra-ui/react';
-import { Balance } from './Balance';
-
-function GenericCard({image,network,token}:any) {
-
-    return(        
-<Card alignItems="center" w="300px" h="350px"
-      borderColor="gray.400"
-      borderRadius="md"
-      boxShadow="dark-lg"
-      >
-  <CardBody>
-    <Stack alignItems="center"  mt='6' spacing='3'>
-        <Image
-        boxSize="80px"
-        objectFit="cover"
-        alignItems="center" 
-        src={image}
-        borderRadius='lg'
-        />
-       <Balance wsEndpoint={network} token={token}/> 
-    </Stack>
-  </CardBody>
-    <Divider />
-  <CardFooter  >
-    <Stack direction="row" alignItems="center"  spacing='10'/>
-      
-  </CardFooter>
-</Card>  
-    )
-    
-    }
-    
-    export { GenericCard};
-
-```
-
-You now have a graphical component that you can import and use by passing the image, network, and token properties. In the following example we will use this component by passing the properties for the Polkadot network ('wss://rpc.polkadot.io'), westend ('wss://westend.api.onfinality.io/public-ws') or rococo (wss://rococo-rpc.polkadot.io) testnets.
-
-```ts
-
-
-import { GenericCard } from './card';
-
-// props for GenericCard component.
-const image='https://s2.coinmarketcap.com/static/img/coins/64x64/5034.png';
-const network='wss://rpc.polkadot.io';
-const token='DOT';
-
-
-function Example() {
-
-
-  return (
-    
-      <GenericCard image={image} network={network} token= {token}/> 
-  )
-}
-
-export { Example };
 
 ```
 The component would look like this:
 
 ![Alt Text](./assets/Portfolio.png)
-
 
 Great !!!, now you have a graphical component that gets the balance of the public key stored in local storage.
 

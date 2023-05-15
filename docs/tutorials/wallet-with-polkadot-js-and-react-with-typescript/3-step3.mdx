@@ -1,6 +1,6 @@
 # Create new keys with the GUI using the Polkadot.js API.
 
-In this section you will understand the basic concepts about encryption algorithms and we will add functionality to the Newaccounts and Addaccounts components created in the previous section.
+In this section you will understand the basic concepts about encryption algorithms and we will add functionality to the ``Newaccounts`` and ``Addaccounts`` components created in the previous section.
 
 ## Basic concepts.
 
@@ -22,122 +22,69 @@ Ed25519 is used in Polkadot and Kusama for the generation of Sr25519 key types, 
 
 In this tutorial we will only use the Ed25519 that is used in Polkadot and Kusama for the generation of Sr25519 key types.
 
+## Instructions
 
-## Add functionality to the graphic component Newaccounts using Polkadot-js API.
+In this interactive tutorial you will add the functionality by integrating the code in the right place, this will require cloning the example repository.
 
-In the previous section the graphical interface component as shown below.
+### Clone the repository
 
+To clone the example repository you can follow the following command:
 
-```ts
+```bash
+git clone https://github.com/A-mont/WalletTutorialExample.git
+```
+### Install packages:
 
-import React from 'react';
-import { 
-    Heading,
-    Center,
-    Box,
-    useDisclosure,
-    FormLabel,
-    FormControl,
-    Modal,
-    ModalOverlay,
-    ModalContent,
-    ModalHeader,
-    ModalFooter,
-    ModalBody,
-    ModalCloseButton,
-    Button, 
-    VStack,
-    Input,
-    HStack
-     } from '@chakra-ui/react';
+```bash
+cd WalletTutorialExample
+yarn install
+```
 
-function Newaccounts() {
-      
-    
-   
-    const { isOpen, onOpen, onClose } = useDisclosure()
-    
-    const initialRef = React.useRef(null)
-    const finalRef = React.useRef(null)
-    
+## Exercises
 
-    
-     return (
-    
-        <VStack>
-        <Heading size="md" className='center' >
-            Your seed phrase  is: 
-        </Heading>
-          <HStack>
-            <Input readOnly w="650px" h="100px" inputMode="text" type="text" className='center' />
-          </HStack>
-          <HStack>
-            <Button  colorScheme='green'  className='center' borderRadius="20px" >
-                 Generate phrase 
-             </Button>
-            <Button colorScheme='red' onClick={onOpen} className='center' borderRadius="20px" > 
-                 Add new account 
-            </Button>
-          </HStack>
-        <Modal
-              size="lg"
-              initialFocusRef={initialRef}
-              finalFocusRef={finalRef}
-              isOpen={isOpen}
-              onClose={onClose}  
-            >
-              <ModalOverlay />
-              <ModalContent>
-                <ModalHeader >
-                    Your Public Address is : 
-                </ModalHeader>
-                <ModalCloseButton />
-                <ModalBody pb={8}>
-                  <FormControl mt={6}>
-                    <FormLabel>
-                        Address:
-                        
-                    </FormLabel>
-                  </FormControl>
-                </ModalBody>
-                <Center>
-                <ModalFooter>
-                 <VStack>
-                  <Button colorScheme='blue' borderRadius="20px">
-                    Add address
-                  </Button>
-                 </VStack> 
-                </ModalFooter>
-                </Center>
-              </ModalContent>
-        </Modal>
-            <Box h="270px" w="100%"/>
-        </VStack>   
-      )
-    }
-    
-    export {  Newaccounts };
+This exercise will consist of completing the code in the ``Newaccounts`` and ``Addaccounts``  functional components provided in the cloned example repository.
 
-  ```
+### 1. Add functionality to the graphic component Newaccounts using Polkadot-js API.
 
+#### 1. Import library components
 
-We will now add the necessary states using the useState hook and add a new function called keyring that will create 12 words for the seed phrase and associated keys.
+The first step for this first exercise will be to import the necessary components available in the Polkadot-js API for the creation of the seed phrase composed of 12 words and with these to create the public and private key.
 
+For this step we will use the following 3 components in the polkadot libraries, these components are:
 
+**mnemonicGenerate:** This function generates the 12 word mnemonic as a seed phrase and is found in the '@polkadot/util-crypto' library which is installed as a dependency when you install the Polkadot-js API.
 
+**Keyring:** This function generates the public and private key, it is found in the '@polkadot/api' library.
 
-```ts
+**waitReady:**This function used to wait for WebAssembly (Wasm) cryptographic modules to be fully loaded and ready for use, it is found in the '@polkadot/wasm-crypto' library.
 
+To import these components in the library, we can use the following code:
+ ```ts title=src/pages/newaccount/newaccounts.tsx
+import {Keyring} from '@polkadot/api'; 
+import {mnemonicGenerate} from '@polkadot/util-crypto';
+import { waitReady } from '@polkadot/wasm-crypto';
+ ```
+
+#### 2. Create states in React
+
+In React, state refers to the data that can change during the lifecycle of a component. **useState** is a React hook that allows functional components to have internal state.
+
+We will now add the necessary states using the useState hook.
+
+```ts title=src/pages/newaccount/newaccounts.tsx
+     // We create a new states
     const [text, setText] = useState('');
    
     const [valueAddress, setValueAddress] = useState('');
-   
-    const { isOpen, onOpen, onClose } = useDisclosure()
-    
-    const initialRef = React.useRef(null)
-    const finalRef = React.useRef(null)
-    
+ ```
 
+ #### 3. Add a keyring function
+ 
+ Now, we add a new function called keyring that will create 12 words for the seed phrase and associated keys.
+
+```ts title=src/pages/newaccount/newaccounts.tsx
+     
+    // We add a new function
     const keyring = async function main () {
       
       // We wait for connection.
@@ -163,288 +110,35 @@ We will now add the necessary states using the useState hook and add a new funct
       
    }
  ```
-
- Finally we add the function to the buttons and the code of the component would look like this:
-
-
- ```ts
-import React, { useState } from 'react';
-import { 
-    Heading,
-    Center,
-    Box,
-    useDisclosure,
-    FormLabel,
-    FormControl,
-    Modal,
-    ModalOverlay,
-    ModalContent,
-    ModalHeader,
-    ModalFooter,
-    ModalBody,
-    ModalCloseButton,
-    Button, 
-    VStack,
-    Input,
-    HStack
-     } from '@chakra-ui/react';
-  import {mnemonicGenerate} from '@polkadot/util-crypto';
-  import { waitReady } from '@polkadot/wasm-crypto';
-  import {Keyring} from '@polkadot/api'; 
+ Finally with these three steps, we add functionality to the Newaccounts component, this functional component will allow us to generate the 12 word seed phrase and associated keys.
  
-      
-  function Newaccounts() {
-      
-    
-    const [text, setText] = useState('');
-   
-    const [valueAddress, setValueAddress] = useState('');
-   
-    const { isOpen, onOpen, onClose } = useDisclosure()
-    
-      const initialRef = React.useRef(null)
-      const finalRef = React.useRef(null)
-    
+### 2. Add functionality to the graphic component Addaccounts using Polkadot-js API.
 
-    const keyring = async function main () {
-      
-      // We wait for connection.
-      await waitReady();
-   
-      // Create mnemonic string
-      const mnemonic = mnemonicGenerate();
-   
-      // Update state
-      setText(mnemonic)
-     
-      // We create a new keychain type Sr25519
-      const keyring = new Keyring({ type: 'sr25519' });
-   
-      // We added seed phrase to the new keyring.
-      const keys = keyring.createFromUri(mnemonic, { name: 'sr25519' });
-   
-      //Update state
-      setValueAddress(keys.address);
-   
-      //We store the public key in local storage.
-      localStorage.setItem("Publickey",keys.address); 
-      
-   }
-  
-     return (
-    
-        <VStack>
-        <Heading size="md" className='center' >
-            Your seed phrase  is: 
-        </Heading>
-          <HStack>
-            <Input readOnly w="650px" h="100px" inputMode="text" type="text" className='center' value={text} onChange={(e) => setText(e.target.value)}   />
-          </HStack>
-          <HStack>
-            <Button  onClick={ keyring} colorScheme='green'  className='center' borderRadius="20px" >
-                 Generate phrase 
-             </Button>
-            <Button colorScheme='red' onClick={onOpen} className='center' borderRadius="20px" > 
-                 Add new account 
-            </Button>
-          </HStack>
-        <Modal
-              size="lg"
-              initialFocusRef={initialRef}
-              finalFocusRef={finalRef}
-              isOpen={isOpen}
-              onClose={onClose}  
-            >
-              <ModalOverlay />
-              <ModalContent>
-                <ModalHeader >
-                    Your Public Address is : 
-                </ModalHeader>
-                <ModalCloseButton />
-                <ModalBody pb={8}>
-                  <FormControl mt={6}>
-                    <FormLabel>
-                        Address:
-                        {<p> {valueAddress}</p>} 
-                    </FormLabel>
-                  </FormControl>
-                </ModalBody>
-                <Center>
-                <ModalFooter>
-                 <VStack>
-                  <Button colorScheme='blue' borderRadius="20px">
-                    Add address
-                  </Button>
-                 </VStack> 
-                </ModalFooter>
-                </Center>
-              </ModalContent>
-        </Modal>
-            <Box h="270px" w="100%"/>
-        </VStack>   
-      )
-    }
-    
-    export {  Newaccounts };
-  
+
+#### 1. Import library components
+
+Now, we will be to import the necessary components available in the Polkadot-js API for Addaccounts component.
+
+```ts title=src/pages/addaccount/addaccounts.tsx
+import {Keyring} from '@polkadot/api'; 
+import { waitReady } from '@polkadot/wasm-crypto';
+ ```
+
+
+#### 2. Create states in React
+
+In the next step, we will add the necessary states using the useState hook.
+
+```ts title=src/pages/addaccount/addaccounts.tsx
+     // Create state
+    const [valueAddress, setValueAddress] = useState('');
   ```
-  ## Add functionality to the graphic component Addaccounts using Polkadot-js API.
 
-  In the previous section the graphical interface component as shown below.
+#### 3. Add a addkeyring function
 
-
-```ts
-import React from 'react';
-import { 
-    Heading, 
-    Center,
-    Box,
-    useDisclosure,
-    FormLabel,
-    FormControl,
-    Modal,
-    ModalOverlay,
-    ModalContent,
-    ModalHeader,
-    ModalFooter,
-    ModalBody,
-    ModalCloseButton,
-    Button, 
-    VStack,
-    Input,
-     HStack
-      } from '@chakra-ui/react';
-
-function Addaccounts() {
-   
-    
-    const { isOpen, onOpen, onClose } = useDisclosure()
-    
-    const initialRef = React.useRef(null)
-    const finalRef = React.useRef(null)
-    
-    
-    // We create the variables for the words of the seed phrase.
-    let word1;
-    let word2;
-    let word3;
-    let word4;
-    let word5;
-    let word6;
-    let word7;
-    let word8;
-    let word9;
-    let word10;
-    let word11;
-    let word12;
-    
-    
-    
-      return (
-    
-        <>
-  
-      <VStack spacing={10} >
-    
-      <Heading className='center' size="md" >Add your seed phrase: </Heading>
-  
-      <HStack className='center' spacing={3}>
-    <Input id="1" value={word1} type="text"  placeholder='1'  w="150px" h="50px" />
-    <Input id="2" value={word2} type="text" placeholder='2' w="150px" h="50px" />
-    <Input id="3" value={word3} type="text" placeholder='3' size='md' w="150px" h="50px" />
-    <Input id="4" value={word4} type="text" placeholder='4' size='md' w="150px" h="50px" />
-    </HStack>
-  
-    <HStack className='center' spacing={3}>
-    <Input id="5" value={word5} type="text" placeholder='5' size='md' w="150px" h="50px" />
-    <Input id="6" value={word6} type="text" placeholder='6' size='md' w="150px" h="50px" />
-    <Input id="7" value={word7} type="text"  placeholder='7' size='md' w="150px" h="50px" />
-    <Input id="8" value={word8} type="text"  placeholder='8' size='md' w="150px" h="50px" />
-    </HStack>
-  
-    <HStack className='center' spacing={3}>
-    <Input id="9" value={word9} type="text" placeholder='9' size='md' w="150px" h="50px" />
-    <Input id="10" value={word10} type="text" placeholder='10' size='md' w="150px" h="50px" />
-    <Input id="11"  value={word11} type="text" placeholder='11' size='md' w="150px" h="50px" />
-    <Input id="12" value={word12} type="text" placeholder='12' size='md' w="150px" h="50px" />
-    </HStack>
-  
-    <Button  colorScheme='green' className='center' borderRadius="20px" > 
-        Add account
-    </Button>
-    
-    <Modal
-            size="lg"
-            initialFocusRef={initialRef}
-            finalFocusRef={finalRef}
-            isOpen={isOpen}
-            onClose={onClose}  
-          >
-            <ModalOverlay />
-            <ModalContent>
-              <ModalHeader >Your Public Address is : </ModalHeader>
-              <ModalCloseButton />
-              <ModalBody pb={8}>
-                <FormControl mt={6}>
-                  <FormLabel>
-                    Address:
-                   
-                  </FormLabel>
-                </FormControl>
-              </ModalBody>
-              <Center>
-                <ModalFooter>
-                    <VStack>
-                        <Button colorScheme='blue' borderRadius="20px">
-                            Add address
-                        </Button>
-                    </VStack>
-                </ModalFooter>
-              </Center>
-            </ModalContent>
-    </Modal>
-          <Box h="88px" w="100%"/>
-    </VStack>
-      </>
-      )
-    }
-    
-    export {Addaccounts };
-
-```
-
-
-In the next step we get the word-for-word seed phrase from the inputs, the necessary states using the useState hook, and add a new function called addkeyring that will add 12 words to the seed phrase and generate the associated keys.
-
-
-
-```ts
-
-
-    const [valueAddress, setValueAddress] = useState('');
-    
-    const { isOpen, onOpen, onClose } = useDisclosure()
-    
-    const initialRef = React.useRef(null)
-    const finalRef = React.useRef(null)
-    
-    
-    // We create the variables for the words of the seed phrase.
-    let word1;
-    let word2;
-    let word3;
-    let word4;
-    let word5;
-    let word6;
-    let word7;
-    let word8;
-    let word9;
-    let word10;
-    let word11;
-    let word12;
-    
-    
-    const addkeyring = async function main () {
+ We will add a new function called addkeyring that will add 12 words to the seed phrase and generate the associated keys.
+  ```ts title=src/pages/addaccount/addaccounts.tsx
+const addkeyring = async function main () {
     
         // Example:
        // spirit two cable team panther clap slush rhythm fish brave asthma nominee
@@ -468,12 +162,12 @@ In the next step we get the word-for-word seed phrase from the inputs, the neces
     word11=document.getElementById("11") as HTMLInputElement;
     word12=document.getElementById("12") as HTMLInputElement;
     
-    // We add a space and concatenate the words of the seed phrase
+    // Add a space and concatenate the words of the seed phrase
     let wordlist= word1.value + " " + word2.value + " " + word3.value + " " + word4.value + " " + word5.value + " " + word6.value + " " + word7.value + " " + word8.value + " " + word9.value + " " + word10.value + " " + word11.value + " " + word12.value
     
     const mnemonic=wordlist;
     
-    // We create a new keyring type Sr25519
+    // Create a new keyring type Sr25519
     const keyring = new Keyring({ type: 'sr25519' });
     
     // We added seed phrase to the new keyring.
@@ -485,184 +179,11 @@ In the next step we get the word-for-word seed phrase from the inputs, the neces
     //We store the public key in local storage.
     localStorage.setItem("Publickey",keys.address)
     
-     
     };
 
-  ```
-  Finally, the code for the Addaccounts component would be:
-
-
-  ```ts
-
-import React, { useState } from 'react';
-import { 
-    Heading, 
-    Center,
-    Box,
-    useDisclosure,
-    FormLabel,
-    FormControl,
-    Modal,
-    ModalOverlay,
-    ModalContent,
-    ModalHeader,
-    ModalFooter,
-    ModalBody,
-    ModalCloseButton,
-    Button, 
-    VStack,
-    Input,
-     HStack
-      } from '@chakra-ui/react';
-  import { waitReady } from '@polkadot/wasm-crypto';
-  import {Keyring} from '@polkadot/api'; 
+ ```
   
-  
-  function Addaccounts() {
-  
-    
-    const [valueAddress, setValueAddress] = useState('');
-    
-    
-    const { isOpen, onOpen, onClose } = useDisclosure()
-    
-    const initialRef = React.useRef(null)
-    const finalRef = React.useRef(null)
-    
-    
-    // We create the variables for the words of the seed phrase.
-    let word1;
-    let word2;
-    let word3;
-    let word4;
-    let word5;
-    let word6;
-    let word7;
-    let word8;
-    let word9;
-    let word10;
-    let word11;
-    let word12;
-    
-    
-    const addkeyring = async function main () {
-    
-        // Example:
-       // spirit two cable team panther clap slush rhythm fish brave asthma nominee
-       // publicKey = 5CFhkekD6ssN4A6AJrB8AUmwKhsR3vrx7GC8BGnruj1vdyk5
-
-    // We wait for connection.
-    await waitReady();
-    
-    //We get the words of the seed phrase from the inputs.
-    
-    word1=document.getElementById("1") as HTMLInputElement;
-    word2=document.getElementById("2") as HTMLInputElement;
-    word3=document.getElementById("3") as HTMLInputElement;
-    word4=document.getElementById("4") as HTMLInputElement;
-    word5=document.getElementById("5") as HTMLInputElement;
-    word6=document.getElementById("6") as HTMLInputElement;
-    word7=document.getElementById("7") as HTMLInputElement;
-    word8=document.getElementById("8") as HTMLInputElement;
-    word9=document.getElementById("9") as HTMLInputElement;
-    word10=document.getElementById("10") as HTMLInputElement;
-    word11=document.getElementById("11") as HTMLInputElement;
-    word12=document.getElementById("12") as HTMLInputElement;
-    
-    // We add a space and concatenate the words of the seed phrase
-    let wordlist= word1.value + " " + word2.value + " " + word3.value + " " + word4.value + " " + word5.value + " " + word6.value + " " + word7.value + " " + word8.value + " " + word9.value + " " + word10.value + " " + word11.value + " " + word12.value
-    
-    const mnemonic=wordlist;
-    
-    // We create a new keyring type Sr25519
-    const keyring = new Keyring({ type: 'sr25519' });
-    
-    // We added seed phrase to the new keyring.
-    const keys = keyring.createFromUri(mnemonic, { name: 'sr25519' });
-    
-    // Update state
-    setValueAddress(keys.address)
-    
-    //We store the public key in local storage.
-    localStorage.setItem("Publickey",keys.address)
-    
-     
-    };
-    
-      return (
-    
-        <>
-  
-      <VStack spacing={10} >
-    
-      <Heading className='center' size="md" >Add your seed phrase: </Heading>
-  
-      <HStack className='center' spacing={3}>
-    <Input id="1" value={word1} type="text"  placeholder='1'  w="150px" h="50px" />
-    <Input id="2" value={word2} type="text" placeholder='2' w="150px" h="50px" />
-    <Input id="3" value={word3} type="text" placeholder='3' size='md' w="150px" h="50px" />
-    <Input id="4" value={word4} type="text" placeholder='4' size='md' w="150px" h="50px" />
-    </HStack>
-  
-    <HStack className='center' spacing={3}>
-    <Input id="5" value={word5} type="text" placeholder='5' size='md' w="150px" h="50px" />
-    <Input id="6" value={word6} type="text" placeholder='6' size='md' w="150px" h="50px" />
-    <Input id="7" value={word7} type="text"  placeholder='7' size='md' w="150px" h="50px" />
-    <Input id="8" value={word8} type="text"  placeholder='8' size='md' w="150px" h="50px" />
-    </HStack>
-  
-    <HStack className='center' spacing={3}>
-    <Input id="9" value={word9} type="text" placeholder='9' size='md' w="150px" h="50px" />
-    <Input id="10" value={word10} type="text" placeholder='10' size='md' w="150px" h="50px" />
-    <Input id="11"  value={word11} type="text" placeholder='11' size='md' w="150px" h="50px" />
-    <Input id="12" value={word12} type="text" placeholder='12' size='md' w="150px" h="50px" />
-    </HStack>
-  
-    <Button onClick={ ()=> { onOpen();  addkeyring(); }} colorScheme='green' className='center' borderRadius="20px" > 
-        Add account
-    </Button>
-    
-    <Modal
-            size="lg"
-            initialFocusRef={initialRef}
-            finalFocusRef={finalRef}
-            isOpen={isOpen}
-            onClose={onClose}  
-          >
-            <ModalOverlay />
-            <ModalContent>
-              <ModalHeader >Your Public Address is : </ModalHeader>
-              <ModalCloseButton />
-              <ModalBody pb={8}>
-                <FormControl mt={6}>
-                  <FormLabel>
-                    Address:
-                    {<p> {valueAddress}</p>}  
-                  </FormLabel>
-                </FormControl>
-              </ModalBody>
-              <Center>
-                <ModalFooter>
-                    <VStack>
-                        <Button colorScheme='blue' borderRadius="20px">
-                            Add address
-                        </Button>
-                    </VStack>
-                </ModalFooter>
-              </Center>
-            </ModalContent>
-    </Modal>
-          <Box h="88px" w="100%"/>
-    </VStack>
-      </>
-      )
-    }
-    
-    export {Addaccounts };
-
-   ```
-
-   Great, now you have two basic components to build a wallet as a web application.
+  Great, now you have two basic components to build a wallet as a web application.
 
 import Quiz from '/src/components/quiz';
 
