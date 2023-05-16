@@ -1,0 +1,306 @@
+# Connecting to the wallet browser extension
+
+This section will teach you about how to connect to the polkadot browser
+extension and some caveats with next js.
+
+## A ContextProvider for polkadot accounts
+
+While this is not a tutorial on react context, this demo dApp is a
+[paradigmatic example of when react context is useful](https://react.dev/learn/passing-data-deeply-with-context#use-cases-for-context).
+It will provide all components in the dApp with context: in our case, that is
+amongst others
+
+- the accounts that come from the browser extension
+- the selected account
+- the injector of the selected account (which can be used for signing data /
+  transactions with the browser extension )
+
+All this comes from the polkadot.js browser extension. If you have never worked
+with it before, the [cookbook](https://polkadot.js.org/docs/extension/cookbook)
+is a good place to start exploring it.
+
+:::info
+
+There are many wallet browser extensions for the polkadot ecosystem. In this
+demo we use the basic
+[Polkadot{.js} "developer" extension](https://polkadot.js.org/extension/). Other
+popular extensions are [Talisman](https://www.talisman.xyz/) or
+[Subwallet](https://subwallet.app/). The tutorial works for any extension a user
+has installed due to the way the third party wallets are injected into the
+browser.
+
+:::
+
+While everything in this dApp could be handled without react Context and a
+ContextProvider
+
+### Starting with a hook
+
+In modern react, the use of hooks is the state of the art. Hooks let you use
+different React features from your components. A `usePolkadotExtension` hook can
+be a means of providing data from the wallet browser extension to any component
+inside your dApp. While our demo dApp is small and you will only use it in two
+distinct components in this demo, you can imagine the usefulness in large
+applications.
+
+Let's first think about the returned data and types from of the hook. As
+mentioned above it should be aware of
+
+1. `accounts` that hold an array of accounts with its substrate `address` as
+   well as some metadata, e.g. the `name` of an account.
+1. The `selectedAccountIdx` which will store the index of the account the user
+   has selected. Imagine having 10 accounts enabled in the browser extension.
+1. In order to sign a message, we need an accounts
+   [`injector`](https://polkadot.js.org/docs/extension/cookbook/#sign-a-message)
+   which holds the signer we can use.
+
+First, create a new file in `hooks/usePolkadotExtension.ts` and start by copying
+the types and the frame for the hook.
+
+```js showLineNumbers title="hooks/usePolkadotExtension.ts"
+import {
+  InjectedAccountWithMeta,
+  InjectedExtension,
+} from "@polkadot/extension-inject/types";
+import { useEffect, useState } from "react";
+import { documentReadyPromise } from "./utils";
+
+export interface UsePolkadotExtensionReturnType {
+  isReady: boolean;
+  accounts: InjectedAccountWithMeta[] | null;
+  error: Error | null;
+  injector: InjectedExtension | null;
+  actingAccount: InjectedAccountWithMeta | null;
+  setActingAccountIdx: (idx: number) => void;
+}
+
+export const usePolkadotExtension = (): UsePolkadotExtensionReturnType => {
+  const [isReady, setIsReady] = useState(false);
+  const [accounts, setAccounts] = useState<InjectedAccountWithMeta[] | null>(
+    null
+  );
+  const [extensions, setExtensions] = useState<InjectedExtension[] | null>(
+    null
+  );
+  const [actingAccountIdx, setActingAccountIdx] = useState<number>(0);
+  const [error, setError] = useState<Error | null>(null);
+  const [injector, setInjector] = useState<InjectedExtension | null>(null);
+
+  const actingAccount = accounts && accounts[actingAccountIdx];
+
+  // TODO hook logic
+
+  return {
+    accounts,
+    actingAccount,
+    setActingAccountIdx,
+    isReady,
+    error,
+    injector,
+  };
+};
+```
+
+We are creating 6 state variables that will be shared through the inclusion of
+`usePolkadotExtension`:
+
+- `isReady`: Accounts were found, the extension is loaded correctly
+- `accounts`: Array of accounts from the extension
+- `actingAccountIdx`: Which of the accounts in the `accounts` array is currently
+  active. You will also use the `setActingAccountIdx` in the `AccountSelect`
+  component we already created.
+- `error`: The error that was eventually returned from the extension
+- `injector`: The active account's injector (which is stored in the hook for
+  convenience)
+
+They are not populated yet. Put the following to effects at the point where it
+says `TODO`, and try to understand the setup before reading below for an
+explanation.
+
+```js showLineNumbers title="hooks/usePolkadotExtension.ts"
+  useEffect(() => {
+    // This effect is used to setup the browser extension
+    const extensionSetup = async () => {
+      //highlight-next-line
+      const extensionDapp = await import("@polkadot/extension-dapp");
+      const { web3AccountsSubscribe, web3Enable } = extensionDapp;
+
+      const injectedPromise = documentReadyPromise(() =>
+        web3Enable("Polkadot Tokengated Website Demo")
+      );
+      const extensions = await injectedPromise;
+
+      setExtensions(extensions);
+
+      if (extensions.length === 0) {
+        console.log("no extension");
+        return;
+      }
+
+      if (accounts) {
+        setIsReady(true);
+      } else {
+        let unsubscribe: () => void;
+
+        // we subscribe to any account change
+        // note that `web3AccountsSubscribe` returns the function to unsubscribe
+        unsubscribe = await web3AccountsSubscribe((injectedAccounts) => {
+          setAccounts(injectedAccounts);
+        });
+
+        return () => unsubscribe && unsubscribe();
+      }
+    };
+
+    if (!isReady) {
+      extensionSetup();
+    }
+  }, [extensions]);
+
+  useEffect(() => {
+    // This effect is used to get the injector from the selected account
+    // and is triggered when the accounts or the actingAccountIdx change
+    const getInjector = async () => {
+      const { web3FromSource } = await import("@polkadot/extension-dapp");
+      const actingAccount =
+        accounts && actingAccountIdx !== undefined
+          ? accounts[actingAccountIdx]
+          : undefined;
+      if (actingAccount?.meta.source) {
+        try {
+          const injector = await web3FromSource(actingAccount?.meta.source);
+          setInjector(injector);
+        } catch (e: any) {
+          setError(e);
+        }
+      }
+    };
+
+    getInjector();
+  }, [actingAccountIdx, accounts]);
+```
+
+The first effect just sets up the extension. It is basically the code from the
+[Instructions on how to use the extenion](https://polkadot.js.org/docs/extension/usage),
+with some adaptions for next.js:
+
+Because next.js code is rendered for the server and the client we will have a
+problem with the extension code, as browser extensions naturally only run on
+clients! That is why we need to use a dynamic import (Line 4). The dynamic
+import is inside an `useEffect` hook,
+[which only runs on the client](https://react.dev/reference/react/useEffect).
+Then, we await the extensions being provided by the polkadot browser extension
+and set the accounts coming from the extension as soon as they are available.
+That whole `extensionSetup` async function is called when the hook is first
+rendered in the DOM _and_ when the extensions change, i.e. a user installs a new
+extension / allows an extension to access the dApp.
+
+The second effect just sets the injector state variable whenever the `accounts`
+or `actingAccountIdx` state variables change.
+
+Before moving on to the next section, take some time to answer the following
+questions if you like to make sure you understood the tutorial content so far.
+
+### Providing Context
+
+> Context lets the parent component make some information available to any
+> component in the tree below it—no matter how deep—without passing it
+> explicitly through props.
+> ([React Dev](https://react.dev/learn/passing-data-deeply-with-context))
+
+Now that the hook is ready, we could use it in our `_index.ts` to call it once
+and then pass the props down. You need the data from the hook in two places (at
+the moment):
+
+1. The `Login` component
+2. The `AccountSelect` component (which is a child of the `Login` component)
+
+So in this example it is really not a big issue however this tutorial wants to
+teach you how to write reusable blocks for larger decentralized applications,
+that's why we will do it with context here. Imagine e.g. you would want to add a
+component that displays a profile for the currently logged in user, showing
+their tokens, or their balances, you would need that `accounts` data over again,
+and can with the following code easily reuse it without prop drilling.
+
+:::info
+
+If you have never worked with _Context_ in react before or do not understand
+when to use it, read the excellent
+[react dev documentation on Context](https://react.dev/learn/passing-data-deeply-with-context).
+
+:::
+
+To get started with Context, create a file
+`context/polkadot-extension-context.ts` and add the following code.
+
+```js title="context/polkadot-extension-context.ts" showLineNumbers
+import { createContext, ReactNode, useContext } from "react";
+import {
+  usePolkadotExtension,
+  UsePolkadotExtensionReturnType,
+} from "@/hooks/use-polkadot-extension";
+
+const PolkadotExtensionContext =
+  createContext <
+  UsePolkadotExtensionReturnType >
+  {
+    accounts: [],
+    error: null,
+    isReady: false,
+    actingAccount: null,
+    injector: null,
+    setActingAccountIdx: () => {},
+  };
+
+export const usePolkadotExtensionWithContext = () =>
+  useContext(PolkadotExtensionContext);
+
+export const PolkadotExtensionContextProvider = ({
+  children,
+}: {
+  children: ReactNode,
+}) => {
+  const polkadotExtension = usePolkadotExtension();
+
+  return (
+    <PolkadotExtensionContext.Provider value={polkadotExtension}>
+      {children}
+    </PolkadotExtensionContext.Provider>
+  );
+};
+```
+
+You can see that it first defines the `PolkadotExtensionContext` type and its
+default values. In lines 19 and 20 a utility hook is defined so that you do not
+have to import the `Context` in other files but can directly use the hook. The
+`PolkadotExtensionContextProvider` finally is just syntactic sugar for using the
+provider with the default value of `usePolkadotExtension()`.
+
+The last step to add Context to your app is now to add the `ContextProvider` to
+your `_app.ts` file. It will make the context available to all components.
+
+```js title="pages/_app.tsx" showLineNumbers
+import "@/styles/globals.css";
+import type { AppProps } from "next/app";
+import { PolkadotExtensionContextProvider } from "@/context/polkadotExtensionContext";
+
+export default function App({ Component, pageProps }: AppProps) {
+  return (
+    <PolkadotExtensionContextProvider>
+      <Component {...pageProps} />
+    </PolkadotExtensionContextProvider>
+  );
+}
+```
+
+### Recap
+
+Until now, you have first created all required UI components. Then you have
+created a custom hook that lets you _use_ the data that comes from the browser
+extension. Because it is a good practice to store account data in Context, you
+have then created a ContextProvider that lets you use the data in any (future)
+component of your dApp.
+
+Now the last and most important thing of the tutorial is to create the actual
+authentication flow, that authenticates a user and checks if they have the
+tokengated permission to view a route.

@@ -3,13 +3,28 @@
 }
 
 .tag {
-  margin: 0 0.4rem 0.5rem 0;
+  margin-right: 1rem;
   display: inline-block;
+}
+
+.tagLink {
+  display: flex;
+  align-items: center;
+  color: #fff;
+
+  &:hover {
+    text-decoration: none;
+  }
+
+  svg {
+    margin-right: 6px;
+  }
 }
 
 .tagText {
   display: flex;
   align-items: center;
+  font-size: 32px;
   svg {
     margin-right: 10px;
   }
