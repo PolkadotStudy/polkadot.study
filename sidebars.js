@@ -13,6 +13,7 @@
 
 const sidebars = {
   // But you can create a sidebar manually
+
   tokengatedSidebar: [
     "tokengated-polkadot-next-js/intro",
     "tokengated-polkadot-next-js/setup",
@@ -35,13 +36,15 @@ const sidebars = {
     },
   ],
 
-  // add a sidebar for your tutorial here like
-  // yourTutorialSidebar: [
-  //  {
-  //    type: "category",
-  //    label: "Your Tutorial Title",
-  //    items: ["your-tutorial-folder/intro", <...other items >],
-  //  },
+  polkadotWalletSidebar: [
+    "wallet-with-polkadot-js-and-react-with-typescript/intro",
+    "wallet-with-polkadot-js-and-react-with-typescript/step1",
+    "wallet-with-polkadot-js-and-react-with-typescript/step2",
+    "wallet-with-polkadot-js-and-react-with-typescript/step3",
+    "wallet-with-polkadot-js-and-react-with-typescript/step4",
+    "wallet-with-polkadot-js-and-react-with-typescript/step5",
+    "wallet-with-polkadot-js-and-react-with-typescript/conclusion",
+  ],
 };
 
 module.exports = sidebars;

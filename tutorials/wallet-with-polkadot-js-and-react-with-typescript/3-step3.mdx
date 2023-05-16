@@ -1,0 +1,241 @@
+# Create new keys with the GUI using the Polkadot.js API.
+
+In this section you will understand the basic concepts about encryption algorithms and we will add functionality to the ``Newaccounts`` and ``Addaccounts`` components created in the previous section.
+
+## Basic concepts.
+
+The Polkadot js API library provides support for several encryption algorithms that can be used to encrypt and decrypt messages on the Polkadot network. Some of the encryption algorithms available in the library are:
+
+1. **AES (Advanced Encryption Standard):** is a widely used symmetric encryption algorithm. Polkadot js API provides support for AES in CBC, CFB, CTR, OFB, and GCM modes.
+
+2. **RSA (Rivest-Shamir-Adleman):** is an asymmetric encryption algorithm that uses a public key to encrypt and a private key to decrypt. Polkadot js API supports RSA with 2048-bit and 4096-bit keys.
+
+3. **ECDSA (Elliptic Curve Digital Signature Algorithm):** is a digital signature algorithm that uses elliptic curves to generate public and private keys. Polkadot js API supports ECDSA with secp256k1 and secp256r1 elliptic curves.
+
+4. **Ed25519:** is a digital signature algorithm based on the Curve25519 elliptic curve. Polkadot js API supports Ed25519 for signing transactions and messages.
+
+5. **Schnorrkel:** is a digital signature algorithm based on elliptic curves used in the Polkadot blockchain. Polkadot js API provides support for Schnorrkel for signing transactions and messages.
+
+Polkadot and Kusama primarily use the Ed25519 encryption algorithm for the generation of public and private keys. Ed25519 is a digital signature algorithm based on the elliptic curve Curve25519, which is highly efficient in terms of speed and security.
+
+Ed25519 is used in Polkadot and Kusama for the generation of Sr25519 key types, which is a special type of public key designed specifically for use in blockchain. Sr25519 keys are used for transaction signing, account identification, and session key generation.
+
+In this tutorial we will only use the Ed25519 that is used in Polkadot and Kusama for the generation of Sr25519 key types.
+
+## Instructions
+
+In this interactive tutorial you will add the functionality by integrating the code in the right place, this will require cloning the example repository.
+
+### Clone the repository
+
+To clone the example repository you can follow the following command:
+
+```bash
+git clone https://github.com/A-mont/WalletTutorialExample.git
+```
+### Install packages:
+
+```bash
+cd WalletTutorialExample
+yarn install
+```
+
+## Exercises
+
+This exercise will consist of completing the code in the ``Newaccounts`` and ``Addaccounts``  functional components provided in the cloned example repository.
+
+### 1. Add functionality to the graphic component Newaccounts using Polkadot-js API.
+
+#### 1. Import library components
+
+The first step for this first exercise will be to import the necessary components available in the Polkadot-js API for the creation of the seed phrase composed of 12 words and with these to create the public and private key.
+
+For this step we will use the following 3 components in the polkadot libraries, these components are:
+
+**mnemonicGenerate:** This function generates the 12 word mnemonic as a seed phrase and is found in the '@polkadot/util-crypto' library which is installed as a dependency when you install the Polkadot-js API.
+
+**Keyring:** This function generates the public and private key, it is found in the '@polkadot/api' library.
+
+**waitReady:**This function used to wait for WebAssembly (Wasm) cryptographic modules to be fully loaded and ready for use, it is found in the '@polkadot/wasm-crypto' library.
+
+To import these components in the library, we can use the following code:
+ ```ts title=src/pages/newaccount/newaccounts.tsx
+import {Keyring} from '@polkadot/api'; 
+import {mnemonicGenerate} from '@polkadot/util-crypto';
+import { waitReady } from '@polkadot/wasm-crypto';
+ ```
+
+#### 2. Create states in React
+
+In React, state refers to the data that can change during the lifecycle of a component. **useState** is a React hook that allows functional components to have internal state.
+
+We will now add the necessary states using the useState hook.
+
+```ts title=src/pages/newaccount/newaccounts.tsx
+     // We create a new states
+    const [text, setText] = useState('');
+   
+    const [valueAddress, setValueAddress] = useState('');
+ ```
+
+ #### 3. Add a keyring function
+ 
+ Now, we add a new function called keyring that will create 12 words for the seed phrase and associated keys.
+
+```ts title=src/pages/newaccount/newaccounts.tsx
+     
+    // We add a new function
+    const keyring = async function main () {
+      
+      // We wait for connection.
+      await waitReady();
+   
+      // Create mnemonic string
+      const mnemonic = mnemonicGenerate();
+   
+      // Update state
+      setText(mnemonic)
+     
+      // We create a new keychain type Sr25519
+      const keyring = new Keyring({ type: 'sr25519' });
+   
+      // We added seed phrase to the new keyring.
+      const keys = keyring.createFromUri(mnemonic, { name: 'sr25519' });
+   
+      //Update state
+      setValueAddress(keys.address);
+   
+      //We store the public key in local storage.
+      localStorage.setItem("Publickey",keys.address); 
+      
+   }
+ ```
+ Finally with these three steps, we add functionality to the Newaccounts component, this functional component will allow us to generate the 12 word seed phrase and associated keys.
+ 
+### 2. Add functionality to the graphic component Addaccounts using Polkadot-js API.
+
+
+#### 1. Import library components
+
+Now, we will be to import the necessary components available in the Polkadot-js API for Addaccounts component.
+
+```ts title=src/pages/addaccount/addaccounts.tsx
+import {Keyring} from '@polkadot/api'; 
+import { waitReady } from '@polkadot/wasm-crypto';
+ ```
+
+
+#### 2. Create states in React
+
+In the next step, we will add the necessary states using the useState hook.
+
+```ts title=src/pages/addaccount/addaccounts.tsx
+     // Create state
+    const [valueAddress, setValueAddress] = useState('');
+  ```
+
+#### 3. Add a addkeyring function
+
+ We will add a new function called addkeyring that will add 12 words to the seed phrase and generate the associated keys.
+  ```ts title=src/pages/addaccount/addaccounts.tsx
+const addkeyring = async function main () {
+    
+        // Example:
+       // spirit two cable team panther clap slush rhythm fish brave asthma nominee
+       // publicKey = 5CFhkekD6ssN4A6AJrB8AUmwKhsR3vrx7GC8BGnruj1vdyk5
+
+    // We wait for connection.
+    await waitReady();
+    
+    //We get the words of the seed phrase from the inputs.
+    
+    word1=document.getElementById("1") as HTMLInputElement;
+    word2=document.getElementById("2") as HTMLInputElement;
+    word3=document.getElementById("3") as HTMLInputElement;
+    word4=document.getElementById("4") as HTMLInputElement;
+    word5=document.getElementById("5") as HTMLInputElement;
+    word6=document.getElementById("6") as HTMLInputElement;
+    word7=document.getElementById("7") as HTMLInputElement;
+    word8=document.getElementById("8") as HTMLInputElement;
+    word9=document.getElementById("9") as HTMLInputElement;
+    word10=document.getElementById("10") as HTMLInputElement;
+    word11=document.getElementById("11") as HTMLInputElement;
+    word12=document.getElementById("12") as HTMLInputElement;
+    
+    // Add a space and concatenate the words of the seed phrase
+    let wordlist= word1.value + " " + word2.value + " " + word3.value + " " + word4.value + " " + word5.value + " " + word6.value + " " + word7.value + " " + word8.value + " " + word9.value + " " + word10.value + " " + word11.value + " " + word12.value
+    
+    const mnemonic=wordlist;
+    
+    // Create a new keyring type Sr25519
+    const keyring = new Keyring({ type: 'sr25519' });
+    
+    // We added seed phrase to the new keyring.
+    const keys = keyring.createFromUri(mnemonic, { name: 'sr25519' });
+    
+    // Update state
+    setValueAddress(keys.address)
+    
+    //We store the public key in local storage.
+    localStorage.setItem("Publickey",keys.address)
+    
+    };
+
+ ```
+  
+  Great, now you have two basic components to build a wallet as a web application.
+
+import Quiz from '/src/components/quiz';
+
+export const onequestion = { 
+  question: "What is the primary encryption algorithm used in Polkadot and Kusama?", 
+  answers: [ 
+    "RSA", 
+    "Ed25519", 
+    "AES",
+    " ECDSA"
+  ],
+  correctAnswerIdx: [1],
+  msgCorrect: "Correct answer. Good job.",
+  msgIncorrect: "Incorrect answer. Please try again.",
+  explanation: "Correct, Ed25519 is used in Polkadot and Kusama"
+}
+
+export const twoquestion = { 
+  question: "What is the advantage of using Ed25519 in Polkadot and Kusama?", 
+  answers: [ 
+    "It is easy to implement", 
+    "It is highly efficient in terms of speed and security", 
+    "It has been widely adopted in other blockchain networks",
+    "It supports multiple encryption keys"
+  ],
+  correctAnswerIdx: [1],
+  msgCorrect: "Correct answer. Good job.",
+  msgIncorrect: "Incorrect answer. Please try again.",
+  explanation: "Great, that's right, Ed25519 is highly efficient in terms of speed and security"
+}
+
+
+export const thirdquestion = { 
+  question: "What is the Sr25519 key type used for in Polkadot and Kusama?", 
+  answers: [ 
+    "Encryption of data", 
+    "Decryption of data", 
+    "Transaction signing, account identification, and session key generation",
+    "Network consensus"
+  ],
+  correctAnswerIdx: [2],
+  msgCorrect: "Correct answer. Good job.",
+  msgIncorrect: "Incorrect answer. Please try again.",
+  explanation: "Sr25519 key is used for transaction signing, account identification, and session key generation"
+}
+
+
+<Quiz quizItem={ onequestion } />
+
+<Quiz quizItem={ twoquestion } />
+
+<Quiz quizItem={ thirdquestion } />
+
+
+   
