@@ -21,7 +21,7 @@ const sidebars = {
     "tokengated-polkadot-next-js/authentication-with-next-auth",
     "tokengated-polkadot-next-js/conclusion",
   ],
-  
+
   substrateInBitsSidebar: [
     {
       type: "category",
@@ -36,21 +36,14 @@ const sidebars = {
     },
   ],
 
-  tutorialSidebar: [
-    'intro',
-    {
-      type: 'category',
-      label: 'Basic Wallet with Polkadot-js and React with Typescript',
-      items: [
-          'tutorials/wallet-with-polkadot-js-and-react-with-typescript/intro',
-          'tutorials/wallet-with-polkadot-js-and-react-with-typescript/step1',
-          'tutorials/wallet-with-polkadot-js-and-react-with-typescript/step2',
-          'tutorials/wallet-with-polkadot-js-and-react-with-typescript/step3',
-          'tutorials/wallet-with-polkadot-js-and-react-with-typescript/step4',
-          'tutorials/wallet-with-polkadot-js-and-react-with-typescript/step5',
-          'tutorials/wallet-with-polkadot-js-and-react-with-typescript/conclusion'
-      ],
-  },
+  polkadotWalletSidebar: [
+    "wallet-with-polkadot-js-and-react-with-typescript/intro",
+    "wallet-with-polkadot-js-and-react-with-typescript/step1",
+    "wallet-with-polkadot-js-and-react-with-typescript/step2",
+    "wallet-with-polkadot-js-and-react-with-typescript/step3",
+    "wallet-with-polkadot-js-and-react-with-typescript/step4",
+    "wallet-with-polkadot-js-and-react-with-typescript/step5",
+    "wallet-with-polkadot-js-and-react-with-typescript/conclusion",
   ],
 };
 
