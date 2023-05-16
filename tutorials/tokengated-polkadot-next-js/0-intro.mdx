@@ -12,30 +12,19 @@ duration: 3h
 level: intermediate
 ---
 
-# Tokengated Website with next-auth, polkadot browser extension and polkadot js API
+# Tokengated Website with polkadot.js and next-auth
 
 In recent years, tokengated websites have become an increasingly popular way to
-control access to sensitive information or functionality on a website. By
-requiring an authentication token to access certain pages or features, website
-developers can ensure that only authorized users or applications can interact
-with their website, while preventing unauthorized access and protecting the
-security and privacy of their users. With web3 that can now be done without
-username + password authentication but instead using a wallet and a browser
-extension.
+control access to sensitive information or functionality on a website. With web3
+that can now be done without username + password authentication but instead
+using a wallet and a browser extension.
 
 The use cases for tokengated websites are diverse, ranging from user
 authentication and authorization, to paid content, to API access control. In the
 context of Non-Fungible Tokens (NFTs) or other crypto tokens, tokengated
 websites can be used to provide exclusive access to content or functionality
-based on the ownership of these tokens.
-
-For example, in the case of NFTs, tokengated websites can be used to provide
-exclusive content or perks to users who own a specific NFT. This could include
-early access to new releases, special events, or other benefits. By requiring
-users to hold a specific token that corresponds to their NFT ownership, website
-developers can ensure that only authorized users can access these exclusive
-features, while also providing additional value to NFT owners and helping to
-ensure the authenticity and provenance of their digital assets.
+based on the ownership of these tokens. This could include early access to new
+releases, special events, or other benefits.
 
 In this tutorial, we will walk through the process of creating a tokengated
 website that is specifically designed to work with NFTs or other crypto tokens.
@@ -45,15 +34,24 @@ is only accessible to users who own specific tokens.
 
 ## What you will build
 
-[https://polkadot-tokengated-website.vercel.app/](https://polkadot-tokengated-website.vercel.app/)
+![Polkadot Tokengated Demo Website](./images/tokengated-website-polkadot-next-auth.png)
+
+[Github](https://github.com/niklasp/polkadot-js-tokengated-webssite) |
+[Demo](https://polkadot-tokengated-website.vercel.app/)
 
 ## Time of completion
 
-3h
+- 2-4 hours
 
 ## What you'll learn
 
-- List of concepts the reader will learn
+- To build a nice user interface for account selection
+- How to use the polkadot browser extension with next.js
+- How to write a convenient hook to just `usePolkadotExtension`
+- How to use `Context` and a `ContextProvider` to make all accounts available to
+  your components
+- How to work with next-auth to create a custom `CredentialsProvider` that
+  authenticates users based on their signature.
 
 ## Prerequisites
 
@@ -63,6 +61,6 @@ is only accessible to users who own specific tokens.
 
 ## Author
 
-Niftesty is a freelance frontend developer. He codes anything polkadot related
+niftesty is a freelance frontend developer. He codes anything polkadot related
 at the moment and has graduated in the Polkadot Blockchain Academy 2023 in
 Buenos Aires.

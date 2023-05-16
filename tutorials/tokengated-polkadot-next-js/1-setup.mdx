@@ -2,26 +2,52 @@
 
 In the first part, you are going to setup the development environment for
 developing the dApp. It's a
-[basic next.js setup](https://nextjs.org/docs/getting-started) with additional
-dependency installations.
+[basic next.js setup](https://nextjs.org/docs/getting-started) with some
+dependencies.
+
+To get you started there is a github repo with stubs and relevant file
+structures. Go ahead and clone it and checkout the `tutorial` branch that only
+contains the stubs.
 
 ```bash
-npx create-next-app@latest
+git clone git@github.com:niklasp/polkadot-js-tokengated-website.git
+cd polkadot-js-tokengated-website
+git checkout tutorial
 ```
 
-As we will be using next-auth and polkadot-js, you will install those
-dependencies, too.
+Then install all dependencies
 
 ```bash
-npm install next-auth
+yarn
 ```
 
-You can run the development server at
-[http://localhost:3000](http://localhost:3000) by running
+To start a development server run
 
 ```bash
-npm run dev
+yarn dev
 ```
+
+You will notice some error outputs in the console when running the server, like:
+
+```bash
+[next-auth][warn][NEXTAUTH_URL]
+https://next-auth.js.org/warnings#nextauth_url
+[next-auth][warn][NO_SECRET]
+https://next-auth.js.org/warnings#no_secret
+```
+
+That is because the repo uses environment variables for different settings. The
+repo contains a `/.env.local.example` file. Go ahead and rename that file to
+`.env.local` and change the variables if you want. Now the error message should
+be gone
+
+:::caution
+
+In a production environment, the security of your dApp / authentication relies
+on `NEXTAUTH_SECRET` being long and secure and not shared. The `NEXTAUTH_URL`
+should also point to something else in production.
+
+:::
 
 Great. Now that the dependencies and development environment are setup, you can
 build the UI in the next step.
@@ -44,48 +70,20 @@ browser wallet extension (we use the polkadot.js extension in this tutorial), in
 order to receive all `accounts`. It also stores the index of the currently
 selected account.
 
-First, create a new file, in `components`, named `account-select.tsx`. Next,
-import some styles / components to build a nice user interface (you can omit
-these if you just want the bare functionality).
-
-```js title="components/account-select.tsx"
-import { useState } from "react";
-
-import Identicon from "@polkadot/react-identicon";
-import "primereact/resources/themes/md-dark-indigo/theme.css";
-import "primereact/resources/primereact.min.css";
-import styles from "@/styles/Home.module.css";
-
-import { Dropdown } from "primereact/dropdown";
-```
-
-:::info
-
-The `Identicon` is the small colorful circle that gives the user a visual
-representation of their substrate address and helps identiying accounts.
-
-:::
+First, have a look at in `components/account-select.tsx`. Think about how you
+would do it yourself, first before proceeding. The `accounts` are given, try to
+write a `<select>` with `<option>` and an `onChange` function, that calls the
+`setActingAccountIdx` function.
 
 Next, let's write the component.
 
 ```js showLineNumbers title="components/account-select.tsx"
 export default function AccountSelector() {
-  const [accounts, setAccounts] = useState([]);
-  const [actingAccountIdx, setActingAccountIdx] = useState(0);
-
   const { accounts, actingAccount, setActingAccountIdx } =
     usePolkadotExtensionWithContext();
 
   return (
-    <Dropdown
-      options={accounts ?? undefined}
-      optionLabel="address"
-      placeholder="Select Account"
-      className={styles.dropdown}
-      value={actingAccount}
-      itemTemplate={accountOptionTemplate}
-      valueTemplate={accountValueTemplate}
-      //highlight-start
+    <select
       onChange={(event) => {
         const accountIdx = accounts
           ? accounts.findIndex(
@@ -94,8 +92,14 @@ export default function AccountSelector() {
           : 0;
         setActingAccountIdx(accountIdx);
       }}
-      //highlight-end
-    />
+      value={actingAccount?.address}
+    >
+      {accounts?.map((acc) => (
+        <option key={acc.address} value={acc.address}>
+          {acc.meta?.name} - {acc.address}
+        </option>
+      ))}
+    </select>
   );
 }
 ```
@@ -112,5 +116,248 @@ UI component you need.
 
 ### Login Button
 
--
-- https://realtakahashi-work.medium.com/astar-next-js-polkadot-js-5cbfe48515ad
+The `LoginButton` component is more complex than the `AccountSelect` but it will
+be breaken down into parts in this paragraph. Have a look at the
+`components/login-button.tsx` file.
+
+You will find 2 `TODO`s
+
+1. to write the `handleLogin` function.
+1. to write the component JSX
+
+The JSX is the easier part, you can try yourself before proceeding. There should
+be 2 nested branches that will change the UI:
+
+- If `accounts` is defined and has a length
+- If `session` is defined and not null
+
+We will look at the `handle login` together below.
+
+```js title="components/login-button.tsx" showLineNumbers
+import { useState } from "react";
+import { useSession, signIn, signOut, getCsrfToken } from "next-auth/react";
+import { useRouter } from "next/router";
+import Link from "next/link";
+
+import { usePolkadotExtensionWithContext } from "@/context/polkadotExtensionContext";
+import AccountSelect from "./account-select";
+
+import styles from "@/styles/Home.module.css";
+import { Inter } from "next/font/google";
+
+const inter = Inter({ subsets: ["latin"] });
+
+export default function LoginButton() {
+  const router = useRouter();
+  const [error, setError] = (useState < string) | (undefined > undefined);
+  const [isLoading, setIsLoading] = useState(false);
+
+  // TODO write ContextProvider
+  const { accounts, actingAccount, injector } =
+    usePolkadotExtensionWithContext();
+
+  const handleLogin = async () => {
+    // TODO login functionality will come here
+  };
+
+  // a next-auth hook that will return the session data, i.e. the authenticated user
+  // used to handle component state
+  const { data: session } = useSession();
+
+  return (
+    <>
+      // highlight-next-line
+      {accounts && accounts.length > 0 ? (
+        <>
+          <div className={styles.cardWrap}>
+            <div className={styles.dropDownWrap}>
+              {!session && <AccountSelect />}
+            </div>
+            // highlight-next-line
+            {session ? (
+              <>
+                <Link href="/protected-api" className={styles.card}>
+                  <h2 className={inter.className}>
+                    🎉 View Tokengated Route <span>-&gt;</span>
+                  </h2>
+                  <p className={inter.className}>
+                    You passed the tokengate {session.user?.name}. You can now
+                    view the protected route.
+                  </p>
+                </Link>
+                <div
+                  role="button"
+                  onClick={() => signOut()}
+                  className={styles.card}
+                >
+                  <h2 className={inter.className}>
+                    Sign Out <span>-&gt;</span>
+                  </h2>
+                  <p className={inter.className}>
+                    Click here to sign out your account {session.user?.name}.
+                  </p>
+                </div>
+              </>
+            ) : (
+              <div
+                role="button"
+                // highlight-next-line
+                onClick={() => handleLogin()}
+                className={styles.card}
+              >
+                <h2 className={inter.className}>
+                  🔑 Let me in <span>-&gt;</span>
+                </h2>
+                <p className={inter.className}>
+                  Click here to sign in with your selected account and check if
+                  you can view the tokengated content. <br></br>
+                  You need &gt; 1 KSM free balance.
+                </p>
+              </div>
+            )}
+          </div>
+          {isLoading ? (
+            <>Signing In ...</>
+          ) : (
+            <span className={styles.error}> {error} </span>
+          )}
+        </>
+      ) : (
+        <div className={styles.walletInfo}>
+          <p>
+            Please{" "}
+            <a
+              className={styles.colorA}
+              href="https://polkadot.js.org/extension/"
+            >
+              install a polkadot wallet browser extension
+            </a>{" "}
+            to test this dApp.
+          </p>
+          <p>
+            If you have already installed it allow this application to access
+            it.
+          </p>
+        </div>
+      )}
+    </>
+  );
+}
+```
+
+Until now, the file basically contains the imports we will need plus some jsx
+logic. Take some minutes to understand the above code. The outer conditional
+checks wether there is data in `accounts` (Line 33). If not, there is likely no
+polkadot browser extension installed, or the user has not granted the dApp
+access. In that case, a message with a link to download and install the
+extension is displayed.
+
+In the case of available accounts, there is another conditional, checking if the
+`session` variable is present (Line 39). If it is, the user is successfully
+authenticated already, and we show a logout button. If the `session` is not
+available, the user is not authenticated and a button that calls the
+`handleLogin` function is displayed.
+
+After copying the code you will have some errors. That is, like in the
+`AccountSelect` component, because you have not defined the
+`usePolkadotExtensionWithContext()` function yet. You will do that in the
+[next chapter](connecting-to-the-wallet-browser-extension). But first focus on
+the `handleLogin` function that is a stub.
+
+#### Handle the login
+
+The `handleLogin` function is responsible for 4 important things:
+
+1. Constructing a `message` that contains relevant information about the user
+   who is trying to authenticate, and also _what_ they are authenticating
+   against.
+1. Ask the browser extension to `sign` that message by the user
+1. Send that signature to the next server side where it can be used to check if
+   it is really the account making the request
+1. Updating the UI with feedback for the user (loading, error).
+
+Have a look at the function before
+
+```js title="components/login-button.tsx" showLineNumbers
+const handleLogin = async () => {
+  try {
+    setIsLoading(true);
+    let signature = "";
+    const message = {
+      statement:
+        "Sign in with polkadot extension to the example tokengated example dApp",
+      uri: window.location.origin,
+      nonce: await getCsrfToken(),
+      version: "1",
+    };
+
+    const signRaw = injector?.signer?.signRaw;
+
+    if (!!signRaw && !!actingAccount) {
+      // after making sure that signRaw is defined
+      // we can use it to sign our message
+      const data = await signRaw({
+        address: actingAccount.address,
+        data: JSON.stringify(message),
+        type: "bytes",
+      });
+
+      signature = data.signature;
+    }
+
+    // will return a promise https://next-auth.js.org/getting-started/client#using-the-redirect-false-option
+    const result = await signIn("credentials", {
+      redirect: false,
+      callbackUrl: "/protected-api",
+      message: JSON.stringify(message),
+      name: actingAccount?.meta?.name,
+      signature,
+      address: actingAccount?.address,
+    });
+
+    // take the user to the protected page if they are allowed
+    if (result?.url) {
+      router.push("/protected-api");
+    }
+
+    setError(result?.error);
+    setIsLoading(false);
+  } catch (error) {
+    setError("Cancelled Signature");
+    setIsLoading(false);
+  }
+};
+```
+
+**Message and Signature**
+
+The browser extensions can be used to sign arbitrary data with the private keys
+of the acting account. This signature alongside the corresponding public key can
+then be used to verify that it was really the user who signed the message. The
+message contains
+
+- a `statement` that will be shown in the browser extension signature dialog and
+  notify the user about what they are signing. It is one part of making sure the
+  user signed something _from our dApp_ and not from any other dApp
+- a `uri` to verify that the user interacted with the dApp at a specific uri
+- a `nonce` to mitigate replication attacks, i.e. if someone gets access to the
+  signature, that signature cannot be used _again_ to login into your dApp
+- and finally a `version`: the version of the dApp might change in critical
+  ways, rendering signatures invalid. We are not using it in our dApp but it is
+  a good practice to have.
+
+All those data are _signed_ which means that with that signature, we can really
+verify that the private key has used our dApp at the `uri` with the specified
+version.
+
+:::info
+
+Learn more on Polkadot's
+[Sign and Verify](https://polkadot.js.org/docs/keyring/start/sign-verify/)
+
+:::
+
+That was a lot. Take a moment to go over the material in this chapter again and
+make sure you understood things. The following two chapters will teach you about
+how to populate the `accounts` we used in several places already and how
+next-auth is used to create the actual token gated authentication.
