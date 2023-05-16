@@ -7,15 +7,8 @@ import {
   useThree,
 } from "@react-three/fiber";
 import { RenderPixelatedPass } from "three/addons/postprocessing/RenderPixelatedPass.js";
-import {
-  AccumulativeShadows,
-  RandomizedLight,
-  Center,
-  Environment,
-  OrbitControls,
-  Effects,
-} from "@react-three/drei";
-import React, { useLayoutEffect, useMemo, useRef, useState } from "react";
+import { OrbitControls } from "@react-three/drei";
+import React, { useMemo, useRef, useState } from "react";
 
 extend({ RenderPixelatedPass });
 
