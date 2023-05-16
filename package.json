@@ -29,6 +29,7 @@
     "@niklasp/docusaurus-plugin-content-tutorials": "^2.4.3",
     "@react-three/drei": "^9.65.5",
     "@react-three/fiber": "^8.12.2",
+    "@subsocial/grill-widget": "^0.0.1",
     "@types/three": "^0.150.2",
     "@vercel/analytics": "^1.0.1",
     "@w3f/polkadot-icons": "^1.0.0",

@@ -2232,6 +2232,11 @@
     p-map "^4.0.0"
     webpack-sources "^3.2.2"
 
+"@subsocial/grill-widget@^0.0.1":
+  version "0.0.1"
+  resolved "https://registry.yarnpkg.com/@subsocial/grill-widget/-/grill-widget-0.0.1.tgz#e4619efa8eb6ee44a440e8c819fd2276e10b01e7"
+  integrity sha512-ysw+4URrNNQeQ1gj1aNKGhEaOvQbFXtYUUB2fT3T58aRYQujojeIy1lPQqTV1g7ESyhBEm0rSTPpx6K4zEimTA==
+
 "@svgr/babel-plugin-add-jsx-attribute@^6.5.1":
   version "6.5.1"
   resolved "https://registry.yarnpkg.com/@svgr/babel-plugin-add-jsx-attribute/-/babel-plugin-add-jsx-attribute-6.5.1.tgz#74a5d648bd0347bda99d82409d87b8ca80b9a1ba"
