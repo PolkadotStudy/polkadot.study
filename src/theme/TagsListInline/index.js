@@ -26,8 +26,10 @@ export default function TagsListInline({ tags }) {
             className={clsx(styles.tag, `tag-${string_to_slug(label)}`)}
           >
             {/* <Tag label={label} permalink={tagPermalink.replace('/tags/', '/category/')} /> */}
-            <TagIcon />
-            <Link to={tagPermalink}>{label}</Link>
+            <Link to={tagPermalink} className={styles.tagLink}>
+              <TagIcon />
+              {label}
+            </Link>
           </li>
         ))}
       </ul>
