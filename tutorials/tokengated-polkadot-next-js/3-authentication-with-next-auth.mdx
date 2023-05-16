@@ -1,0 +1,233 @@
+# Authentication with next-auth and the Polkadot extension
+
+Authentication in webapps is a recurring task and can be solved in multiple
+ways. In nextjs serverless architectures without database access you can either
+rely on third party auth services like auth0, or you can use cookies and
+sessions to authenticate your users. Generally authentication should solve the
+issue of restricting access to users that meet certain criteria, while
+preserving usability, i.e. storing auth information in a secure way, without
+having to input your credentials / signature over and over.
+
+As authentication is a key to protected web resources, security is very
+important and many things can go wrong and must be taken care of. That is why
+this tutorial is based on the popular [next-auth](https://authjs.dev/), an _open
+source_ auth library that can handle user authentication with many different
+given authentication providers like github or Google. It supports databaseless,
+serverless architectures by utilizing encrypted JSON Web Tokens for
+authenticating users. And abstracts away some of the complexities authentication
+in next.js brings.
+
+- next js will pre render pages. pre-rendering. **Static generation** and
+  **Server-side** rendering
+- `/protected` is a server-side rendered page you will want to protect with the
+  authentication and only show its content to authorized users.
+- protecting either API routes of the next node js server or protecting
+- Typically, Static Generation is the better choice here, because it reduces the
+  Time To First Byte (TTI). It's only disadvantage is that it will flash
+  unauthorized content as long as a server request loads.
+- With Static Generation, (protected) user data is fetched from any endpoint.
+  This endpoint makes sure that the user requesting the data is authorized to do
+  so. Here, with nextjs case you will use a
+  [API Route](https://nextjs.org/docs/pages/building-your-application/routing/api-routes)
+  for fetching that user data. As the api route is server only functionality, it
+  is safe to check for proper authentication there. You will build all that now.
+
+- usually we get the user from the server side api. In web3 things are a little
+  bit different. The user data comes from the _client-side_, namely the browser
+  wallet extension that stores accounts with addresses and names. The
+  server-side API will only be used for authorizing the users, i.e. verifying a
+  signature and validating the signed data
+
+:::info
+
+If you need to refresh your knowledge about the difference between Server-Side
+Rendering and Static Generation, or have never heard of them.
+[Read along here](https://nextjs.org/learn/basics/data-fetching/two-forms)
+
+:::
+
+## Configuring next-auth
+
+Next-auth config is done in the `api/auth/[...nextauth.ts] file. There are many
+options to configure next-auth to your needs, including different auth providers
+and many more options. The repo you cloned already contains relevant config
+options and we are not going to look at every single one. You can find all
+config options described in the
+[next-auth documentation](https://next-auth.js.org/configuration/options).
+
+For the purpose of the tutorial we are going to write a new
+`CredentialsProvider` with a focus on the `authorize` function.
+
+### A Custom CredentialsProvider
+
+In this tutorial you will extend next-auth with a custom web3
+`CredentialsProvider` that checks that certain criteria are met:
+
+- the user has signed a message with their polkadot browser extension
+- the message signature is correct
+- the message nonce is correct (csrf protection)
+- the other message data is correct (uri)
+- **finally: the account passes the criteria of the token gate**
+
+That means, that you will need to ask the user to sign a message with all
+relevant data in the frontend, which will then be sent to the server, where it
+is verified
+
+## The `authorize` function
+
+You need to provide your own logic in the `authorize` function, that takes the
+credentials submitted and returns either a object representing a user or value
+that is false/null if the credentials are invalid. In our case we want to return
+an object of the following form:
+
+```ts
+interface User {
+  id: string; //the account's substrate address
+  name: string; //the account name
+  ksmAddress: string; // the account's Kusama Address
+  freeBalance: BN; // the free KSM balance of the account
+}
+```
+
+:::info
+
+You can return arbitrary data here. In our example we use `freeBalance` as the
+tokengate checks it anyway and can be populated easily. When you use a different
+token to check for, e.g. NFTs from a certain collection, you could e.g. store
+`nfts: number[]` with all the NFTs from that collection a user holds.
+
+:::
+
+The following code snippet shows the full authorize function with annotations.
+Have a look at it first and try to understand the parts for yourself, with a
+special focus on the highlighted lines. We are adding all the checks that were
+defined at the beginning of this section. Afterwards they will be explained.
+
+```ts title="/pages/api/auth/[...nextauth].ts" showLineNumbers
+...
+async authorize(credentials): Promise<any | null> {
+    if (credentials === undefined) {
+        return null;
+    }
+
+    try {
+        const message = JSON.parse(credentials.message);
+
+        // verify the message is from the same uri
+        if (message.uri !== process.env.NEXTAUTH_URL) {
+            return Promise.reject(new Error('🚫 You shall not pass!'));
+        }
+
+        // verify the message was not compromised
+        if (message.nonce !== credentials.csrfToken) {
+            return Promise.reject(new Error('🚫 You shall not pass!'));
+        }
+
+        // verify signature of the message
+        // highlight-start
+        const { isValid } = signatureVerify(
+            credentials.message,
+            credentials.signature,
+            credentials.address,
+        );
+        // highlight-end
+
+        if (!isValid) {
+            return Promise.reject(new Error('🚫 Invalid Signature'));
+        }
+
+        // verify the account has the defined token
+        // highlight-start
+        const wsProvider = new WsProvider(
+            process.env.RPC_ENDPOINT ?? 'wss://kusama-rpc.dwellir.com',
+        );
+        const api = await ApiPromise.create({ provider: wsProvider });
+        await api.isReady;
+
+        if (credentials?.address) {
+            const ksmAddress = encodeAddress(credentials.address, 2);
+            const accountInfo = await api.query.system.account(ksmAddress);
+
+            if (accountInfo.data.free.gt(new BN(1_000_000_000_000))) {
+            // if the user has a free balance > 1 KSM, we let them in
+                return {
+                    id: credentials.address,
+                    name: credentials.name,
+                    freeBalance: accountInfo.data.free,
+                    ksmAddress,
+                };
+            } else {
+                return Promise.reject(new Error('🚫 The gate is closed for you'));
+            }
+        }
+        // highlight-end
+
+        return Promise.reject(new Error('🚫 API Error'));
+    } catch (e) {
+        return null;
+    }
+},
+...
+```
+
+So what is going on here? The interesting parts are the `signatureVerify`
+function and the usage of the polkadot API.
+
+1. `signatureVerify`: If the signature is valid, that means that it is really
+   the holder of the private key that send the request.
+2. The last check - if all other checks were successful - is the actual
+   tokengate. In our example we use the polkadot API with RPC endpoint of the
+   Kusama network, to retrieve the account's token balance of the KSM token. If
+   the user's freeBalance is greater than 1 KSM, that is the only possible
+   branch, where non null data is returned.
+
+:::info
+
+You hardcoded the RPC endpoint to a constant value, that the user can configure
+in ther `.env` with a fallback to `wss://kusama-rpc.dwellir.com`. In a
+production environment, you will most likely not rely on only one RPC endpoint
+as a single point of failure. To mitigate, you can use a
+[substrate connect light client](https://docs.substrate.io/learn/light-clients-in-substrate-connect/#integrate-in-apps-that-use-polkadot-js-api)
+
+If you want to know more about how substrate chains store tokenbalances and what
+`BN` is in the code above, read about
+[Type Basics](https://polkadot.js.org/docs/api/start/types.basics/)
+
+:::
+
+Also notice the many `Promise.reject(...)` lines. That is to make sure that when
+any issue appears, either signature validation, or other errors, no `user` is
+returned,
+[signalling next auth that the authentication was not successful](https://next-auth.js.org/providers/credentials#example---username--password)
+and not showing the tokengated content.
+
+### Adding the session provider
+
+You already wrote your own Provider in the last section. The
+[easiest way to find if someone is authenticated](https://next-auth.js.org/getting-started/client#usesession)
+with next-auth is the `useSession` hook and the corresponding `SessionProvider`.
+Remember how we already used the `session` in the `LoginButton` component in the
+[first section of the tutorial](setup)?
+
+So let's add that to the `pages/_app.tsx` as a wrapping provider to our dApp.
+
+```tsx title="pages/_app.tsx" showLineNumbers
+import "@/styles/globals.css";
+import type { AppProps } from "next/app";
+import { SessionProvider } from "next-auth/react";
+import { PolkadotExtensionContextProvider } from "@/context/polkadotExtensionContext";
+
+export default function App({
+  Component,
+  pageProps: { session, ...pageProps },
+}: AppProps) {
+  return (
+    <SessionProvider session={session}>
+      <PolkadotExtensionContextProvider>
+        <Component {...pageProps} />
+        <Analytics />
+      </PolkadotExtensionContextProvider>
+    </SessionProvider>
+  );
+}
+```
