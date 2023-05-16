@@ -171,6 +171,7 @@
 .sectionIntro {
   min-height: calc(100vh - var(--ifm-navbar-height)) !important;
   position: relative;
+  padding-top: 1rem !important;
 }
 
 .sectionTutorials {

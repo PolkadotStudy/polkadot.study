@@ -36,8 +36,8 @@ export default function FooterLayout({ style, links, logo, copyright }) {
           Funded By the{" "}
           <Link to="https://guide.kusama.network/docs/learn-treasury/">
             Kusama Treasury
-          </Link>{" "}
-          This is a community site and in no way incorporated with Parity or
+          </Link>
+          . This is a community site and in no way incorporated with Parity or
           Polkadot
         </div>
         <div>
