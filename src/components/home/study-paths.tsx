@@ -6,25 +6,31 @@ import TutorialSlider from "../tutorial/tutorial-slider";
 import useGlobalData, { usePluginData } from "@docusaurus/useGlobalData";
 import Link from "@docusaurus/Link";
 import Button from "../button/Button";
+import { pick } from "lodash";
 
 export function StudyPaths() {
-  // const description = allTagsWithDescription.find(
-  //   (tag) => tag.tag === selectedTag
-  // ).description;
-
   const allTags = usePluginData(
     "docusaurus-plugin-content-tutorials",
     "tutorials"
   ).tags;
 
+  console.log("allTags", allTags);
+
+  //filter tags that are 'polkadot.js' or 'substrate'
+  const allTagsFiltered = pick(allTags, "polkadot.js");
+
+  console.log("alltagsfiltered", allTagsFiltered);
+
   // const tutorials = globalData["docusaurus-plugin-content-tutorials"].tutorials;
   const [selectedTag, setSelectedTag] = useState(
-    allTags[Object.keys(allTags)[0]]?.tag
+    allTagsFiltered[Object.keys(allTagsFiltered)[0]]?.tag
   );
 
-  const selectedTagItems = selectedTag ? allTags[selectedTag.label]?.items : [];
+  const selectedTagItems = selectedTag
+    ? allTagsFiltered[selectedTag.label]?.items
+    : [];
 
-  if (Object.keys(allTags).length === 0) {
+  if (Object.keys(allTagsFiltered).length === 0) {
     return (
       <>
         No tutorials found.{" "}
@@ -40,22 +46,20 @@ export function StudyPaths() {
       <p className={styles.description}>{selectedTag?.description}</p>
       <div className={styles.content}>
         <div className={styles.left}>
-          {allTags &&
-            Object.keys(allTags)
-              .slice(0, 4)
-              ?.map((key, index) => (
-                <Button
-                  className={clsx(styles.tag, {
-                    [styles.selected]:
-                      allTags[key].tag.label === selectedTag?.label,
-                  })}
-                  onClick={() => setSelectedTag(allTags[key].tag)}
-                  key={allTags[key].tag.label}
-                  arrow={false}
-                >
-                  {allTags[key].tag.label}
-                </Button>
-              ))}
+          {allTagsFiltered &&
+            Object.keys(allTagsFiltered)?.map((key, index) => (
+              <Button
+                className={clsx(styles.tag, {
+                  [styles.selected]:
+                    allTagsFiltered[key].tag.label === selectedTag?.label,
+                })}
+                onClick={() => setSelectedTag(allTagsFiltered[key].tag)}
+                key={allTagsFiltered[key].tag.label}
+                arrow={false}
+              >
+                {allTagsFiltered[key].tag.label}
+              </Button>
+            ))}
         </div>
         <div className={styles.right}>
           {/* <pre>{JSON.stringify(selectedTag, null, 2)}</pre> */}
