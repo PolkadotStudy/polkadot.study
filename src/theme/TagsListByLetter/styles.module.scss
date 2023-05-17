@@ -1,0 +1,43 @@
+.tags {
+  display: inline;
+}
+
+.tag {
+  margin-right: 1rem;
+  display: inline-block;
+}
+
+.tagLink {
+  display: flex;
+  align-items: center;
+  color: #000;
+
+  &:hover {
+    text-decoration: none;
+    color: var(--polkadot-purple);
+  }
+
+  svg {
+    margin-right: 6px;
+  }
+}
+
+.tagText {
+  display: flex;
+  align-items: center;
+  font-size: 32px;
+  
+  svg {
+    margin-right: 10px;
+  }
+}
+
+[data-theme='dark'] {
+  .tagLink {
+    color: #fff;
+
+    &:hover {
+      color: var(--polkadot-cyan);
+    }
+  }
+}
