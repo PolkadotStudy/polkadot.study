@@ -1,7 +1,6 @@
 import React from "react";
 import clsx from "clsx";
 import Translate from "@docusaurus/Translate";
-import Tag from "@theme/Tag";
 import { Tag as TagIcon } from "../../components/icons/icons";
 
 import { string_to_slug } from "@site/src/util";
