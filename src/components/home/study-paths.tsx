@@ -77,6 +77,9 @@ export function StudyPaths() {
             }}
             slides={selectedTagItems ?? []}
           />
+          <div className={styles.btnViewAll}>
+            <Button to="/tutorials/tags/">View All Tags</Button>
+          </div>
         </div>
       </div>
     </div>
