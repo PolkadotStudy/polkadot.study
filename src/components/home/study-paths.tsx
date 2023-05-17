@@ -17,7 +17,7 @@ export function StudyPaths() {
   console.log("allTags", allTags);
 
   //filter tags that are 'polkadot.js' or 'substrate'
-  const allTagsFiltered = pick(allTags, "polkadot.js");
+  const allTagsFiltered = pick(allTags, "polkadot.js", "substrate");
 
   console.log("alltagsfiltered", allTagsFiltered);
 
