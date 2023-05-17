@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React from "react";
 import clsx from "clsx";
 import Link from "@docusaurus/Link";
 import {
@@ -7,21 +7,17 @@ import {
   ThemeClassNames,
   usePluralForm,
 } from "@docusaurus/theme-common";
-import { useDoc } from "@docusaurus/theme-common/internal";
-import Translate, { translate } from "@docusaurus/Translate";
+import { translate } from "@docusaurus/Translate";
 import Layout from "@theme/Layout";
 import SearchMetadata from "@theme/SearchMetadata";
 import TutorialCard from "@site/src/components/tutorial/tutorial-card";
-import CategoryMDX from "@site/src/components/tutorial/category-mdx";
 
 import PolkadotJs from "/tutorials/tags/polkadot-js.mdx";
 import Substrate from "/tutorials/tags/substrate.mdx";
 import Contribute from "/tutorials/tags/contribute.mdx";
 import EditThisPage from "@theme/EditThisPage";
-import useGlobalData, { usePluginData } from "@docusaurus/useGlobalData";
-import TutorialSlider from "@site/src/components/tutorial/tutorial-slider";
+import { usePluginData } from "@docusaurus/useGlobalData";
 import TutorialGrid from "@site/src/components/tutorial/tutorial-grid";
-import { useDocsData } from "@site/../docusaurus-plugin-content-tutorials/lib/client";
 import { ArrowRight } from "@site/src/components/icons/icons";
 
 // Very simple pluralization: probably good enough for now
