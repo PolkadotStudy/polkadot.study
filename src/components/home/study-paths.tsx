@@ -14,12 +14,8 @@ export function StudyPaths() {
     "tutorials"
   ).tags;
 
-  console.log("allTags", allTags);
-
   //filter tags that are 'polkadot.js' or 'substrate'
   const allTagsFiltered = pick(allTags, "polkadot.js", "substrate");
-
-  console.log("alltagsfiltered", allTagsFiltered);
 
   // const tutorials = globalData["docusaurus-plugin-content-tutorials"].tutorials;
   const [selectedTag, setSelectedTag] = useState(
