@@ -74,11 +74,8 @@ export default function Home(): JSX.Element {
           <p>
             Learn how to navigate the polkadot ecosystem as a developer in our
             step-by-step tutorials. All tutorials are written by developers from
-            the polkadot community. Polkadot.study is the perfect place to start
-            your Polkadot journey as a developer. We cover many different
-            subjects from both frontend and blockchain development.
+            the polkadot community. Start your polkadot developer journey here.
           </p>
-          <p>Here are our latest tutorials:</p>
           <TutorialSlider
             slides={getAllTutorialsSorted()}
             style={{ marginTop: "2rem" }}
@@ -116,7 +113,7 @@ export default function Home(): JSX.Element {
             </p>
           </div>
           <div className={styles.right}>
-            <></>
+            <Dots />
           </div>
         </section>
         <section className={styles.sectionStudyPaths}>
@@ -152,7 +149,7 @@ export default function Home(): JSX.Element {
             </Button>
           </div>
           <div className={styles.right}>
-            <></>
+            <Dots />
           </div>
         </section>
       </main>
