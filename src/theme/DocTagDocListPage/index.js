@@ -7,6 +7,7 @@ import {
   ThemeClassNames,
   usePluralForm,
 } from "@docusaurus/theme-common";
+import { useDoc } from "@docusaurus/theme-common/internal";
 import Translate, { translate } from "@docusaurus/Translate";
 import Layout from "@theme/Layout";
 import SearchMetadata from "@theme/SearchMetadata";
@@ -17,9 +18,10 @@ import PolkadotJs from "/tutorials/tags/polkadot-js.mdx";
 import Substrate from "/tutorials/tags/substrate.mdx";
 import Contribute from "/tutorials/tags/contribute.mdx";
 import EditThisPage from "@theme/EditThisPage";
-import { usePluginData } from "@docusaurus/useGlobalData";
+import useGlobalData, { usePluginData } from "@docusaurus/useGlobalData";
 import TutorialSlider from "@site/src/components/tutorial/tutorial-slider";
 import TutorialGrid from "@site/src/components/tutorial/tutorial-grid";
+import { useDocsData } from "@site/../docusaurus-plugin-content-tutorials/lib/client";
 
 // Very simple pluralization: probably good enough for now
 function useNDocsTaggedPlural() {
@@ -80,6 +82,10 @@ export default function DocTagDocListPage({ tag }) {
 
   const taggedTutorials = allTags[tag.label];
 
+  console.log("tag", tag);
+
+  const editUrl = `https://github.com/PolkadotStudy/polkadot.study/blob/staging${tag.permalink}.mdx`;
+
   return (
     <HtmlClassNameProvider
       className={clsx(
@@ -111,6 +117,7 @@ export default function DocTagDocListPage({ tag }) {
               >
                 <TutorialGrid slides={taggedTutorials?.items} big={false} />
               </section>
+              <EditThisPage editUrl={editUrl} />
             </main>
           </div>
         </div>
