@@ -1,0 +1,85 @@
+# Introduction to using the Polkadot.js API with TypeScript.
+
+
+
+Polkadot.js is a JavaScript library that provides a set of APIs for interacting with the Polkadot blockchain. While JavaScript can be used to interact with Polkadot.js, using TypeScript can offer some advantages, such as type checking, code completion, and better overall code organization. In this wallet tutorial, we'll go over the basics of using the Polkadot.js API with TypeScript.
+TypeScript is a programming language that is based on JavaScript,  but adds static typing features and other improvements that help developers write more robust and scalable code. TypeScript is compiled into JavaScript before being executed, which means that it can be used in any environment where JavaScript can be used.
+When it comes to using the Polkadot API, both options are valid, but TypeScript may offer some advantages when working with a complex API like Polkadot, due to its ability to provide more accurate information about the data types being handled and its static typing system, which can help detect errors early in the development process.
+Here are some advantages of TypeScript over JavaScript when using the Polkadot API:
+
+
+•	**Type Safety:** TypeScript offers a static type system that can help catch errors before the code is even executed. This can be especially useful when working with a complex API like Polkadot, where the types of data being handled can be difficult to manage.
+
+---
+
+•	**Better Code Organization:** TypeScript supports interfaces, classes, and modules, which can help organize code in a more structured way. This can make it easier to understand and maintain, especially for larger projects.
+
+---
+
+•	**Improved Tooling:** TypeScript offers better tooling support, including code editors with built-in support for syntax highlighting, error checking, and code completion. This can make it easier to write and debug code, especially when working with a complex API like Polkadot.
+
+---
+
+•	**Easy to Learn:** TypeScript is based on JavaScript, so developers who are already familiar with JavaScript will find it easy to learn. The syntax is similar, but TypeScript adds additional features that make it more powerful and easier to work with.
+
+***
+
+•	**Compatibility:** TypeScript can be compiled to JavaScript, so it can be used in any environment where JavaScript is used. This means that it can be used with the Polkadot API, just like JavaScript, but with the added benefits of a static type system and better code organization.
+
+
+
+import Quiz from '/src/components/quiz';
+
+export const onequestion = { 
+  question: "What is TypeScript?", 
+  answers: [ 
+    "A programming language based on JavaScript", 
+    "A markup language used for web development", 
+    "An operating system developed by Microsoft",
+    "A database management system"
+  ],
+  correctAnswerIdx: [0],
+  msgCorrect: "Correct answer. Good job.",
+  msgIncorrect: "Incorrect answer. Please try again.",
+  explanation: "TypeScript is a programming language that is based on JavaScript, but adds static typing features and other improvements that help developers write more robust and scalable code."
+}
+
+export const twoquestion = { 
+  question: "What are the advantages of using TypeScript?", 
+  answers: [ 
+    "Better code readability and maintainability", 
+    "Type checking at compile-time", 
+    "Improved code navigation and refactoring",
+    "All of the above"
+  ],
+  correctAnswerIdx: [3],
+  msgCorrect: "Correct answer. Good job.",
+  msgIncorrect: "Incorrect answer. Please try again.",
+  explanation: "Great, that's right, these are all advantages of using TypeScript in your projects."
+}
+
+
+export const thirdquestion = { 
+  question: "What is Polkadot.js?", 
+  answers: [ 
+    "A programming language based on JavaScript", 
+    "A library for building Polkadot-based applications", 
+    "An operating system developed by Polkadot",
+    "A database management system"
+  ],
+  correctAnswerIdx: [1],
+  msgCorrect: "Correct answer. Good job.",
+  msgIncorrect: "Incorrect answer. Please try again.",
+  explanation: "Polkadot.js is a library for building Polkadot-based applications"
+}
+
+
+<Quiz quizItem={ onequestion } />
+
+<Quiz quizItem={ twoquestion } />
+
+<Quiz quizItem={ thirdquestion } />
+
+
+
+
