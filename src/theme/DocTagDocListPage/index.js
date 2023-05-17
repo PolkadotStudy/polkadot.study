@@ -22,6 +22,7 @@ import useGlobalData, { usePluginData } from "@docusaurus/useGlobalData";
 import TutorialSlider from "@site/src/components/tutorial/tutorial-slider";
 import TutorialGrid from "@site/src/components/tutorial/tutorial-grid";
 import { useDocsData } from "@site/../docusaurus-plugin-content-tutorials/lib/client";
+import { ArrowRight } from "@site/src/components/icons/icons";
 
 // Very simple pluralization: probably good enough for now
 function useNDocsTaggedPlural() {
@@ -100,22 +101,25 @@ export default function DocTagDocListPage({ tag }) {
           <div className="row">
             <main className="col col--8 col--offset-2">
               {TagPageContent()}
-              <header className="margin-bottom--xl">
+              <header className="">
                 <h1>{title}</h1>
-                <Link href={tag.allTagsPath}>
-                  <Translate
-                    id="theme.tags.tagsPageLink"
-                    description="The label of the link targeting the tag list page"
-                  >
-                    View All Tags
-                  </Translate>
-                </Link>
               </header>
               <section
                 className="margin-vert--lg"
                 style={{ position: "relative" }}
               >
                 <TutorialGrid slides={taggedTutorials?.items} big={false} />
+                <Link
+                  href={tag.allTagsPath}
+                  style={{
+                    marginTop: "2rem",
+                    display: "flex",
+                    alignItems: "center",
+                  }}
+                >
+                  <ArrowRight style={{ paddingRight: "0.3rem" }} />
+                  View All Tags
+                </Link>
               </section>
               <EditThisPage editUrl={editUrl} />
             </main>
