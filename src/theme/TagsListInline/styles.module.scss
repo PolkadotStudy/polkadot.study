@@ -10,7 +10,7 @@
 .tagLink {
   display: flex;
   align-items: center;
-  color: #fff;
+  color: #000;
 
   &:hover {
     text-decoration: none;
@@ -27,5 +27,11 @@
   font-size: 32px;
   svg {
     margin-right: 10px;
+  }
+}
+
+[data-theme='dark'] {
+  .tagLink {
+    color: #fff;
   }
 }

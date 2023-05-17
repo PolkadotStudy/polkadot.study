@@ -14,7 +14,7 @@ import TutorialCard from "@site/src/components/tutorial/tutorial-card";
 import CategoryMDX from "@site/src/components/tutorial/category-mdx";
 
 import PolkadotJs from "/tutorials/tags/polkadot-js.mdx";
-import substrate from "/tutorials/tags/substrate.mdx";
+import Substrate from "/tutorials/tags/substrate.mdx";
 import Contribute from "/tutorials/tags/contribute.mdx";
 import EditThisPage from "@theme/EditThisPage";
 import { usePluginData } from "@docusaurus/useGlobalData";
@@ -57,7 +57,7 @@ export default function DocTagDocListPage({ tag }) {
       case "contribute":
         return <Contribute />;
       case "substrate":
-        return <substrate />;
+        return <Substrate />;
       default:
         return <></>;
     }
@@ -109,7 +109,7 @@ export default function DocTagDocListPage({ tag }) {
                 className="margin-vert--lg"
                 style={{ position: "relative" }}
               >
-                <TutorialGrid slides={taggedTutorials?.items} />
+                <TutorialGrid slides={taggedTutorials?.items} big={false} />
               </section>
             </main>
           </div>
