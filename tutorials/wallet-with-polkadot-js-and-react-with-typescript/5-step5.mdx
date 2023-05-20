@@ -68,76 +68,81 @@ We create an instance called wsProvider, this is a necessary element to obtain t
 Finally we need to add the transfer function, this function will get the accounts available in the extension to update local storage and sign from the polkadot-js extension.
 
 ```ts title=src/pages/portfolio/Transfer.tsx
+  const transfer = async function main() {
+    // Enable connection to the extension
+    await web3Enable("my wallet");
 
-const transfer = async function main () {
+    // Known account we want to use on Polkadot extension
+    const allAccounts = await web3Accounts();
 
-      // Enable connection to the extension
-      await web3Enable('my wallet');
- 
-     // Known account we want to use on Polkadot extension
-     const allAccounts = await web3Accounts();
+    // Get the first visible account of the polkadot extension.
+    const account = allAccounts[0];
 
-     // Get the first visible account of the polkadot extension.
-     const account = allAccounts[0];
+    // Store the public key in local storage.
+    localStorage.setItem("Publickey", account.address);
 
-     // Store the public key in local storage.
-     localStorage.setItem("Publickey",account.address); 
+    // Get the public key in local storage.
+    const addressaccount: any = localStorage.getItem("Publickey");
 
-     // Get the public key in local storage.
-     const addressaccount:any=localStorage.getItem("Publickey");
-         
-     // Create an instance of the Polkadot JS API    
-     const api = await ApiPromise.create({ provider: wsProvider });
-     
-     // Create a transfer extrinsic 
-     const transferExtrinsic = api.tx.balances.transfer(valueAddress, Number(valueAmount)*1000000000000)
-     
+    // Create an instance of the Polkadot JS API
+    const api = await ApiPromise.create({ provider: wsProvider });
+
+    // Create a transfer extrinsic
+    const transferExtrinsic = api.tx.balances.transfer(
+      valueAddress,
+      Number(valueAmount) * 1000000000000
+    );
+
     // Reset States
-     setValueAmount('')
-     setValueAddress('')
-     
-     // to be able to retrieve the signer interface from this account
-     // we can use web3FromSource which will return an InjectedExtension type
-     const injector = await web3FromSource(account.meta.source);
-          
-     // passing the injected account address as the first argument of signAndSend
-     // will allow the api to retrieve the signer and the user will see the extension
-     // popup asking to sign the balance transfer transaction
-     transferExtrinsic.signAndSend(addressaccount, { signer: injector.signer }, ({ status }) => {
-     if (status.isInBlock) {
-         console.log(`Completed at block hash #${status.asInBlock.toString()}`);
-         setBlockhash(status.asInBlock.toString())
-         
-        
-     } else {
-         console.log(`Current status: ${status.type}`);
-     
-         setStatus(status.type)
-     
-         if (status.type==='Finalized'){
-       toast({
-       title: 'Successful Transaction',
-       duration: 3000,
-       status: 'success',
-       isClosable: true,
-     })
+    setValueAmount("");
+    setValueAddress("");
 
-     ReactDOM.render(
-        <ChakraProvider>
-            <App />
-        </ChakraProvider>,
-        document.getElementById('root')
-        );
+    // to be able to retrieve the signer interface from this account
+    // we can use web3FromSource which will return an InjectedExtension type
+    const injector = await web3FromSource(account.meta.source);
 
-    onClose()
+    // passing the injected account address as the first argument of signAndSend
+    // will allow the api to retrieve the signer and the user will see the extension
+    // popup asking to sign the balance transfer transaction
+    transferExtrinsic
+      .signAndSend(
+        addressaccount,
+        { signer: injector.signer },
+        ({ status }) => {
+          if (status.isInBlock) {
+            console.log(
+              `Completed at block hash #${status.asInBlock.toString()}`
+            );
+            setBlockhash(status.asInBlock.toString());
+          } else {
+            console.log(`Current status: ${status.type}`);
 
-     }
-     }
-     }).catch((error: any) => {
-     console.log(':( transaction failed', error);
-     });
- 
-      };
+            setStatus(status.type);
+
+            if (status.type === "Finalized") {
+              toast({
+                title: "Successful Transaction",
+                duration: 3000,
+                status: "success",
+                isClosable: true,
+              });
+
+              ReactDOM.render(
+                <ChakraProvider>
+                  <App />
+                </ChakraProvider>,
+                document.getElementById("root")
+              );
+
+              onClose();
+            }
+          }
+        }
+      )
+      .catch((error: any) => {
+        console.log(":( transaction failed", error);
+      });
+  };
 ```
 Great, now you have a component that has the ability to transfer a token to another address.
 

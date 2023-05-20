@@ -97,20 +97,19 @@ To create this component we will first import the UI components in the Chakra UI
 
 
 ```ts
-import { 
-    Heading,
-    Button, 
-    VStack,
-    Input,
-    HStack
-     } from '@chakra-ui/react';
+import {
+  Heading,
+  Button,
+  VStack,
+  Input,
+  HStack,
+} from "@chakra-ui/react";
 ```
 The second step will be to build a function as a component that we will call ``Newaccounts`` and use the Chakra-ui components:
 
 
 ```ts
-function Newaccounts() {
-       
+function Newaccounts() {      
      return (
         <VStack>
             <Heading size="md" className='center' >
@@ -131,7 +130,7 @@ function Newaccounts() {
       )
     }
     
-    export {  Newaccounts };
+export {  Newaccounts };
 ```
 
 Finally at this point our component would look like:
@@ -139,20 +138,15 @@ Finally at this point our component would look like:
 
 ```ts
 import React from 'react';
-import { 
-    Heading,
-    Center,
-    Box,
-    FormLabel,
-    FormControl,
-    Button, 
-    VStack,
-    Input,
-    HStack
-     } from '@chakra-ui/react';
+import {
+  Heading,
+  Button,
+  VStack,
+  Input,
+  HStack,
+} from "@chakra-ui/react";
 
-function Newaccounts() {
-       
+function Newaccounts() {   
      return (
         <VStack>
             <Heading size="md" className='center' >
@@ -173,7 +167,7 @@ function Newaccounts() {
       )
     }
     
-    export {  Newaccounts };
+export {  Newaccounts };
 ```
 
 The component would look like this:
@@ -193,15 +187,14 @@ import {
     Button, 
     VStack,
     Input,
-     HStack
-      } from '@chakra-ui/react';
+    HStack
+} from '@chakra-ui/react';
 ```
 
 The second step will be to build a function as a component that we will call ``Addaccounts`` and use the Chakra-ui components:
 
 ```ts
 function Addaccounts() {
- 
     // We create the variables for the words of the seed phrase.
     let word1;
     let word2;
@@ -244,7 +237,7 @@ function Addaccounts() {
       )
     }
     
-    export {Addaccounts };
+export { Addaccounts };
 ```
 
 Finally at this point our component would look like:
@@ -256,11 +249,10 @@ import {
     Button, 
     VStack,
     Input,
-     HStack
-      } from '@chakra-ui/react';
+    HStack
+} from '@chakra-ui/react';
 
 function Addaccounts() {
- 
     // We create the variables for the words of the seed phrase.
     let word1;
     let word2;
@@ -303,7 +295,7 @@ function Addaccounts() {
       )
     }
     
-    export {Addaccounts };
+export { Addaccounts };
 ```
 
 The component would look like this:
