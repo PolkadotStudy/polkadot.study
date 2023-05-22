@@ -45,8 +45,8 @@ export default function TutorialGrid({ slides, style, big = true }) {
       className={clsx(styles.tutorialGrid, { [styles.tutorialGridBig]: big })}
     >
       {displayedSlides?.map((slide) => (
-        <div key={slide.title}>
-          <TutorialCard {...slide} />
+        <div key={slide.title} className={styles.itemWrap}>
+          <TutorialCard {...slide} limitedWidth={false} />
         </div>
       ))}
     </div>

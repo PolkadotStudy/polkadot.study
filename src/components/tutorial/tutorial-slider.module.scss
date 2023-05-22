@@ -23,5 +23,16 @@
     .tutorialSwiper {
         padding: 10px;
         margin: -10px;
+        border-right: 1px dashed transparent;
+        border-left: 1px dashed transparent;
+        transition: border-color 0.6s ease;
     }    
+
+    .isBeginning {
+        border-right: 1px dashed;
+    }
+
+    .isEnd {
+        border-left: 1px dashed;
+    }
 }
