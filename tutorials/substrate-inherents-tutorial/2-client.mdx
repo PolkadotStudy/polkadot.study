@@ -1,0 +1,155 @@
+# Client
+## Inherent Data Provider
+A block producing node relies on an ```InherentDataProvider``` whenever it is interested to pass
+data to Runtime upon authoring a new block.
+An ```InherentDataProvider``` trait implementor utilizes ```provide_inherent_data``` method to put data onto 
+storage location under a key both the Client and the Runtime share.
+
+As the first step you'll define a struct implementing the aforementioned ```InherentDataProvider``` trait.
+
+Please head to ./node/src folder and add a file ```inherent_data_provider.rs``` with the following code:
+
+```rust title=node/src/inherent_data_provider.rs
+use sp_inherents::{InherentIdentifier, InherentData};
+use node_template_runtime::{InherentDataType};
+use node_template_runtime::inherents_example::{INHERENT_IDENTIFIER};
+use async_trait;
+use std::fmt::Debug;
+use sp_core::Encode;
+
+/// The provider of inherent data from the Node to the Runtime
+/// It holds data of InherentDataType defined by the Runtime
+#[derive(Debug, Clone)]
+pub struct ExternalDataInherentProvider(pub Option<InherentDataType>);
+
+/// Implementation of sp_inherents::InherentDataProvider trait for ExternalDataInherentProvider 
+#[async_trait::async_trait]
+impl sp_inherents::InherentDataProvider for ExternalDataInherentProvider {
+	async fn provide_inherent_data(
+		&self,
+		inherent_data: &mut InherentData,
+	) -> Result<(), sp_inherents::Error> {
+        if let Some(ref data) = self.0 {
+            inherent_data.put_data(INHERENT_IDENTIFIER, &data.encode())
+        } else {
+            Ok(())
+        }
+	}
+
+	async fn try_handle_error(
+		&self,
+		identifier: &InherentIdentifier,
+		error: &[u8],
+	) -> Option<Result<(), sp_inherents::Error>> {
+		// handle only data identified by INHERENT_IDENTIFIER key, ignore the rest
+		if *identifier == INHERENT_IDENTIFIER {
+            Some(Err(sp_inherents::Error::Application(Box::from(std::format!("Error processing inherent: {:?}", error)))))
+		} else {
+            None
+        }
+	}
+}
+
+``` 
+
+This code references a few data types that you'll later define on the Runtime side.
+Let's have a look at them.
+
+The line 
+```rust
+use node_template_runtime::{InherentDataType}
+```
+references the type of the inherent as it is understood by the Runtime. Your inherent data provider will hold
+an instance of this type which it will pass to the Runtime in a SCALE-encoded format.
+
+Then we have
+```rust
+use node_template_runtime::inherents_example::{INHERENT_IDENTIFIER}
+```
+which is the key under which the block producer passes inherent data to the Runtime. 
+
+The struct ```ExternalDataInherentProvider``` holds the data you want the block producer to pass to the Runtime
+and implements the trait ```InherentDataProvider``` by putting it onto storage from which the data will be then
+fetched and decoded by the Runtime.
+
+## Create Inherent Data Provider
+Now when your inherent data provider is ready it must be used by the block production.
+Inherent data provider instances are created by a closure passed to consensus block production module.
+Please head to the file ```node/src/service.rs``` and locate the 
+```rust title=node/src/service.rs
+create_inherent_data_providers: move |_, ()| async move {
+    let timestamp = sp_timestamp::InherentDataProvider::from_system_time();
+
+    let slot =
+        sp_consensus_aura::inherents::InherentDataProvider::from_timestamp_and_slot_duration(
+            *timestamp,
+            slot_duration,
+        );
+
+    Ok((slot, timestamp))
+},
+```
+code snippet.
+
+There are two identical snippets in the file, at the moment we are going to concentrate
+on that referred by ```sc_consensus_aura::start_aura```.
+We see that there are already two inherent data providers returned by the closure which
+Aura uses to pass inherent data to the Runtime when it produces a block.
+Aura passes the current time and slot inherents to the Runtime.
+
+You are going to create you custom inherent data provider, so your data is also passed to the Runtime:
+
+```rust title=node/src/service.rs
+create_inherent_data_providers: move |_, ()| async move {
+    let timestamp = sp_timestamp::InherentDataProvider::from_system_time();
+
+    let slot =
+        sp_consensus_aura::inherents::InherentDataProvider::from_timestamp_and_slot_duration(
+            *timestamp,
+            slot_duration,
+        );
+
+    let external_data_provider = crate::inherent_data_provider::ExternalDataInherentProvider(inherent_data);
+
+    Ok((slot, timestamp, external_data_provider))
+},
+```
+
+Now, we need to receive the ```inherent_data``` from somewhere. As a simplest solution we could just hardcode it. 
+A slightly more interesting option is to inject it from outside, for example as a constant CLI parameter.
+Please modify the ```new_full``` function signature as follows:
+```rust title=node/src/service.rs
+pub fn new_full(mut config: Configuration, inherent_data: Option<InherentDataType>) -> Result<TaskManager, ServiceError> {
+```
+
+## Client CLI
+Now add the ```inherent_data``` into ```node/src/cli.rs```:
+
+```rust title=node/src/cli.rs
+use node_template_runtime::{InherentDataType};
+
+#[derive(Debug, clap::Parser)]
+pub struct Cli {
+	#[command(subcommand)]
+	pub subcommand: Option<Subcommand>,
+
+	#[clap(flatten)]
+	pub run: RunCmd,
+
+	#[clap(long)]
+	pub inherent_data: Option<InherentDataType>,
+}
+```
+and a modification is necessary for ```node/src/command.rs```:
+
+find the code snippet where ```new_full(...)``` is called and change it like so:
+```rust title=node/src/command.rs
+/* snip */
+    None => {
+        let runner = cli.create_runner(&cli.run)?;
+        let inherent_data = cli.inherent_data;
+        runner.run_node_until_exit(|config| async move {
+            service::new_full(config, inherent_data).map_err(sc_cli::Error::Service)
+        })
+    },
+```

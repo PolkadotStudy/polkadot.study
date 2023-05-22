@@ -127,12 +127,12 @@ const config = {
           src: "img/polkadot_pink.svg",
         },
         items: [
-          // {
-          //   href: "/tutorials",
-          //   docId: "intro",
-          //   position: "left",
-          //   label: "Tutorials",
-          // },
+          {
+            href: "/tutorials",
+            docId: "intro",
+            position: "left",
+            label: "Tutorials",
+          },
           {
             href: "/docs/authors/new-tutorial-on-polkadot-study/intro",
             docId: "authors/new-tutorial-on-polkadot-study/intro",

@@ -1,0 +1,41 @@
+---
+tags:
+  - substrate
+  - inherents
+  - client
+  - runtime
+keywords: [tutorial, substrate, inherent, client, runtime]
+description: Learn how to use Inherent Extrinsics in Substrate
+author: Yury Yukhananov
+duration: 2-4h
+level: intermediate
+---
+
+# How to Use Inherent Extrinsics Feature in Substrate
+
+- Step-by-step guidance of implementing an extrinsic creation by a block authoring node.
+- Leverage the standard Substrate's Template Node to build a custom inherent provider and create an inherent extrinsic by the block authoring node.
+  
+  A Block producer node has a feature to add an extrinsic to a block it produces.
+  These are called inherent extrinsics.
+  As an example, Aura passes such data as timestamp and slot index to the Runtime.
+  With this tutorial you'll implement your custom inherent provider as well a pallet which eventually creates an extrinsic call using the inherent data passed from the Client. 
+
+## Time of completion
+
+- 2-4 hrs
+
+## What you'll learn
+- implement a custom ```InherentDataProvider``` on the Node(client) side
+- share ```InherentData``` from the Client to the Runtime
+- construct an inherent on the Runtime and create an extrinsic call
+- handling a Inherent as a special type of Unsigned Extrinsic
+
+## Prerequisites
+- knowledge of Rust programming language
+- acquaintance with Substrate's concepts such as Client, Runtime, Scale codec, block production, extrinsic etc
+- basic experience with compiling and running the Node Template CLI and Polkadot JS web client
+
+## Author
+
+- https://github.com/Retamogordo

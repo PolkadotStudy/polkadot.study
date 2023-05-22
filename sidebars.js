@@ -13,6 +13,58 @@
 
 const sidebars = {
   // But you can create a sidebar manually
+  tutorialSidebar: [
+//      'intro',
+    //begin your sidebar - copy below
+    {
+        type: 'category',
+        label: 'Substrate Inherents',
+        link: {
+//            type: 'doc',
+            id: 'substrate-inherents-tutorial/intro',
+        },
+        items: [
+            'substrate-inherents-tutorial/intro',
+            'substrate-inherents-tutorial/setup',
+            'substrate-inherents-tutorial/client',
+            'substrate-inherents-tutorial/runtime',     
+            'substrate-inherents-tutorial/running-nodes',     
+            // 'docs/substrate-inherents-tutorial/conclusion'
+        ],
+    },
+    //end: your sidebar - copy until here
+  
+  ],
+  authorsSidebar: [
+    {
+      type: "category",
+      label: "How to Write a New Tutorial on Polkadot.study",
+      link: {
+        type: "doc",
+        id: "authors/new-tutorial-on-polkadot-study/intro",
+      },
+      items: [
+        "authors/new-tutorial-on-polkadot-study/development-environment",
+        "authors/new-tutorial-on-polkadot-study/use-the-tutorial-template",
+        "authors/new-tutorial-on-polkadot-study/structure-and-style",
+        "authors/new-tutorial-on-polkadot-study/metadata",
+        "authors/new-tutorial-on-polkadot-study/funding",
+        "authors/new-tutorial-on-polkadot-study/submitting-the-tutorial",
+        "authors/new-tutorial-on-polkadot-study/further-reading",
+      ],
+    },
+    "authors/contribution-checklist",
+    "authors/components-cheatsheet",
+  ],
+
+  inherentsTutorialSidebar: [
+    "substrate-inherents-tutorial/intro",
+    "substrate-inherents-tutorial/setup",
+    "substrate-inherents-tutorial/client",
+    "substrate-inherents-tutorial/runtime",
+    "substrate-inherents-tutorial/running-nodes",
+    "substrate-inherents-tutorial/conclusion",
+  ],
 
   tokengatedSidebar: [
     "tokengated-polkadot-next-js/intro",
