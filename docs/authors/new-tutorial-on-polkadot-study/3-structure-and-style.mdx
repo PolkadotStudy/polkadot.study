@@ -67,16 +67,18 @@ You can choose any file name you like. You can also prefix every filename with a
 number in order to keep things organized. This very file you are reading is e.g.
 named `1-structure-and-style.mdx`. Have a look
 [in the repo](https://github.com/PolkadotStudy/website/tree/staging/docs/authors/new-tutorial-on-polkadot-study)
-to see how file naming can be handled. :::
+to see how file naming can be handled.
 
-- **Step 1 / Subtopic 1 — Doing the First Thing or expaining the first thing**
+:::
+
+- **Step 1 / Subtopic 1 — Doing the First Thing or explaining the first thing**
   (Level 2 heading)
   - What will the reader build / learn in this step
   - [Title Capitalization](https://capitalizemytitle.com/)
 
 ### File: 2-another-step.mdx
 
-- **Step 2 / Subtopic 2 — Doing the Next Thing or expaining the next thing**
+- **Step 2 / Subtopic 2 — Doing the Next Thing or explaining the next thing**
   (Level 2 heading)
 - …
 
@@ -87,16 +89,14 @@ to see how file naming can be handled. :::
 - **further study** (Level 2 heading)
   - What can the reader do next, where can they deepen their aquired knowledge
 
-:::note todo Link and explain the tutorial template. You can add as many steps
-as you wish to your tutorial. :::
-
 ## Tutorial Style
 
 The style for _polkadot.study_ articles reflects our purpose in publishing them:
 to provide quality learning information for developers inside and outside the
 Polkadot and Kusama ecosystem. We aim tu ensure our tutorials are:
 
-- Comprehensive and written for all experience levels
+- Comprehensive and written for the `level` you will define in
+  [Metadata](metadata)
 - Technically detailed and correct
 - Practical, useful, and self-contained
 - Friendly but formal
@@ -107,7 +107,6 @@ Polkadot and Kusama ecosystem. We aim tu ensure our tutorials are:
 
 These principles guide authors to create articles, tutorials, and other learning
 materials that help people solve their problems and grow as developers.
-Comprehensive and written for all experience levels
 
 We encourage and help our authors to submit clear and detailed as possible
 articles without making too much assumptions about the reader’s or writer's
@@ -151,7 +150,7 @@ Please remember to use alt text for your images.
 
 :::
 
-### Code Blocks in your Tutorial
+### Code and Code Blocks in your Tutorial
 
 - provide more details than just code
 - do not provide large code blocks in the tutorial, if there is need for larger
@@ -159,6 +158,8 @@ Please remember to use alt text for your images.
 - every code example should be followed by an explanation of what it does and
   why it works that way - help readers understand what they do and learn
 - every code example should be tested by the author at the time of writing
+- see [Codeblocks in the Component Cheatsheet](components-cheatsheet) to see how
+  to include filenames, highlights and formatting.
 
 ### Interactive Elements in your Tutorial
 
@@ -230,10 +231,3 @@ use the following code
 ```js
 <Task mandatory={false}>I have completed this task</Task>
 ```
-
-:::info
-
-The Task component is still being worked on, the goal is to have a UI flow like
-[here](https://www.apollographql.com/tutorials/lift-off-part1/01-feature-overview-and-setup)
-
-:::

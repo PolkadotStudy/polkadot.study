@@ -21,6 +21,7 @@ export default function TutorialCard({
   const Levels = () => {
     switch (level) {
       case "easy":
+      case "beginner":
         return (
           <>
             <CircleFull />
@@ -40,8 +41,8 @@ export default function TutorialCard({
         return (
           <>
             <CircleFull />
-            <CircleFull />
-            <CircleFull />
+            <CircleEmpty />
+            <CircleEmpty />
           </>
         );
     }

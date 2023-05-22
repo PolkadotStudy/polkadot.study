@@ -30,7 +30,7 @@ export default function Grill() {
         onClick={() => setCollapsed(!collapsed)}
       >
         <img
-          src="icons/grillchat.svg"
+          src="/icons/grillchat.svg"
           alt="grillchat icon"
           className={styles.grillIcon}
         />

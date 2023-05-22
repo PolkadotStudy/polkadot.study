@@ -146,6 +146,7 @@ const config = {
           hideable: true,
           autoCollapseCategories: true,
         },
+        authorsMapPath: require.resolve("./tutorials/authors.yml"),
       },
       announcementBar: {
         id: "support_us",
