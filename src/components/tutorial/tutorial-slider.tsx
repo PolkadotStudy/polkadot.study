@@ -30,42 +30,42 @@ export default function TutorialSlider({ slides, swiper, style }) {
   }, []);
 
   const updateStatus = (swiper) => {
+    console.log("sssss", swiper);
     if (swiper.isBeginning && swiper.isEnd) {
       setPositionStatus("all");
     } else if (swiper.isEnd) {
       setPositionStatus("end");
+      sliderRef.current?.classList.remove(styles.isBeginning);
+      sliderRef.current?.classList.add(styles.isEnd);
     } else if (swiper.isBeginning) {
+      sliderRef.current?.classList.remove(styles.isEnd);
+      sliderRef.current?.classList.add(styles.isBeginning);
       setPositionStatus("beginning");
     } else {
       setPositionStatus("");
+      sliderRef.current?.classList.remove(styles.isEnd);
+      sliderRef.current?.classList.add(styles.isBeginning);
     }
   };
+
+  console.log("swiper", sliderRef.current?.swiper.isBeginning);
+
+  const swiperClasses = clsx(styles.tutorialSwiper, styles.isBeginning, {
+    // [styles.isBeginning]: sliderRef.current?.swiper.isBeginning,
+    // [styles.isEnd]: sliderRef.current?.swiper.isEnd,
+  });
 
   return (
     <div className={styles.tutorialSliderWrap}>
       <Swiper
         ref={sliderRef}
-        // onReachEnd={() => {
-        //   setPositionStatus("end");
-        // }}
-        // onReachBeginning={() => {
-        //   setPositionStatus("beginning");
-        // }}
-        onInit={updateStatus}
-        onSlideChange={updateStatus}
-        className={styles.tutorialSwiper}
+        onAfterInit={updateStatus}
+        onSlideChangeTransitionEnd={updateStatus}
+        className={swiperClasses}
         modules={[Navigation, A11y]}
         spaceBetween={20}
-        slidesPerView={1}
+        slidesPerView={"auto"}
         style={style}
-        breakpoints={{
-          740: {
-            slidesPerView: 2,
-          },
-          1080: {
-            slidesPerView: 3,
-          },
-        }}
         {...swiper}
       >
         {slides?.map((slide) => (
