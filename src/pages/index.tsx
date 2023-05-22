@@ -17,6 +17,7 @@ import useGlobalData, { usePluginData } from "@docusaurus/useGlobalData";
 import { uniqBy } from "lodash";
 import PageHead from "../components/PageHead";
 import Button from "../components/button/Button";
+import TutorialGrid from "../components/tutorial/tutorial-grid";
 
 export default function Home(): JSX.Element {
   const allTags = usePluginData(
@@ -76,8 +77,8 @@ export default function Home(): JSX.Element {
             step-by-step tutorials. All tutorials are written by developers from
             the polkadot community. Start your polkadot developer journey here.
           </p>
-          <TutorialSlider
-            slides={getAllTutorialsSorted()}
+          <TutorialGrid
+            slides={getAllTutorialsSorted().slice(0, 6)}
             style={{ marginTop: "2rem" }}
           />
           <div className={styles.btnViewAll}>
