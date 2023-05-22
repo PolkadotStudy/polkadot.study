@@ -28,6 +28,7 @@ h6 {
 
     .theme-doc-sidebar-container {
         border-right: none;
+        padding-bottom: 1rem;
     }
 
     [class*='expandButton_'],
@@ -215,7 +216,6 @@ nav.menu {
   
 .docSidebar {
     flex: 1;
-    padding-bottom: 2rem;
 }
 
 [class*='docPage_'] {
