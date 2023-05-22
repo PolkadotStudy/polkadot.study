@@ -1,0 +1,34 @@
+.grillWrap {
+    position: fixed;
+    bottom: 2rem;
+    right: 2rem;
+    height: 70vh;
+    max-height: 600px;
+    min-height: 400px;
+    width: 30%;
+    min-width: 320px;
+    z-index: 8000;
+
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+    align-items: flex-end;
+
+    display: none;
+
+    &.collapsed {
+        .grill {
+            display: none;
+        }
+    }
+
+    .grill {
+        height: 100%;
+        width: 100%;
+        border: 2px solid var(--ifm-color-content);
+    }
+
+    .grillButton {
+        cursor: pointer;
+    }
+  }
