@@ -17,6 +17,7 @@ import useGlobalData, { usePluginData } from "@docusaurus/useGlobalData";
 import { uniqBy } from "lodash";
 import PageHead from "../components/PageHead";
 import Button from "../components/button/Button";
+import TutorialGrid from "../components/tutorial/tutorial-grid";
 
 export default function Home(): JSX.Element {
   const allTags = usePluginData(
@@ -74,13 +75,10 @@ export default function Home(): JSX.Element {
           <p>
             Learn how to navigate the polkadot ecosystem as a developer in our
             step-by-step tutorials. All tutorials are written by developers from
-            the polkadot community. Polkadot.study is the perfect place to start
-            your Polkadot journey as a developer. We cover many different
-            subjects from both frontend and blockchain development.
+            the polkadot community. Start your polkadot developer journey here.
           </p>
-          <p>Here are our latest tutorials:</p>
-          <TutorialSlider
-            slides={getAllTutorialsSorted()}
+          <TutorialGrid
+            slides={getAllTutorialsSorted().slice(0, 6)}
             style={{ marginTop: "2rem" }}
           />
           <div className={styles.btnViewAll}>
@@ -116,7 +114,7 @@ export default function Home(): JSX.Element {
             </p>
           </div>
           <div className={styles.right}>
-            <Dots />
+            <></>
           </div>
         </section>
         <section className={styles.sectionStudyPaths}>
@@ -152,7 +150,7 @@ export default function Home(): JSX.Element {
             </Button>
           </div>
           <div className={styles.right}>
-            <Dots />
+            <></>
           </div>
         </section>
       </main>

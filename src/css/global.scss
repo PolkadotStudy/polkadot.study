@@ -1,5 +1,5 @@
 html {
-    scroll-behavior: smooth;
+    // scroll-behavior: smooth;
     scroll-padding: 6rem;
 }
 
@@ -290,6 +290,7 @@ nav.menu {
 
     .swiper-slide {
         height: unset;
+        width: auto;
     }
 }
 

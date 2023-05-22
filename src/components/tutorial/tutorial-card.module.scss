@@ -10,11 +10,17 @@
     border: 2px solid;
     position: relative;
     transition: all 0.5s;
+    text-overflow: ellipsis;
+    min-height: 350px;
 
     font-size: 18px;
     font-weight: 500;
     line-height: 24px;
     letter-spacing: 0.1px;
+
+    &.limitedWidth {
+        width: 400px;
+    }
 
     a, >div, p, h3 {
         transition: all 0.5s;
@@ -24,7 +30,7 @@
         font-size: 26px;
         line-height: 28px;
         letter-spacing: -0.1px;
-        text-transform: uppercase;
+        // text-transform: uppercase;
         margin-bottom: 23px;
     }
 
