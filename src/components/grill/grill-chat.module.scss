@@ -1,34 +1,35 @@
-.grillWrap {
-    position: fixed;
-    bottom: 2rem;
-    right: 2rem;
-    height: 70vh;
-    max-height: 600px;
-    min-height: 400px;
-    width: 30%;
-    min-width: 320px;
-    z-index: 8000;
 
-    display: flex;
-    flex-direction: column;
-    justify-content: flex-end;
-    align-items: flex-end;
 
-    display: none;
+    // display: none;
 
-    &.collapsed {
-        .grill {
+    .grill {
+        position: fixed;
+        bottom: 0.5rem;
+        right: 0.7rem;
+        height: 70vh;
+        max-height: 600px;
+        min-height: 400px;
+        width: 30%;
+        min-width: 320px;
+        z-index: 8000;
+        border-radius: 10px;
+        padding: 2px;
+
+        &.collapsed {
             display: none;
         }
     }
 
-    .grill {
-        height: 100%;
-        width: 100%;
-        border: 2px solid var(--ifm-color-content);
-    }
-
     .grillButton {
         cursor: pointer;
+        position: fixed;
+        bottom: 1.2rem;
+        right: 1.5rem;
+        width: 55px;
+        height: 55px;
+        z-index: 9000;        
     }
-  }
+
+    .grillIcon {
+        max-height: 55px;
+    }

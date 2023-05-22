@@ -9,24 +9,32 @@ export default function Grill() {
   useEffect(() => {
     const init = async () => {
       const { default: grill } = await import("@subsocial/grill-widget");
-      grill?.init();
+      grill?.init({
+        hub: {
+          id: 1014,
+        },
+      });
     };
 
     init();
   }, []);
 
   return (
-    <div
-      id="grillWrap"
-      className={clsx(styles.grillWrap, collapsed && styles.collapsed)}
-    >
-      <div id="grill" className={styles.grill}></div>
+    <>
+      <div
+        id="grill"
+        className={clsx(styles.grill, collapsed && styles.collapsed)}
+      ></div>
       <div
         className={styles.grillButton}
         onClick={() => setCollapsed(!collapsed)}
       >
-        GRILL
+        <img
+          src="icons/grillchat.svg"
+          alt="grillchat icon"
+          className={styles.grillIcon}
+        />
       </div>
-    </div>
+    </>
   );
 }
