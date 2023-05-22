@@ -4,7 +4,6 @@
     background: var(--quiz-color-background);
     border-radius: 2px;
     margin: 1rem 0;
-    color: #000;
 }
 
 .question {
@@ -66,10 +65,9 @@
 }
 
 .feedback {
-    padding: 1rem;
+    padding: 1rem 0;
     display: flex;
     align-items: center;
-    border-left: 4px solid;
     border-radius: 2px;
 
     span {
@@ -77,13 +75,11 @@
     }
 
     &.isWrong {
-        background: var(--quiz-color-wrong);
-        border-color: var(--quiz-color-wrong);
+        color: var(--quiz-color-wrong);
     }
 
     &.isCorrect {
-        background: var(--quiz-color-correct);
-        border-color: var(--quiz-color-correct);
+        color: var(--quiz-color-correct);
     }
 
     .feedbackIcon {
