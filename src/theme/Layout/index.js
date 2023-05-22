@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import clsx from "clsx";
 import { Analytics } from "@vercel/analytics/react";
 import ErrorBoundary from "@docusaurus/ErrorBoundary";
@@ -16,6 +16,7 @@ import LayoutProvider from "@theme/Layout/Provider";
 import ErrorPageContent from "@theme/ErrorPageContent";
 import styles from "./styles.module.css";
 import Head from "@docusaurus/Head";
+import grill from "@subsocial/grill-widget";
 export default function Layout(props) {
   const {
     children,
@@ -26,6 +27,10 @@ export default function Layout(props) {
     description,
   } = props;
   useKeyboardNavigation();
+
+  useEffect(() => {
+    grill.init({});
+  }, []);
   return (
     <LayoutProvider>
       <Head>
@@ -63,6 +68,7 @@ export default function Layout(props) {
       </div>
 
       {!noFooter && <Footer />}
+      <div id="grill"></div>
       <Analytics />
     </LayoutProvider>
   );

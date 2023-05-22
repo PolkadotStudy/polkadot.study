@@ -114,7 +114,7 @@ export default function Home(): JSX.Element {
             </p>
           </div>
           <div className={styles.right}>
-            <></>
+            <Dots></Dots>
           </div>
         </section>
         <section className={styles.sectionStudyPaths}>
@@ -150,7 +150,7 @@ export default function Home(): JSX.Element {
             </Button>
           </div>
           <div className={styles.right}>
-            <></>
+            <Dots />
           </div>
         </section>
       </main>
