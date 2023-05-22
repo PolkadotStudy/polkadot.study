@@ -59,6 +59,7 @@ export default function TutorialSlider({ slides, swiper, style }) {
     <div className={styles.tutorialSliderWrap}>
       <Swiper
         ref={sliderRef}
+        onInit={updateStatus}
         onAfterInit={updateStatus}
         onSlideChangeTransitionEnd={updateStatus}
         className={swiperClasses}

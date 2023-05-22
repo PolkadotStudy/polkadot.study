@@ -97,15 +97,20 @@ const config = {
         },
         items: [
           {
-            href: "/docs/authors/new-tutorial-on-polkadot-study/intro",
-            docId: "authors/new-tutorial-on-polkadot-study/intro",
+            to: "/tutorials/",
             position: "left",
-            label: "For Authors",
+            label: "Tutorials",
           },
           {
             to: "/tutorials/substrate-in-bits/",
             position: "left",
             label: "Substrate in Bits",
+          },
+          {
+            href: "/docs/authors/new-tutorial-on-polkadot-study/intro",
+            docId: "authors/new-tutorial-on-polkadot-study/intro",
+            position: "left",
+            label: "For Authors",
           },
           {
             to: "/blog",
