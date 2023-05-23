@@ -15,7 +15,7 @@ submitting a pull request.
 2. Answer the questions in the discussion template and include all relevant
    information and wait for community feedback
 
-3. Read the Tutorial for new Authors explains almost anything:
+3. Read the Tutorial for new Authors that explains almost anything:
    https://polkadot.study/docs/authors/new-tutorial-on-polkadot-study/intro
 
 ## Running Locally
