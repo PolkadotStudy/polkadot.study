@@ -151,7 +151,7 @@ const config = {
       announcementBar: {
         id: "support_us",
         content:
-          'We are looking for payed authors to write Polkadot developer tutorials<br><a rel="noopener noreferrer" href="/blog/looking-for-authors">Learn More</a>',
+          'We are looking for payed authors to write Polkadot developer tutorials <a rel="noopener noreferrer" href="/blog/looking-for-authors">Learn More</a>',
         backgroundColor: "var(--polkadot-pink)",
         textColor: "#eee",
         isCloseable: true,
