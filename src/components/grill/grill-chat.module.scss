@@ -5,15 +5,14 @@
     .grill {
         position: fixed;
         bottom: 0.5rem;
-        right: 0.7rem;
+        right: 0.9rem;
         height: 70vh;
         max-height: 600px;
         min-height: 400px;
-        width: 30%;
+        width: calc(100vw - 1.8rem);
         min-width: 320px;
         z-index: 8000;
-        border-radius: 10px;
-        padding: 2px;
+        box-shadow: 0 0 10px #0005;
 
         &.collapsed {
             display: none;
@@ -32,4 +31,16 @@
 
     .grillIcon {
         max-height: 55px;
+    }
+
+    @media screen and (min-width: 568px) {
+        .grill {
+            width: 40%;
+        }
+    }
+
+    @media screen and (min-width: 768px) {
+        .grill {
+            width: 30%;
+        }
     }
