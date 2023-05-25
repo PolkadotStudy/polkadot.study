@@ -145,11 +145,11 @@ and a modification is necessary for ```node/src/command.rs```:
 find the code snippet where ```new_full(...)``` is called and change it like so:
 ```rust title=node/src/command.rs
 /* snip */
-    None => {
-        let runner = cli.create_runner(&cli.run)?;
-        let inherent_data = cli.inherent_data;
-        runner.run_node_until_exit(|config| async move {
-            service::new_full(config, inherent_data).map_err(sc_cli::Error::Service)
-        })
-    },
+None => {
+    let runner = cli.create_runner(&cli.run)?;
+    let inherent_data = cli.inherent_data;
+    runner.run_node_until_exit(|config| async move {
+        service::new_full(config, inherent_data).map_err(sc_cli::Error::Service)
+    })
+},
 ```
