@@ -1,0 +1,40 @@
+# (Bad) Weather Oracle
+## Warning
+This project by no means can be used as a legitimate example for a decentralized oracle design.
+
+## Description
+This section describes a slightly more interesting use case of Inherents.
+Instead of providing a constant value the node will access a weather data provider endpoint which fetches current weather parameters at a provided geographical coordinates.
+A user submits a transaction were they order a weather report for a specified location.
+The node fetches the tranasction data from the last block via a custom (RuntimeAPI)[https://docs.substrate.io/reference/runtime-apis/]
+and the InherentProvider requests the weather data for the specified location.
+If no transaction is submitted by the user, InherentProvider obtains geolocation by its local IP provider thus
+converting the inherent data into node specific.
+As a result an event is created on chain which can be observed as usual with the blockchain explorer.
+
+## Source code
+Refers to relevant WeatherOracle sections of the Client and Runtime sides in the same repo
+https://github.com/Retamogordo/substrate-inherents-tutorial-node
+
+## Running
+Run Alice and Bob nodes in two separate terminals:
+```bash
+./node-template --base-path /tmp/alice --chain local --alice --validator
+```
+```bash
+./node-template --base-path /tmp/bob --chain local --bob --validator
+```
+Head to https://polkadot.js.org/apps/#/extrinsics, locate weatherOracle pallet and submit an orderWeatherData transaction with latitude and longitude parameters in float number-like format.
+
+Then head to https://polkadot.js.org/apps/#/explorer and observe WeatherDataSet event data in the Recent Events section.
+
+## Why this isn't a feasible oracle
+There are a few reasons why this model of "oracle" is not feasible.
+As said before Inherents are not validated by the rest of the nodes, rather they assumed to be accepted as is.
+That said the situation when the block producer node cheats is not detectable by other nodes, so if fake data is submitted there is no way to reject it.
+One possible solution is to keep history of recent data samples and derive from them statistical metrics for current data feasibility.
+A possibly better solution would be not to use Inherents feature but rather access outer world using Offchain Workers.
+
+Another aspect of the problem is that a centralized trustful provider is utilized by the oracle to fetch data from the external world.
+A truly decentralized oracle would connect to a variety of data providers applying specific consensus algorithms, like,
+for example those this document https://research.chain.link/whitepaper-v1.pdf describes.

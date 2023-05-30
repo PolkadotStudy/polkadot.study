@@ -1,5 +1,17 @@
-# Build substrate-node-template
+# Introduction to Inherent Extrinsics
+A term extrinsic refers to a transaction in Substrate parlance.
+End users usually submit signed transactions to be executed and stored on a block chain.
+Substrate offers a functionality for submitting also unsigned extrinsics on chain.
+This kind of transaction is in use, for example, by Offchain Workers that usually implement buisiness logic requiring transaction execution.
+A specific sort of Unsigned Extrinsic is an Inherent Extrinsic.
+Inherent Extrinsics are submitted on chain by a block producing node. Unlike other kinds of extrinsics, Inherent Extrinsics
+are not gossiped to the rest of the node for consensus, rather they are included into the block to be executed when the block is imported by the nodes.
+Inherent Extrinsics are used to include node-specific data into the the block it proposes.
+For instance, inherent extrinsics are used to include the node's local timestamp when it produces a block.
+In this tutorial your Client will provide custom data to the Runtime for inclusion into the block.
+
+## Setup
 You're going to leverage the standard Substrate node template where you'll 
 customize the Client side as well as develop a custom Runtime pallet for handling your inherent extrinsic.
 
-As the first step, please fork, clone and build [substrate-node-template](https://github.com/substrate-developer-hub/substrate-node-template)
+As a first step, please fork, clone and build [substrate-node-template](https://github.com/substrate-developer-hub/substrate-node-template)

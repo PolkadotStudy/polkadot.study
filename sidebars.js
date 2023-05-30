@@ -46,6 +46,7 @@ const sidebars = {
     "substrate-inherents-tutorial/client",
     "substrate-inherents-tutorial/runtime",
     "substrate-inherents-tutorial/running-nodes",
+    "substrate-inherents-tutorial/weather-oracle",
     "substrate-inherents-tutorial/conclusion",
   ],
 
