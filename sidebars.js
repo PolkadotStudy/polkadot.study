@@ -39,6 +39,16 @@ const sidebars = {
     "wallet-with-polkadot-js-and-react-with-typescript/step5",
     "wallet-with-polkadot-js-and-react-with-typescript/conclusion",
   ],
+
+  parachainVaultSidebar: [
+    "parachain-to-polkadot-vault/intro",
+    "parachain-to-polkadot-vault/step1",
+    "parachain-to-polkadot-vault/step2",
+    "parachain-to-polkadot-vault/step3",
+    "parachain-to-polkadot-vault/step4",
+    "parachain-to-polkadot-vault/step5",
+    "parachain-to-polkadot-vault/conclusion",
+  ],
 };
 
 module.exports = sidebars;
