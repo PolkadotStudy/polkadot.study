@@ -56,37 +56,6 @@ const config = {
         editUrl: "https://github.com/PolkadotStudy/website/tree/staging/",
       },
     ],
-    // [
-    //   "@docusaurus/plugin-client-redirects",
-    //   {
-    //     // fromExtensions: ["html", "htm"], // /myPage.html -> /myPage
-    //     // toExtensions: ["exe", "zip"], // /myAsset -> /myAsset.zip (if latter exists)
-    //     // redirects: [
-    //     //   // /docs/oldDoc -> /docs/newDoc
-    //     //   {
-    //     //     to: "/docs/newDoc",
-    //     //     from: "/docs/oldDoc",
-    //     //   },
-    //     //   // Redirect from multiple old paths to the new path
-    //     //   {
-    //     //     to: "/docs/newDoc2",
-    //     //     from: ["/docs/oldDocFrom2019", "/docs/legacyDocFrom2016"],
-    //     //   },
-    //     // ],
-    //     createRedirects(existingPath) {
-    //       if (existingPath.includes("/tutorials/substrate-in-bits/docs/")) {
-    //         // Redirect from /docs/team/X to /community/X and /docs/support/X to /community/X
-    //         return [
-    //           existingPath.replace(
-    //             "/tutorials/substrate-in-bits/docs/",
-    //             "/substrate-in-bits/"
-    //           ),
-    //         ];
-    //       }
-    //       return undefined; // Return a falsy value: no redirect created
-    //     },
-    //   },
-    // ],
   ],
 
   presets: [
@@ -128,21 +97,20 @@ const config = {
         },
         items: [
           {
-            href: "/tutorials",
-            docId: "intro",
+            to: "/tutorials/",
             position: "left",
             label: "Tutorials",
+          },
+          {
+            to: "/tutorials/substrate-in-bits/",
+            position: "left",
+            label: "Substrate in Bits",
           },
           {
             href: "/docs/authors/new-tutorial-on-polkadot-study/intro",
             docId: "authors/new-tutorial-on-polkadot-study/intro",
             position: "left",
             label: "For Authors",
-          },
-          {
-            to: "/tutorials/substrate-in-bits/",
-            position: "left",
-            label: "Substrate in Bits",
           },
           {
             to: "/blog",
@@ -178,11 +146,12 @@ const config = {
           hideable: true,
           autoCollapseCategories: true,
         },
+        authorsMapPath: require.resolve("./tutorials/authors.yml"),
       },
       announcementBar: {
         id: "support_us",
         content:
-          'We are looking for payed authors to write Polkadot developer tutorials<br><a rel="noopener noreferrer" href="/blog/looking-for-authors">Learn More</a>',
+          'We are looking for payed authors to write Polkadot developer tutorials <a rel="noopener noreferrer" href="/blog/looking-for-authors">Learn More</a>',
         backgroundColor: "var(--polkadot-pink)",
         textColor: "#eee",
         isCloseable: true,

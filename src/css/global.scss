@@ -1,5 +1,5 @@
 html {
-    scroll-behavior: smooth;
+    // scroll-behavior: smooth;
     scroll-padding: 6rem;
 }
 
@@ -28,6 +28,7 @@ h6 {
 
     .theme-doc-sidebar-container {
         border-right: none;
+        padding-bottom: 1rem;
     }
 
     [class*='expandButton_'],
@@ -41,28 +42,28 @@ h6 {
         }
     }
 
-    [class*='announcementBar_'] {
-        color: #fff;
-        position: fixed;
-        z-index: 1000;
-        bottom: 1rem;
-        right: 1rem;
-        max-width: 300px;
-        height: auto;
-        border-radius: 20px;
-        padding: 0.5rem;
-        padding-left: 1rem; 
-        box-shadow: 0 0 3px #95226b;
-        border: none;
+    // [class*='announcementBar_'] {
+    //     color: #fff;
+    //     position: fixed;
+    //     z-index: 1000;
+    //     bottom: 1rem;
+    //     right: 1rem;
+    //     max-width: 300px;
+    //     height: auto;
+    //     border-radius: 20px;
+    //     padding: 0.5rem;
+    //     padding-left: 1rem; 
+    //     box-shadow: 0 0 3px #95226b;
+    //     border: none;
 
-        [class*='announcementBarPlaceholder_'] {
-            display: none;
-        }
+    //     [class*='announcementBarPlaceholder_'] {
+    //         display: none;
+    //     }
 
-        .close {
-            color: #fff;
-        }
-    }
+    //     .close {
+    //         color: #fff;
+    //     }
+    // }
 
     [class*='collapseSidebarButtonIcon'] {
         margin-top: -6px;
@@ -290,6 +291,7 @@ nav.menu {
 
     .swiper-slide {
         height: unset;
+        width: auto;
     }
 }
 

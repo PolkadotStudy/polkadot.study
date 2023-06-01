@@ -1,23 +1,18 @@
-import React, { ChangeEvent, useEffect, useState } from "react";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { icon } from "@fortawesome/fontawesome-svg-core/import.macro";
-import cn from "classnames";
-
+import React from "react";
 import Link from "@docusaurus/Link";
-import useBaseUrl from "@docusaurus/useBaseUrl";
 
 import styles from "./tutorial-card.module.scss";
-import { string_to_slug } from "@site/src/util";
 import { CircleEmpty, CircleFull, Clock, Tag } from "../icons/icons";
+import clsx from "clsx";
 
 export default function TutorialCard({
   title,
   description,
-  category,
   permalink,
   tags,
   level,
   duration,
+  limitedWidth = true,
 }): JSX.Element {
   const handleClick = () => {
     window.open(permalink, "_self");
@@ -26,6 +21,7 @@ export default function TutorialCard({
   const Levels = () => {
     switch (level) {
       case "easy":
+      case "beginner":
         return (
           <>
             <CircleFull />
@@ -45,18 +41,18 @@ export default function TutorialCard({
         return (
           <>
             <CircleFull />
-            <CircleFull />
-            <CircleFull />
+            <CircleEmpty />
+            <CircleEmpty />
           </>
         );
     }
   };
 
   return (
-    <div className={styles.tutorialCard} onClick={handleClick}>
-      {/* <Link to={permalink} className={ styles.imgLink }>
-                <img src={ useBaseUrl(`/img/categories/${string_to_slug(category)}.svg`) } />
-            </Link> */}
+    <div
+      className={clsx(styles.tutorialCard, limitedWidth && styles.limitedWidth)}
+      onClick={handleClick}
+    >
       <h3 className={styles.title}>{title}</h3>
       <div className={styles.description}>{description}</div>
       <div className={styles.meta}>
@@ -68,9 +64,6 @@ export default function TutorialCard({
         )}
         <div className={styles.tags}>
           {tags?.map((tag, idx) => (
-            // <Link to={`/tags/${string_to_slug(tag)}`} className="tag">
-            //   {tag}
-            // </Link>
             <Link to={`#`} className="tag" key={`${tag.label}-${idx}`}>
               <Tag /> {tag.label}
             </Link>

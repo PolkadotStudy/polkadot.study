@@ -21,6 +21,7 @@
   display: flex;
   justify-content: center;
   position: relative;
+  overflow: hidden;
 
   img {
     max-width: 80vw;
@@ -75,11 +76,11 @@
 [data-theme='dark'] {
   .logoTitle {
     color: #fff;
-    mix-blend-mode: normal;
+    // mix-blend-mode: normal;
 
     h1 {
       color: #fff;
-      mix-blend-mode: normal;
+      // mix-blend-mode: normal;
     }
   }
 
