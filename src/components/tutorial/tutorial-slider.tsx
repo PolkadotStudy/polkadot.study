@@ -30,7 +30,6 @@ export default function TutorialSlider({ slides, swiper, style }) {
   }, []);
 
   const updateStatus = (swiper) => {
-    console.log("sssss", swiper);
     if (swiper.isBeginning && swiper.isEnd) {
       setPositionStatus("all");
     } else if (swiper.isEnd) {
@@ -47,8 +46,6 @@ export default function TutorialSlider({ slides, swiper, style }) {
       sliderRef.current?.classList.add(styles.isBeginning);
     }
   };
-
-  console.log("swiper", sliderRef.current?.swiper.isBeginning);
 
   const swiperClasses = clsx(styles.tutorialSwiper, styles.isBeginning, {
     // [styles.isBeginning]: sliderRef.current?.swiper.isBeginning,
