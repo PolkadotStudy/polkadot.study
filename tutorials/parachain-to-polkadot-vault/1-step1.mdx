@@ -7,7 +7,7 @@ This is also known as "cold storage".
 You can create accounts in Substrate-based networks, sign messages/transactions,
 and transfer funds to and from these accounts without any sort of connectivity enabled on the device.
 
-Any data transfer from or to the app happens using QR code.
+Any data transfer from or to the app happens using QR codes.
 By doing so, the most sensitive piece of information, the private keys, will never leave the phone.
 
 **Note:** This is not a complete crypto wallet in itself. The Vault does not sync with blockchain,
@@ -16,7 +16,7 @@ This is a cold wallet app that only stores keys, reads and signs messages. It sh
 
 GitHub repo: https://github.com/paritytech/parity-signer
 
-## Metadata Portal
+## Substrate Metadata
 Because Substrate is modular and provides a composable framework for building a blockchain, there's no predefined schema of properties.
 Instead, every runtime is configured with its own set of properties and those properties—including functions and types—can change over time with upgrades.
 
@@ -25,6 +25,11 @@ To capture all the information that's unique to a runtime, Substrate enables you
 The metadata for a runtime describes all the pallets and types that are defined for a specific version of the runtime.
 For every pallet, the metadata includes information about its storage items, functions, events, errors, and constants.
 The metadata also includes type definitions for any custom types included in the runtime.
+
+## Metadata portal
+In order to allow Polkadot Vault to read content of a transaction, it needs to know the metadata of the runtime.
+Since the Vaule is an air-gapped device, it cannot fetch the metadata from the blockchain node.
+Instead, the metadata needs to be provided to the Vault in a form of a QR code.
 
 The Metadata Portal is a web application and CLI that allows:
 - fetch metadata from a blockchain node
