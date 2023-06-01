@@ -14,6 +14,7 @@
 const sidebars = {
   // But you can create a sidebar manually
 
+
   tokengatedSidebar: [
     "tokengated-polkadot-next-js/intro",
     "tokengated-polkadot-next-js/setup",
@@ -39,6 +40,16 @@ const sidebars = {
     "wallet-with-polkadot-js-and-react-with-typescript/step5",
     "wallet-with-polkadot-js-and-react-with-typescript/conclusion",
   ],
+  inherentsTutorialSidebar: [
+    "substrate-inherents-tutorial/intro",
+    "substrate-inherents-tutorial/setup",
+    "substrate-inherents-tutorial/client",
+    "substrate-inherents-tutorial/runtime",
+    "substrate-inherents-tutorial/running-nodes",
+    "substrate-inherents-tutorial/weather-oracle",
+    "substrate-inherents-tutorial/conclusion",
+  ],
+
 };
 
 module.exports = sidebars;
