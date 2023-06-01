@@ -1,0 +1,136 @@
+# Runtime
+Now it's time to develop the second part of your Inherents project - the Runtime side.
+
+Please head to the ```pallets``` folder as you're going to use and modify the ```template``` pallet
+as a base pallet.
+First of all change the ```template``` subfolder name to ```inherents-example```.
+
+The most of the necessary changes will refer to the ```lib.rs``` file where the pallet is defined.
+
+Let's include some types:
+```rust title=pallets/inherents-example/lib.rs
+use sp_std::vec::Vec;
+use sp_inherents::{InherentIdentifier, IsFatalError};
+use sp_core::{Encode, Decode};
+use sp_runtime::traits::Zero;
+
+/// Type for Scale-encoded data provided by the block author
+type InherentRawType = Vec<u8>;
+
+pub const INHERENT_IDENTIFIER: InherentIdentifier = *b"ext_data";
+```
+You also added a private type alias ```InherentRawType``` which represents bytes vector of Scale-encoded inherent data passed from the Client.
+
+The ```INHERENT_IDENTIFIER``` is the 8-byte-long key you already used on the Client side to put the encoded data into the storage.
+
+The next thing is to add ```InherentDataType``` declaration into the ```Config``` trait;
+```rust title=pallets/inherents-example/lib.rs
+#[pallet::config]
+pub trait Config: frame_system::Config {
+	/// Because this pallet emits events, it depends on the runtime's definition of an event.
+	type RuntimeEvent: From<Event<Self>> + IsType<<Self as frame_system::Config>::RuntimeEvent>;
+	/// Type representing the weight of this pallet
+	type WeightInfo: WeightInfo;
+	/// Actual type of inherent data
+	type InherentDataType: Default + Encode + Decode + Clone + Parameter + Member + MaxEncodedLen;
+}
+```
+and its corresponding definition for the ```Runtime``` implementing the ```Config``` trait in ```runtime/src/lib```:
+```rust title=runtime/src/lib.rs
+/* snip */
+pub type InherentDataType = u16;
+```
+Now back to ```pallets/inherents-example/lib.rs```, define the pallet's Storage Item:
+```rust title=pallets/inherents-example/lib.rs
+// Storage items for inherent data created by the block author
+#[pallet::storage]
+pub type StoredInherentData<T: Config> = StorageValue<_, T::InherentDataType, OptionQuery>;
+```
+The next step is to define the unsigned extrinsic that will be submitted as a result of inherent receipt, and the corresponding ```Event``` that will be triggered upon extrinsic call success as well as the ```Error``` for the case of failure outcome:
+```rust title=pallets/inherents-example/lib.rs
+#[pallet::event]
+#[pallet::generate_deposit(pub(super) fn deposit_event)]
+pub enum Event<T: Config> {
+	/// Triggered when 'set' transaction succedes
+	InherentDataSet { data: T::InherentDataType  },
+}
+
+// Errors inform users that something went wrong.
+#[pallet::error]
+pub enum Error<T> {
+	/// Triggered when the inherent data is already set for the current block
+	AlreadySet,
+}
+
+#[pallet::call]
+impl<T: Config> Pallet<T> {
+	/// Unsigned extrinsic submitted by create_inherent(..) 
+	#[pallet::call_index(0)]
+	#[pallet::weight(T::WeightInfo::set())]
+	pub fn set(origin: OriginFor<T>, inherent_data: T::InherentDataType) -> DispatchResult {
+		// as this call is created by block auth it is supposed to be unsigned
+		ensure_none(origin)?;
+		ensure!(StoredInherentData::<T>::get().is_none(), Error::<T>::AlreadySet);
+
+		StoredInherentData::<T>::put(&inherent_data);
+		
+		Self::deposit_event(Event::InherentDataSet { data: inherent_data });
+
+		Ok(())
+	}
+}
+```
+
+The essential thing a pallet that provides and/or verifies an inherent extrinsic must do is to implement a ```ProvideInherent``` trait:
+```rust title=pallets/inherents-example/lib.rs
+// This pallet provides an inherent, as such it implements ProvideInherent trait
+// https://paritytech.github.io/substrate/master/frame_support/inherent/trait.ProvideInherent.html
+#[pallet::inherent]
+impl<T: Config> ProvideInherent for Pallet<T> {
+	type Call = Call<T>;
+	type Error = InherentError;
+	const INHERENT_IDENTIFIER: InherentIdentifier = INHERENT_IDENTIFIER;
+	// This method is used to decide whether this inherent is requiered for the block to be accepted
+	fn is_inherent_required(data: &InherentData) -> Result<Option<Self::Error>, Self::Error> {
+		// we could return Ok(None) to indicate that this inherent is not required. 
+		// This happens by default if altenative implementation of is_inherent_required is provided
+		// Here for demonstration we return Ok(Some(..)) if inherent data is present and successfully decoded, expecting
+		// that inherent is required in this case.
+		Ok(Self::get_and_decode_data(data)
+			.map(|_| InherentError::InherentRequiredForDataPresent))
+	}
+
+	fn create_inherent(data: &InherentData) -> Option<Self::Call> {
+		// create and return the extrinsic call if the data could be read and decoded
+		Self::get_and_decode_data(data)
+			.map(|inherent_data| Call::set {inherent_data})
+	}
+	// Determine if a call is an inherent extrinsic
+	fn is_inherent(call: &Self::Call) -> bool {
+		matches!(call, Call::set {..})
+	}
+}
+```
+
+And the final thing left to do is to implement and embed your pallet into the Runtime, as usual:
+```rust title=runtime/src/lib.rs
+/// Configure the inherents-example in pallets/inherents_example.
+impl inherents_example::Config for Runtime {
+	type RuntimeEvent = RuntimeEvent;
+	type WeightInfo = inherents_example::weights::SubstrateWeight<Runtime>;
+	type InherentDataType = InherentDataType;
+}
+// Create the runtime by composing the FRAME pallets that were previously configured.
+construct_runtime!(
+	pub struct Runtime
+	where
+		Block = Block,
+		NodeBlock = opaque::Block,
+		UncheckedExtrinsic = UncheckedExtrinsic,
+	{
+        /* snip */
+		InherentsExample: inherents_example,
+	}
+);
+
+```

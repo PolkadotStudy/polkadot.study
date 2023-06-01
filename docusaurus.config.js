@@ -108,7 +108,6 @@ const config = {
           },
           {
             href: "/docs/authors/new-tutorial-on-polkadot-study/intro",
-            docId: "authors/new-tutorial-on-polkadot-study/intro",
             position: "left",
             label: "For Authors",
           },

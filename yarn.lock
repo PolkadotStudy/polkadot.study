@@ -2041,10 +2041,10 @@
   resolved "https://registry.yarnpkg.com/@mdx-js/util/-/util-1.6.22.tgz#219dfd89ae5b97a8801f015323ffa4b62f45718b"
   integrity sha512-H1rQc1ZOHANWBvPcW+JpGwr+juXSxM8Q8YCkm3GhZd8REu1fHR3z99CErO1p9pkcfcxZnMdIZdIsXkOHY0NilA==
 
-"@niklasp/docusaurus-plugin-content-tutorials@^2.4.3":
-  version "2.4.3"
-  resolved "https://registry.yarnpkg.com/@niklasp/docusaurus-plugin-content-tutorials/-/docusaurus-plugin-content-tutorials-2.4.3.tgz#0abeb7893e5dfff00d7e30a15e7b79c24d135566"
-  integrity sha512-JZval5RxxzJGQEDvn96t3FYso7lsqob3nAO9aLjiRrMBRFif8tr8arxp94Rjx8oO1PXG4OO4ZCyK5IQIVgkVOQ==
+"@niklasp/docusaurus-plugin-content-tutorials@^2.4.5":
+  version "2.4.5"
+  resolved "https://registry.yarnpkg.com/@niklasp/docusaurus-plugin-content-tutorials/-/docusaurus-plugin-content-tutorials-2.4.5.tgz#9fb6914f58e6d2c78ee8c63c12cd55f8191d2599"
+  integrity sha512-UM/OOrCYZFhTuD5pG/GUwHcWdPVPKG98uaL31PYQfppmOqKTnFaRnD3bkxD9N/7PtKt+VJ9tHDu0WOmnBJraXQ==
   dependencies:
     "@docusaurus/core" "2.4.0"
     "@docusaurus/logger" "2.4.0"

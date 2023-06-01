@@ -29,8 +29,8 @@ export default function Home(): JSX.Element {
     let allTutorialsSorted = [];
 
     Object.keys(allTags).map((key) => {
-      const items = allTags[key].items[0];
-      allTutorialsSorted.push(items);
+      const items = allTags[key].items;
+      allTutorialsSorted.push(...items);
     });
 
     allTutorialsSorted = uniqBy(allTutorialsSorted, "permalink");

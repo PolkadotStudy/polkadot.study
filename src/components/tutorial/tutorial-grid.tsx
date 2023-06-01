@@ -36,7 +36,6 @@ export default function TutorialGrid({ slides, style, big = true }) {
 
     allTutorials = uniqBy(allTutorials, "permalink");
 
-    console.log("displayedSlides", allTutorials);
     displayedSlides = allTutorials;
   }
 
