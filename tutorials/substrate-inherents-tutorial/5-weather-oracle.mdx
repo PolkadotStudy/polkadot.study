@@ -1,12 +1,12 @@
 # (Bad) Weather Oracle
-## Warning
+:::caution
 This project by no means can be used as a legitimate example for a decentralized oracle design.
-
+::: 
 ## Description
 This section describes a slightly more interesting use case of Inherents.
 Instead of providing a constant value the node will access a weather data provider endpoint which fetches current weather parameters at a provided geographical coordinates.
 A user submits a transaction were they order a weather report for a specified location.
-The node fetches the tranasction data from the last block via a custom (RuntimeAPI)[https://docs.substrate.io/reference/runtime-apis/]
+The node fetches the transaction data from the last block via a custom [RuntimeAPI](https://docs.substrate.io/reference/runtime-apis/)
 and the InherentProvider requests the weather data for the specified location.
 If no transaction is submitted by the user, InherentProvider obtains geolocation by its local IP provider thus
 converting the inherent data into node specific.

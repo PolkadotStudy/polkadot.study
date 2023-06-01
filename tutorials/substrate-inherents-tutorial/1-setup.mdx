@@ -1,11 +1,11 @@
 # Introduction to Inherent Extrinsics
-A term extrinsic refers to a transaction in Substrate parlance.
+The term _extrinsic_ refers to a transaction in Substrate parlance.
 End users usually submit signed transactions to be executed and stored on a block chain.
-Substrate offers a functionality for submitting also unsigned extrinsics on chain.
-This kind of transaction is in use, for example, by Offchain Workers that usually implement buisiness logic requiring transaction execution.
+Substrate offers a functionality for also submitting unsigned extrinsics on chain.
+This kind of transaction is in use, for example, by _offchain workers_ that usually implement buisiness logic requiring transaction execution.
 A specific sort of Unsigned Extrinsic is an Inherent Extrinsic.
 Inherent Extrinsics are submitted on chain by a block producing node. Unlike other kinds of extrinsics, Inherent Extrinsics
-are not gossiped to the rest of the node for consensus, rather they are included into the block to be executed when the block is imported by the nodes.
+are not gossiped to the rest of the nodes for consensus, rather they are included into the block to be executed when the block is imported by the nodes.
 Inherent Extrinsics are used to include node-specific data into the the block it proposes.
 For instance, inherent extrinsics are used to include the node's local timestamp when it produces a block.
 In this tutorial your Client will provide custom data to the Runtime for inclusion into the block.

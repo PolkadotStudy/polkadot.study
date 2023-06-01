@@ -12,21 +12,20 @@ level: intermediate
 ---
 
 # How to Use Inherent Extrinsics Feature in Substrate
-
-- Step-by-step guidance of implementing an extrinsic creation by a block authoring node.
-- Leverage the standard Substrate's Template Node to build a custom inherent provider and create an inherent extrinsic by the block authoring node.
   
   A Block producer node has a feature to add an extrinsic to a block it produces.
   These are called inherent extrinsics.
-  As an example, Aura passes such data as timestamp and slot index to the Runtime.
-  With this tutorial you'll implement your custom inherent provider as well a pallet which eventually creates an extrinsic call using the inherent data passed from the Client. 
+  AURA for example passes the timestamp and the slot index to the runtime as inherent extrinsics.
+  In this tutorial you'll implement your custom inherent provider as well as a pallet which eventually creates an extrinsic call using the inherent data passed from the client.
 
 ## Time of completion
 
 - 2-4 hrs
 
 ## What you'll learn
-- implement a custom InherentDataProvider on the Node(client) side
+- step-by-step guidance of implementing an extrinsic creation by a block authoring node.
+- leverage the standard Substrate's Template Node to build a custom inherent provider and create an inherent extrinsic by the block authoring node.
+- implement a custom InherentDataProvider on the Node (Client) side
 - share InherentData from the Client to the Runtime
 - construct an inherent on the Runtime and create an extrinsic call
 - handling a Inherent as a special type of Unsigned Extrinsic

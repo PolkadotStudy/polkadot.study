@@ -1,13 +1,13 @@
 # Client
 ## Inherent Data Provider
 A block producing node relies on an ```InherentDataProvider``` whenever it is interested to pass
-data to Runtime upon authoring a new block.
-An ```InherentDataProvider``` trait implementor utilizes ```provide_inherent_data``` method to put data onto 
-storage location under a key both the Client and the Runtime share.
+data to the runtime upon authoring a new block.
+An ```InherentDataProvider``` trait implementor utilizes the ```provide_inherent_data``` method to put data into 
+storage under a key both the Client and the Runtime share.
 
 As the first step you'll define a struct implementing the aforementioned ```InherentDataProvider``` trait.
 
-Please head to ./node/src folder and add a file ```inherent_data_provider.rs``` with the following code:
+Please head to `./node/src` folder and add a file ```inherent_data_provider.rs``` with the following code:
 
 ```rust title=node/src/inherent_data_provider.rs
 use sp_inherents::{InherentIdentifier, InherentData};
@@ -74,7 +74,7 @@ fetched and decoded by the Runtime.
 
 ## Create Inherent Data Provider
 Now when your inherent data provider is ready it must be used by the block production.
-Inherent data provider instances are created by a closure passed to consensus block production module.
+Inherent data provider instances are created by a closure passed to the consensus block production module.
 Please head to the file ```node/src/service.rs``` and locate the 
 ```rust title=node/src/service.rs
 create_inherent_data_providers: move |_, ()| async move {
@@ -93,9 +93,9 @@ code snippet.
 
 There are two identical snippets in the file, at the moment we are going to concentrate
 on that referred by ```sc_consensus_aura::start_aura```.
-We see that there are already two inherent data providers returned by the closure which
-Aura uses to pass inherent data to the Runtime when it produces a block.
-Aura passes the current time and slot inherents to the Runtime.
+You can see that there are already two inherent data providers returned by the closure which
+AURA uses to pass inherent data to the Runtime when it produces a block.
+AURA passes the current time and slot inherents to the Runtime.
 
 You are going to create you custom inherent data provider, so your data is also passed to the Runtime:
 
