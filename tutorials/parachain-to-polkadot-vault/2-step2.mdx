@@ -1,0 +1,47 @@
+# Running local node
+
+For the purpose of this tutorial, you need to have a running blockchain node.
+You can either run a node locally or use any public node.
+
+Examples of public nodes that you can experiment with are:
+- wss://acala-rpc.dwellir.com
+- wss://rpc.astar.network
+- wss://spiritnet.kilt.io
+
+However, for better understanding, I will run a blockchain from a template locally.
+
+## Run a blockchain node locally.
+Clone the template repository:
+
+```bash
+git clone https://github.com/substrate-developer-hub/substrate-node-template.git
+```
+Go to the template directory:
+```bash
+cd substrate-node-template
+```
+
+### Build
+
+Use the following command to build the node without launching it:
+
+```bash
+cargo build --release
+```
+
+**Note:** Depending on your operating system and Rust version, there might be additional packages required to compile this template.
+Check the [installation](https://docs.substrate.io/install/) instructions for your platform for the most common dependencies.
+Alternatively, you can use one of the [alternative installation](#alternative-installations) options.
+
+
+### Single-Node Development Chain
+
+The following command starts a single-node development chain that doesn't persist state:
+
+```bash
+./target/release/node-template --dev
+```
+
+The node is reachable via the following RPC endpoints:
+- JSON-RPC API on [http://localhost:9933](http://localhost:9933)
+- WebSocket API on [ws://localhost:9944](ws://localhost:9944).
