@@ -12,21 +12,7 @@
 // @ts-check
 
 const sidebars = {
-<<<<<<< HEAD
-  // But you can create a sidebar manually
-
-
-  tokengatedSidebar: [
-    "tokengated-polkadot-next-js/intro",
-    "tokengated-polkadot-next-js/setup",
-    "tokengated-polkadot-next-js/connecting-to-the-wallet-browser-extension",
-    "tokengated-polkadot-next-js/authentication-with-next-auth",
-    "tokengated-polkadot-next-js/conclusion",
-  ],
-
-=======
   // Create a sidebar for your tutorial at the end of this list
->>>>>>> staging
   substrateInBitsSidebar: [
     "substrate-in-bits/README",
     {
