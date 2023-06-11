@@ -12,16 +12,7 @@
 // @ts-check
 
 const sidebars = {
-  // But you can create a sidebar manually
-
-  tokengatedSidebar: [
-    "tokengated-polkadot-next-js/intro",
-    "tokengated-polkadot-next-js/setup",
-    "tokengated-polkadot-next-js/connecting-to-the-wallet-browser-extension",
-    "tokengated-polkadot-next-js/authentication-with-next-auth",
-    "tokengated-polkadot-next-js/conclusion",
-  ],
-
+  // Create a sidebar for your tutorial at the end of this list
   substrateInBitsSidebar: [
     "substrate-in-bits/README",
     {
@@ -29,7 +20,13 @@ const sidebars = {
       dirName: "substrate-in-bits/docs",
     },
   ],
-
+  tokengatedSidebar: [
+    "tokengated-polkadot-next-js/intro",
+    "tokengated-polkadot-next-js/setup",
+    "tokengated-polkadot-next-js/connecting-to-the-wallet-browser-extension",
+    "tokengated-polkadot-next-js/authentication-with-next-auth",
+    "tokengated-polkadot-next-js/conclusion",
+  ],
   polkadotWalletSidebar: [
     "wallet-with-polkadot-js-and-react-with-typescript/intro",
     "wallet-with-polkadot-js-and-react-with-typescript/step1",
@@ -47,6 +44,25 @@ const sidebars = {
     "kitties-part-01/step3",
     "kitties-part-01/step4",
     "kitties-part-01/conclusion",
+  ],
+  
+  inherentsTutorialSidebar: [
+    "substrate-inherents-tutorial/intro",
+    "substrate-inherents-tutorial/setup",
+    "substrate-inherents-tutorial/client",
+    "substrate-inherents-tutorial/runtime",
+    "substrate-inherents-tutorial/running-nodes",
+    "substrate-inherents-tutorial/weather-oracle",
+    "substrate-inherents-tutorial/conclusion",
+  ],
+  parachainVaultSidebar: [
+    "parachain-to-polkadot-vault/intro",
+    "parachain-to-polkadot-vault/step1",
+    "parachain-to-polkadot-vault/step2",
+    "parachain-to-polkadot-vault/step3",
+    "parachain-to-polkadot-vault/step4",
+    "parachain-to-polkadot-vault/step5",
+    "parachain-to-polkadot-vault/conclusion",
   ],
 };
 

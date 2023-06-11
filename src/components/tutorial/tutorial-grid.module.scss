@@ -3,16 +3,8 @@
 }
 
 .tutorialGrid {
-    display: grid;
-    
-    grid-template-columns: repeat(1, 1fr);
-    gap: 0;
     margin-left: -10px;
     width: calc(100% + 20px);
-}
-
-.tutorialGridBig {
-    grid-template-columns: repeat(1, 1fr);
 }
 
 .itemWrap {
@@ -22,7 +14,9 @@
 
 @media screen and (min-width: 768px) {
     .tutorialGrid {
+        display: grid;
         grid-template-columns: repeat(2, 50%);
+        gap: 0;
     }
 
     .tutorialGridBig {

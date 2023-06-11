@@ -51,7 +51,7 @@ function Box(props: ThreeElements["mesh"] & { index: number }) {
       onPointerOut={(event) => hover(false)}
       scale={[1, 1, 1]}
     >
-      <sphereBufferGeometry args={[0.5, 64, 64]} />
+      <sphereGeometry args={[0.5, 64, 64]} />
       <meshStandardMaterial />
     </mesh>
   );

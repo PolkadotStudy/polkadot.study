@@ -79,8 +79,6 @@ export default function DocTagDocListPage({ tag }) {
 
   const taggedTutorials = allTags[tag.label];
 
-  console.log("tag", tag);
-
   const editUrl = `https://github.com/PolkadotStudy/polkadot.study/blob/staging${tag.permalink}.mdx`;
 
   return (
