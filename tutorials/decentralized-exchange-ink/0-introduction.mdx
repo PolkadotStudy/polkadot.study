@@ -1,0 +1,63 @@
+---
+tags:
+  - ink!
+  - rust
+  - automated market maker
+keywords: [ink!, rust, automated market maker]
+description: How to deliver decentralized exchange in ink! smart contract language
+level: intermediate
+duration: 8h
+---
+
+# Building WebAssembly Decentralized Exchange.
+
+## What you will build
+
+
+## Time of completion
+
+- 4-8 hours
+
+## What you'll learn
+
+
+## Prerequisites
+
+
+## Author
+
+[Tomasz Waszczyk](https://github.com/tomaszWaszczyk/) is a software engineer that is constantly curious.
+The function provide_liquidity is a public function defined within a smart contract. It is used to provide new liquidity to a pool, allowing users to lock assets and receive shares in return. Let's go through the code and understand its functionality:
+
+The function takes two arguments:
+
+    _amount_token1: The amount of the first token to be locked in the liquidity pool.
+    _amount_token2: The amount of the second token to be locked in the liquidity pool.
+
+The function returns a Result which contains either the amount of shares issued for locking the assets or an error (Error) if the operation fails.
+
+Here's a breakdown of the function's implementation:
+
+    self.check_valid_amount(&self.token1_balance, _amount_token1)?;: This line calls a helper function (check_valid_amount) to validate if the _amount_token1 being provided is valid. If it's not, an error is returned.
+
+    let _caller = self.env().caller();: This line retrieves the address of the caller (the account invoking the function).
+
+    let issued_shares: u128;: This line declares a variable issued_shares to store the number of shares issued.
+
+    The following if statement checks if the total_shares in the pool is zero. If it is, it means there are no existing shares, so a fixed amount of 1000 shares (multiplied by a constant super::PRECISION) is issued. Otherwise, the existing shares are used to calculate the proportional amount of shares to be issued based on the provided amounts of tokens.
+
+    If the calculated shares for the first token (share_1) are not equal to the shares calculated for the second token (share_2), an error is returned, indicating that the values of the two tokens are not equivalent.
+
+    The token balances of the caller (_caller) for both tokens are retrieved from the token1_balance mapping.
+
+    The token balances for _caller are updated by subtracting the provided amounts of tokens (_amount_token1 and _amount_token2).
+
+    The pool_total_token1 and pool_total_token2 variables are increased by the provided amounts of tokens.
+
+    The total_shares variable is increased by the issued_shares calculated earlier.
+
+    The shares for _caller are updated in the shares mapping. If the caller already has shares, the existing value is modified by adding the issued_shares. Otherwise, a new entry is inserted with the issued_shares as the value.
+
+    Finally, the function returns Ok(issued_shares) to indicate the successful issuance of shares.
+
+In summary, the provide_liquidity function allows users to provide liquidity to a pool by locking assets (tokens). The function calculates the proportionate shares to be issued based on the provided amounts of tokens and updates the necessary variables and mappings to reflect the liquidity addition.
