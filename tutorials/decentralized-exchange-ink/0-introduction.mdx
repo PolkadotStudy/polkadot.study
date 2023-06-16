@@ -6,13 +6,23 @@ tags:
 keywords: [ink!, rust, automated market maker]
 description: How to deliver decentralized exchange in ink! smart contract language
 level: intermediate
-duration: 8h
+duration: 4-8h
+author: Tomasz Waszczyk
 ---
 
-# Building WebAssembly Decentralized Exchange.
+# How to Build Decentralized Exchange in ink!
+
+A decentralized exchange (DEX) is a type of cryptocurrency exchange that operates on a blockchain network without the need for intermediaries or a central authority.
+It allows users to trade cryptocurrencies directly with each other using smart contracts. DEXs provide increased security and privacy as they eliminate the need to trust a centralized entity with users' funds.
+They also offer a more transparent and censorship-resistant trading environment, empowering users to have full control over their assets.
 
 ## What you will build
 
+An Automated Market Maker (AMM) is a decentralized exchange model that relies on a mathematical price formula to facilitate asset trading.
+Instead of using a traditional order book and relying on buyers and sellers, AMMs utilize liquidity pools where assets are priced based on a specific algorithm.
+Uniswap, for instance, employs the formula p * q = k, where p represents one token's amount in the pool, and q represents the amount of the other token.
+The constant "k" ensures that the total liquidity remains unchanged. As an example, when a volatile asset like A is purchased, its price increases due to reduced availability in the pool, while the price of asset B decreases as its availability increases.
+The pool maintains balance, with the total value of A always equaling the total value of B, and expands only when new liquidity providers participate.
 
 ## Time of completion
 
@@ -20,44 +30,20 @@ duration: 8h
 
 ## What you'll learn
 
+I do believe that learning by doing and making experiments is a proper way to gain more experience that is especially important for delivering smart contracts. The tutorial shows you:
+
+- how works basic decentralized exchange
+- how to implement ink! smart contract
+- unit testing of the smart contract
+- how to handle errors in the smart contracts written in ink!
 
 ## Prerequisites
 
+- basic knowledge of Rust programming language
+- preferred Linux-like operating system
+- willingness for learning and curiosity
 
 ## Author
 
-[Tomasz Waszczyk](https://github.com/tomaszWaszczyk/) is a software engineer that is constantly curious.
+- [Tomasz Waszczyk](https://github.com/tomaszWaszczyk/) is a software engineer that is constantly curious.
 The function provide_liquidity is a public function defined within a smart contract. It is used to provide new liquidity to a pool, allowing users to lock assets and receive shares in return. Let's go through the code and understand its functionality:
-
-The function takes two arguments:
-
-    _amount_token1: The amount of the first token to be locked in the liquidity pool.
-    _amount_token2: The amount of the second token to be locked in the liquidity pool.
-
-The function returns a Result which contains either the amount of shares issued for locking the assets or an error (Error) if the operation fails.
-
-Here's a breakdown of the function's implementation:
-
-    self.check_valid_amount(&self.token1_balance, _amount_token1)?;: This line calls a helper function (check_valid_amount) to validate if the _amount_token1 being provided is valid. If it's not, an error is returned.
-
-    let _caller = self.env().caller();: This line retrieves the address of the caller (the account invoking the function).
-
-    let issued_shares: u128;: This line declares a variable issued_shares to store the number of shares issued.
-
-    The following if statement checks if the total_shares in the pool is zero. If it is, it means there are no existing shares, so a fixed amount of 1000 shares (multiplied by a constant super::PRECISION) is issued. Otherwise, the existing shares are used to calculate the proportional amount of shares to be issued based on the provided amounts of tokens.
-
-    If the calculated shares for the first token (share_1) are not equal to the shares calculated for the second token (share_2), an error is returned, indicating that the values of the two tokens are not equivalent.
-
-    The token balances of the caller (_caller) for both tokens are retrieved from the token1_balance mapping.
-
-    The token balances for _caller are updated by subtracting the provided amounts of tokens (_amount_token1 and _amount_token2).
-
-    The pool_total_token1 and pool_total_token2 variables are increased by the provided amounts of tokens.
-
-    The total_shares variable is increased by the issued_shares calculated earlier.
-
-    The shares for _caller are updated in the shares mapping. If the caller already has shares, the existing value is modified by adding the issued_shares. Otherwise, a new entry is inserted with the issued_shares as the value.
-
-    Finally, the function returns Ok(issued_shares) to indicate the successful issuance of shares.
-
-In summary, the provide_liquidity function allows users to provide liquidity to a pool by locking assets (tokens). The function calculates the proportionate shares to be issued based on the provided amounts of tokens and updates the necessary variables and mappings to reflect the liquidity addition.
