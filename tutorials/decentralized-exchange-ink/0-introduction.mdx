@@ -4,13 +4,13 @@ tags:
   - rust
   - automated market maker
 keywords: [ink!, rust, automated market maker]
-description: How to deliver decentralized exchange in ink! smart contract language
+description: How to implement decentralized exchange in ink! smart contract language
 level: intermediate
 duration: 4-8h
 author: Tomasz Waszczyk
 ---
 
-# How to Build Decentralized Exchange in ink!
+# How to Build Decentralized Exchange in ink! Smart Contract Programming Language
 
 A decentralized exchange (DEX) is a type of cryptocurrency exchange that operates on a blockchain network without the need for intermediaries or a central authority.
 It allows users to trade cryptocurrencies directly with each other using smart contracts. DEXs provide increased security and privacy as they eliminate the need to trust a centralized entity with users' funds.
@@ -23,6 +23,8 @@ Instead of using a traditional order book and relying on buyers and sellers, AMM
 Uniswap, for instance, employs the formula p * q = k, where p represents one token's amount in the pool, and q represents the amount of the other token.
 The constant "k" ensures that the total liquidity remains unchanged. As an example, when a volatile asset like A is purchased, its price increases due to reduced availability in the pool, while the price of asset B decreases as its availability increases.
 The pool maintains balance, with the total value of A always equaling the total value of B, and expands only when new liquidity providers participate.
+
+![Automated Market Maker](./assets/dex.jpg)
 
 ## Time of completion
 
@@ -40,10 +42,9 @@ I do believe that learning by doing and making experiments is a proper way to ga
 ## Prerequisites
 
 - basic knowledge of Rust programming language
-- preferred Linux-like operating system
+- preferred Linux-like operating system (optional)
 - willingness for learning and curiosity
 
 ## Author
 
 - [Tomasz Waszczyk](https://github.com/tomaszWaszczyk/) is a software engineer that is constantly curious.
-The function provide_liquidity is a public function defined within a smart contract. It is used to provide new liquidity to a pool, allowing users to lock assets and receive shares in return. Let's go through the code and understand its functionality:
