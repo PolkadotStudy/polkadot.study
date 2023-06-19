@@ -3,6 +3,38 @@
 - What did the user learn and create?
 - Why was the approach useful?
 
+```rust
+#![cfg_attr(not(feature = "std"), no_std)]
+
+const PRECISION: u128 = 1_000_000;
+
+#[ink::contract]
+pub mod automated_market_maker {
+
+    use ink_prelude::collections::BTreeMap;
+
+    /// Section 0: Definition of a storage
+
+    #[ink(impl)]
+
+    impl AutomatedMarketMaker {
+
+        /// Constructor
+
+        /// Business logic, functions like:
+            -   Providing new liquidity to the pool
+            -   Swap
+            -   Removing liquidity from a pool
+            -   Liquidity constant of a pool
+
+    }
+
+        /// Utils, errors definitions
+
+    }
+}
+```
+
 ## Further Studies
 
 - How and where can users find more information on learned concepts?
