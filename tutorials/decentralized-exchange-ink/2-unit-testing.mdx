@@ -1,9 +1,18 @@
 # Unit testing
 
-- What did the user learn and create?
-- Why was the approach useful?
+The role of unit testing in software engineering is to verify the correctness and robustness of individual units of code in a smart contract, typically at the function or method level. Unit testing involves writing and executing automated tests that target specific units of code in isolation to ensure they function as expected. 
 
-## Further Studies
+Like in any software written in Rust programming language, tests are usually stored in `tests` directory and the name of the file is `tests.rs`. In the `tests.rs` 
 
-- How and where can users find more information on learned concepts?
-- Where can users continue their studies / deepen their knowledge?
+
+
+```rust
+#[test]
+fn create_new_contract_test() {
+    let mut _amm_contract = AutomatedMarketMaker::new(0);
+    let _accounts = ink_env::test::default_accounts::<ink_env::DefaultEnvironment>();
+    let _contract_addr: AccountId = AccountId::from([0xFF as u8; 32]);
+    set_callee::<DefaultEnvironment>(_contract_addr);
+    set_caller::<ink_env::DefaultEnvironment>(_accounts.alice);
+}
+```

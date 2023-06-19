@@ -7,7 +7,7 @@ cargo new automated_market_maker
 ```
 
 ink! smart contract programming language is based on Rust and that is why the most important file
-where we will implement a whole business logic is `lib.rs`. From helicopter view the file looks like below:
+where we will implement a whole business logic is `lib.rs`. Helicopter view of the file `lib.rs` looks like below:
 
 ```rust
 #![cfg_attr(not(feature = "std"), no_std)]
@@ -22,20 +22,20 @@ pub mod automated_market_maker {
     /// Section: Definition of a storage
 
     #[ink(impl)]
-
     impl AutomatedMarketMaker {
 
         /// Section: Constructor
 
+
         /// Section: Business logic and core functions like:
-            -   Providing new liquidity to the pool
-            -   Swap
-            -   Removing liquidity from a pool
-            -   Liquidity constant of a pool
+        /// -   Providing new liquidity to the pool
+        /// -   Swap
+        /// -   Removing liquidity from a pool
+        /// -   Liquidity constant curve of a pool
 
     }
 
-        /// Utils, errors definitions
+        /// Section: Utils, errors definitions
 
     }
 }
