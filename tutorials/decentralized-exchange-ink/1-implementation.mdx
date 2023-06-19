@@ -1,7 +1,13 @@
 # Implementation
 
-- What did the user learn and create?
-- Why was the approach useful?
+In the chapter of the tutorial you will create a fully working smart contract. Let's start with creation your first ink! smart contract:
+
+```bash
+cargo new automated_market_maker
+```
+
+ink! smart contract programming language is based on Rust and that is why the most important file
+where we will implement a whole business logic is `lib.rs`. From helicopter view the file looks like below:
 
 ```rust
 #![cfg_attr(not(feature = "std"), no_std)]
@@ -13,15 +19,15 @@ pub mod automated_market_maker {
 
     use ink_prelude::collections::BTreeMap;
 
-    /// Section 0: Definition of a storage
+    /// Section: Definition of a storage
 
     #[ink(impl)]
 
     impl AutomatedMarketMaker {
 
-        /// Constructor
+        /// Section: Constructor
 
-        /// Business logic, functions like:
+        /// Section: Business logic and core functions like:
             -   Providing new liquidity to the pool
             -   Swap
             -   Removing liquidity from a pool
@@ -35,10 +41,54 @@ pub mod automated_market_maker {
 }
 ```
 
+## Definition of a storage
+
+```rust
+    /// Storage
+    #[ink(storage)]
+    #[derive(Default)]
+    pub struct AutomatedMarketMaker {
+        trading_fee: Balance, // Percent of trading fees charged on every trade
+        token1_balance: BTreeMap<AccountId, Balance>, // Amount of token1 balance of each user
+        token2_balance: BTreeMap<AccountId, Balance>, // Amount of token2 balance of each user
+        pool_total_token1: Balance, // The amount of token1 locked in the pool
+        pool_total_token2: Balance, // The amount of token2 locked in the pool
+        total_shares: Balance, // Stores the total amount of share issued for the pool
+        shares: BTreeMap<AccountId, Balance>, // Stores the share holding of each user
+    }
+```
+
+## Constructor
+
+Constructor is the hear of every smart contract.
+
+```rust
+/// Instantiating AMM instance
+/// @param _fees: valid interval -> [0,1000)
+#[ink(constructor)]
+pub fn new(_fees: Balance) -> Self {
+    Self {
+        trading_fee: if _fees >= 1000 { 0 } else { _fees },
+        ..Default::default()
+    }
+}
+```
+
+## Business logic and core functions
+
+## Utils, errors definitions
+
 ## Further Studies
 
-- How and where can users find more information on learned concepts?
-- Where can users continue their studies / deepen their knowledge?
+More information regarding ink! smart contracts programming language you will find in the [documentation](https://use.ink).
+
+It's important to note that DEX development involves complex engineering challenges and requires a deep understanding of blockchain technology, cryptography, and security practices.
+Collaboration with blockchain experts and continuous learning about evolving protocols and standards is essential in building a successful decentralized exchange.
+
+While smart contracts are designed to be immutable, there are situations where it becomes necessary to make changes or upgrades to them. Developers may encounter scenarios where they need to address critical bugs or introduce additional features.
+
+If you are interested in more learning and development of the smart contract one of the option is to implement `proxy pattern`.
+
 
 ## Github repository
 
