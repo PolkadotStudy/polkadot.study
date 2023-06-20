@@ -6,8 +6,7 @@ In the chapter of the tutorial you will create a fully working smart contract. L
 cargo new automated_market_maker
 ```
 
-ink! smart contract programming language is based on Rust and that is why the most important file
-where we will implement a whole business logic is `lib.rs`. Helicopter view of the file `lib.rs` looks like below:
+ink! smart contract programming language is based on Rust and that is why the most important file where we will implement the whole business logic in `lib.rs`. Helicopter view of the file `lib.rs` looks like below:
 
 ```rust
 #![cfg_attr(not(feature = "std"), no_std)]
@@ -40,6 +39,8 @@ pub mod automated_market_maker {
     }
 }
 ```
+
+Within ink! smart contract language, the utilization of the standard library is not permitted. This restriction is explicitly denoted through the inclusion of a fundamental declaration at the outset of each smart contract: `#![cfg_attr(not(feature = "std"), no_std)]`. This statement signifies that, in the absence of the "std" feature, the standard library is not accessible for use in the ink! smart contract environment.
 
 ## Definition of a storage
 
@@ -76,7 +77,33 @@ pub fn new(_fees: Balance) -> Self {
 
 ## Business logic and core functions
 
-## Utils, errors definitions
+The core functions of every decentralized exchange are:
+
+- deliver liquidity
+- swap tokens
+- withdraw liquidity
+
+## Errors definitions and utils
+
+Rust does not have traditional exceptions like those found in languages such as Java or Python. Instead, Rust relies on the `Result` and `Option` types for error handling and handling absence of values, respectively.
+
+
+```rust
+    /// Errors definitions
+    #[derive(Debug, PartialEq, Eq, scale::Encode, scale::Decode)]
+    #[cfg_attr(feature = "std", derive(scale_info::TypeInfo))]
+    pub enum Error {
+        PoolDepleted(String),
+        ZeroAmountErr(String),
+        InvalidShareErr(String),
+        ZeroLiquidityErr(String),
+        SlippageExceededErr(String),
+        InsufficientAmountErr(String),
+        NonEquivalentValueErr(String),
+        ThresholdNotReachedErr(String),
+        InsufficientLiquidityErr(String),
+    }
+```
 
 ## Additional information
 
