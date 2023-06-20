@@ -36,7 +36,9 @@ export default function TutorialGrid({ slides, style, big = true }) {
 
     allTutorials = uniqBy(allTutorials, "permalink");
 
-    displayedSlides = allTutorials;
+    displayedSlides = allTutorials.filter(
+      (t) => !t.permalink.includes("/substrate-in-bits/")
+    );
   }
 
   return (
