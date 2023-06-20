@@ -36,7 +36,9 @@ export default function Home(): JSX.Element {
     allTutorialsSorted = uniqBy(allTutorialsSorted, "permalink");
     allTutorialsSorted.sort((a, b) => a.lastUpdatedAt - b.lastUpdatedAt);
 
-    return allTutorialsSorted;
+    return allTutorialsSorted.filter(
+      (t) => !t.permalink.includes("/substrate-in-bits/")
+    );
   };
 
   return (
