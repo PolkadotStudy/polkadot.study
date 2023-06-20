@@ -111,7 +111,7 @@ const config = {
               },
               {
                 label: "Interactive Substrate Tutorials",
-                href: "/tutorials/rusty-crewmates/",
+                href: "/tutorials/interactive-substrate-tutorials-rusty-crewmates/",
               },
               // ... more items
             ],
