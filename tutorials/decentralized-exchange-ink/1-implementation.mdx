@@ -44,6 +44,10 @@ Within ink! smart contract language, the utilization of the standard library is 
 
 ## Definition of a storage
 
+Storage in a smart contract is a place where data are stored, there is also an incentive to make it as light as possible due to cost - keeping data on a blockchain is expensive.
+
+In order to hold information about `shares` we use [BTreeMap](https://paritytech.github.io/ink/ink_prelude/collections/btree_map/struct.BTreeMap.html) which works similarly to a mapping in Solidity - an ordered map based data structure. Please pay attention to the fact that `BTreeMap` comes from `ink_prelude` package, not Rust standard library
+
 ```rust
     /// Storage
     #[ink(storage)]
@@ -61,7 +65,7 @@ Within ink! smart contract language, the utilization of the standard library is 
 
 ## Constructor
 
-Constructor is the hear of every smart contract.
+Constructor is the hear of every smart contract. As a parameter to constructor our smart contract we pass information about fees.
 
 ```rust
 /// Instantiating AMM instance
@@ -83,10 +87,26 @@ The core functions of every decentralized exchange are:
 - swap tokens
 - withdraw liquidity
 
+Let's start from crucial subject in any decentralized exchange which is liquidity, below we can function responsible for providing liquidity:
+
+```rust
+#[ink(message)]
+pub fn provide_liquidity(
+    &mut self,
+    _amount_token1: Balance,
+    _amount_token2: Balance,
+) -> Result<Balance, Error>
+```
+
+`provide_liquidity` in `ink!` smart contract programming language every public function has to have `#[ink(message)]` attribute. There need to be at least one public method in a smart contract.
+
+`swap` feature is the most complex one in the smart contract and due to a need for estimation firstly of possibility a given swap it is implemented two functions `estimate_swap_token1_for_given_token1` and `estimate_swap_token1_for_given_token2`.
+
+`withdraw` function is quite intuitive where we check firstly validation of the process with `check_valid_amount` to be sure that some user is not able to withdraw more money that it is previously delivered.
+
 ## Errors definitions and utils
 
 Rust does not have traditional exceptions like those found in languages such as Java or Python. Instead, Rust relies on the `Result` and `Option` types for error handling and handling absence of values, respectively.
-
 
 ```rust
     /// Errors definitions
@@ -104,6 +124,8 @@ Rust does not have traditional exceptions like those found in languages such as 
         InsufficientLiquidityErr(String),
     }
 ```
+
+In the smart contract is implement some functions that are not strictly needed but helpful for testing, for example a place where a software engineer is able to generate tokens for tests - `faucet_brrr`. To follow K curve in an automated market maker is implemented `get_k` function. To get information about portfolio is implemented `get_information_portfolio` function and for pools information `get_pool_details`.
 
 ## Additional information
 
@@ -127,4 +149,4 @@ If you are interested in more learning and development of the smart contract one
 
 ## Github repository
 
-I encourage you to explore the entire source of [the decentralized exchange source](https://github.com/TomaszWaszczyk/ink-automated-market-maker) code and unleash your creativity to enhance it. There is no better approach to learning than by actively engaging with the code, conducting experiments, and making improvements in a live environment.
+I encourage you to explore the whole source code of [the decentralized exchange](https://github.com/TomaszWaszczyk/ink-automated-market-maker) code and unleash your creativity to enhance it. There is no better approach to learning than by actively engaging with the code, conducting experiments, and making improvements in a live environment.
