@@ -102,9 +102,19 @@ const config = {
             label: "Tutorials",
           },
           {
-            to: "/tutorials/substrate-in-bits/",
             position: "left",
-            label: "Substrate in Bits",
+            label: "Substrate Tutorials",
+            items: [
+              {
+                label: "Substrate in Bits",
+                to: "/tutorials/substrate-in-bits/",
+              },
+              {
+                label: "Interactive Substrate Tutorials",
+                href: "/tutorials/interactive-substrate-tutorials-rusty-crewmates/",
+              },
+              // ... more items
+            ],
           },
           {
             href: "/docs/authors/new-tutorial-on-polkadot-study/intro",

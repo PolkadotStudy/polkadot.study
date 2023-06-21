@@ -2,7 +2,14 @@ import React from "react";
 import Link from "@docusaurus/Link";
 
 import styles from "./tutorial-card.module.scss";
-import { CircleEmpty, CircleFull, Clock, Tag } from "../icons/icons";
+import {
+  CircleEmpty,
+  CircleFull,
+  Clock,
+  Tag,
+  SubstrateLogo,
+  PolkadotLogo,
+} from "../icons/icons";
 import clsx from "clsx";
 
 export default function TutorialCard({
@@ -65,7 +72,23 @@ export default function TutorialCard({
         <div className={styles.tags}>
           {tags?.map((tag, idx) => (
             <Link to={`#`} className="tag" key={`${tag.label}-${idx}`}>
-              <Tag /> {tag.label}
+              {tag.label === "substrate" && (
+                <>
+                  <Tag />
+                  <SubstrateLogo />
+                </>
+              )}
+              {tag.label === "polkadot.js" && (
+                <>
+                  <PolkadotLogo />
+                  polkadot&#123;.js&#125;
+                </>
+              )}
+              {!["substrate", "polkadot.js"].includes(tag.label) && (
+                <>
+                  <Tag /> {tag.label}
+                </>
+              )}
             </Link>
           ))}
         </div>
