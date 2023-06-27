@@ -13,12 +13,15 @@ export default function FooterLayout({ style, links, logo, copyright }) {
       <div className={styles.footerTop}>
         <div className={styles.footerLinks}>
           <Link className={styles.logo} to="#">
-            Polkadot Study
+            Polkadot Developer Tutorials
           </Link>
           <Link className={styles.logo} to="/about">
             About
           </Link>
-          <Link className={styles.logo} to="/docs/authors">
+          <Link
+            className={styles.logo}
+            to="/docs/authors/new-tutorial-on-polkadot-study/intro"
+          >
             For Authors
           </Link>
         </div>
