@@ -141,13 +141,17 @@ pre {
     font-size: 15px;
 }
 
+.dropdown__menu {
+    border: var(--pd-border-style);
+    border-radius: 1px;
+}
+
 .navbar-sidebar__brand {
     box-shadow: none;
     border-bottom: var(--pd-border-style);
 }
 
 nav.navbar {
-    overflow: hidden;
     background: transparent;
     
     box-shadow: none;
@@ -319,4 +323,12 @@ nav.menu {
 
   .theme-doc-markdown.markdown {
     min-height: 50vh;
+  }
+
+  .substrate-logo {
+    padding-top: 3px;
+  }
+
+  svg.polkadot-logo {
+    height: 20px !important;
   }

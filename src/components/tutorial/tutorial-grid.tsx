@@ -18,7 +18,13 @@ import clsx from "clsx";
  * @param param0 Data for the tutorial cards
  * @returns
  */
-export default function TutorialGrid({ slides, style, big = true }) {
+export default function TutorialGrid({
+  slides,
+  style,
+  big = true,
+  displaySubstrateInBits = false,
+  displayRustyCrewmates = false,
+}) {
   let displayedSlides = slides;
 
   if (typeof slides === "undefined" || slides.length === 0) {
@@ -36,7 +42,9 @@ export default function TutorialGrid({ slides, style, big = true }) {
 
     allTutorials = uniqBy(allTutorials, "permalink");
 
-    displayedSlides = allTutorials;
+    displayedSlides = allTutorials.filter(
+      (t) => !t.permalink.includes("/substrate-in-bits/")
+    );
   }
 
   return (
@@ -48,6 +56,32 @@ export default function TutorialGrid({ slides, style, big = true }) {
           <TutorialCard {...slide} limitedWidth={false} />
         </div>
       ))}
+      {displaySubstrateInBits && (
+        <div className={styles.itemWrap}>
+          <TutorialCard
+            title="Substrate in Bits"
+            description="Substrate in Bits is a technical content series/reference aimed at solving the pain points of developers building with Substrate and Rust."
+            permalink="/tutorials/substrate-in-bits"
+            tags={[{ label: "substrate" }]}
+            level="intermediate"
+            duration={"differs per tutorial"}
+            limitedWidth={false}
+          />
+        </div>
+      )}
+      {displayRustyCrewmates && (
+        <div className={styles.itemWrap}>
+          <TutorialCard
+            title="Interactive Substrate Tutorials"
+            description="A collection of exercises that will teach you the basics of Substrate development by interactive code examples from github."
+            permalink="/tutorials/interactive-substrate-tutorials-rusty-crewmates/"
+            tags={[{ label: "substrate" }]}
+            level="intermediate"
+            duration={"differs per tutorial"}
+            limitedWidth={false}
+          />
+        </div>
+      )}
     </div>
   );
 }
