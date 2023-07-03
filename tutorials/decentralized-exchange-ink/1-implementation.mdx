@@ -98,7 +98,7 @@ pub fn provide_liquidity(
 ) -> Result<Balance, Error>
 ```
 
-`provide_liquidity` in `ink!` smart contract programming language every public function has to have `#[ink(message)]` attribute. There need to be at least one public method in a smart contract.
+In `ink!` smart contract programming language every public function has to have `#[ink(message)]` attribute. There need to be at least one public method in a smart contract.
 
 `swap` feature is the most complex one in the smart contract and due to a need for estimation firstly of possibility a given swap it is implemented two functions `estimate_swap_token1_for_given_token1` and `estimate_swap_token1_for_given_token2`.
 
