@@ -21,7 +21,7 @@
 
 .footerTop {
     display: flex;
-    background: #fff;
+    background: #ccc3;
     // border-top-left-radius: 40px;
     // border-top-right-radius: 40px;
     flex-direction: row;
@@ -34,7 +34,7 @@
 
     a {
         padding-right: 1rem;
-        color: #000;
+        color: var(--ifm-color-content);
         width: 100%;
         display: block;
     }
@@ -43,6 +43,7 @@
 .footerLogos {
     svg {
         transform: scale(0.5);
+        fill: currentColor;
     }
 }
 

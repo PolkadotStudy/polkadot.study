@@ -22,8 +22,8 @@ export default function TutorialGrid({
   slides,
   style,
   big = true,
-  displaySubstrateInBits = true,
-  displayRustyCrewmates = true,
+  displaySubstrateInBits = false,
+  displayRustyCrewmates = false,
 }) {
   let displayedSlides = slides;
 
