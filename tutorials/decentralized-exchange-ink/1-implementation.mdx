@@ -87,7 +87,7 @@ The core functions of every decentralized exchange are:
 - swap tokens
 - withdraw liquidity
 
-Below you can find explanation of the implementation of the functionalities. Let's start from a crucial subject in any decentralized exchange which is liquidity:
+Below you can find explanation of the implementation of the functionalities. Let's start from a crucial subject in any decentralized exchange which is liquidity.
 
 ### Provide a liquidity functionality
 
@@ -104,11 +104,11 @@ pub fn provide_liquidity(
 
 This function, `provide_liquidity`, is designed to add new liquidity to the pool. It takes two balance amounts of token1 and token2 as inputs and returns the amount of shares issued for locking those assets. The function performs validations, calculates the issued shares based on the provided by user amounts, deducts the input amounts from the caller's balance, updates the pool's total token balances and the total number of shares, and finally assigns the issued shares to the caller's account in the `shares` mapping. The function then returns the issued shares as a result if the execution is successful, or an error otherwise.
 
-Let's describe first line of the function:
+Let's describe also first line of the function:
 
 `self.check_valid_amount(&self.token1_balance, _amount_token1)?;`
 
-As you may have noticed, the question mark at the end of the function is the way how we should cope with error handling in Rust language. Rust does not have exceptions, it has panics, for error handling uses [Result](https://doc.rust-lang.org/std/result/enum.Result.html) type.
+As you may have noticed, the question mark at the end of the function is the way how we should cope with error handling in Rust and/or `ink!` language. Rust does not have exceptions, it has panics and for error handling uses [Result](https://doc.rust-lang.org/std/result/enum.Result.html) type.
 
 ### `swap` functionality 
 
@@ -116,9 +116,30 @@ It is the most complex one in the smart contract and due to a need for estimatio
 
 1. The function `estimate_swap_token1_for_given_token1` takes a balance amount of token1 as input and estimates the resulting amount of token2 that the user will receive after swapping. It performs calculations based on the pool's liquidity and trading fee, and returns the estimated amount of token2 as a result.
 
+```rust
+#[ink(message)]
+pub fn estimate_swap_token1_for_given_token1(
+    &self,
+    _amount_token_1: Balance,
+) -> Result<Balance, Error>
+```
+
 2. The function `estimate_swap_token1_for_given_token2` takes a balance amount of token1 as input and estimates the corresponding amount of token1 that the user needs to swap in order to receive a given amount of token2. It considers the pool's liquidity and trading fee, and returns the estimated amount of token1 as a result.
 
+```rust
+#[ink(message)]
+pub fn estimate_swap_token1_for_given_token2(
+    &self,
+    _amount_token1: Balance,
+) -> Result<Balance, Error> 
+```
+
 3. The function `swap_token1_for_given_token2` takes a balance amount of token2 as input and calculates the amount of token1 that the user should swap to receive the specified amount of token2. It verifies the pool's liquidity, checks if there is sufficient balance, performs calculations based on the trading fee, and returns the required amount of token1 as a result.
+
+```rust
+#[ink(message)]
+pub fn swap_token1_for_given_token2(&self, _amount_token2: Balance) -> Result<Balance, Error>
+```
 
 ### `withdraw` functionality
 
