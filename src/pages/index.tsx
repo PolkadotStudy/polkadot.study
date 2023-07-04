@@ -82,6 +82,8 @@ export default function Home(): JSX.Element {
           <TutorialGrid
             slides={getAllTutorialsSorted().slice(0, 6)}
             style={{ marginTop: "2rem" }}
+            displayRustyCrewmates={true}
+            displaySubstrateInBits={true}
           />
           <div className={styles.btnViewAll}>
             <Button to="/tutorials">View All Tutorials</Button>
