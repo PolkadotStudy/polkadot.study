@@ -89,7 +89,7 @@ The core functions of every decentralized exchange are:
 
 Below you can find explanation of the implementation of the functionalities. Let's start from a crucial subject in any decentralized exchange which is liquidity:
 
-- provide a liquidity functionality
+### Provide a liquidity functionality
 
 In `ink!` smart contract programming language every public function has to have `#[ink(message)]` annotation. There need to be at least one public method in a smart contract.
 
@@ -110,7 +110,7 @@ Let's describe first line of the function:
 
 As you may have noticed, the question mark at the end of the function is the way how we should cope with error handling in Rust language. Rust does not have exceptions, it has panics, for error handling uses [Result](https://doc.rust-lang.org/std/result/enum.Result.html) type.
 
-- `swap` functionality 
+### `swap` functionality 
 
 It is the most complex one in the smart contract and due to a need for estimation firstly of possibility a given swap it is implemented three functions `estimate_swap_token1_for_given_token1` and `estimate_swap_token1_for_given_token2` and `swap_token1_for_given_token2`.
 
@@ -120,7 +120,7 @@ It is the most complex one in the smart contract and due to a need for estimatio
 
 3. The function `swap_token1_for_given_token2` takes a balance amount of token2 as input and calculates the amount of token1 that the user should swap to receive the specified amount of token2. It verifies the pool's liquidity, checks if there is sufficient balance, performs calculations based on the trading fee, and returns the required amount of token1 as a result.
 
-- `withdraw` functionality
+### `withdraw` functionality
 
 ```rust
 pub fn get_withdraw_estimation(&self, _share: Balance) -> Result<(Balance, Balance), Error>
