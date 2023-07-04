@@ -87,7 +87,11 @@ The core functions of every decentralized exchange are:
 - swap tokens
 - withdraw liquidity
 
-Let's start from a crucial subject in any decentralized exchange which is liquidity, below we can see the function responsible for providing liquidity:
+Below you can find explanation of the implementation of the functionalities. Let's start from a crucial subject in any decentralized exchange which is liquidity:
+
+- provide a liquidity functionality
+
+In `ink!` smart contract programming language every public function has to have `#[ink(message)]` annotation. There need to be at least one public method in a smart contract.
 
 ```rust
 #[ink(message)]
@@ -98,11 +102,39 @@ pub fn provide_liquidity(
 ) -> Result<Balance, Error>
 ```
 
-In `ink!` smart contract programming language every public function has to have `#[ink(message)]` annotation. There need to be at least one public method in a smart contract.
+This function, `provide_liquidity`, is designed to add new liquidity to the pool. It takes two balance amounts of token1 and token2 as inputs and returns the amount of shares issued for locking those assets. The function performs validations, calculates the issued shares based on the provided by user amounts, deducts the input amounts from the caller's balance, updates the pool's total token balances and the total number of shares, and finally assigns the issued shares to the caller's account in the `shares` mapping. The function then returns the issued shares as a result if the execution is successful, or an error otherwise.
 
-`swap` feature is the most complex one in the smart contract and due to a need for estimation firstly of possibility a given swap it is implemented two functions `estimate_swap_token1_for_given_token1` and `estimate_swap_token1_for_given_token2`.
+Let's describe first line of the function:
 
-`withdraw` function is quite intuitive where we check firstly validation of the process with `check_valid_amount` to be sure that some user is not able to withdraw more money that it is previously delivered.
+`self.check_valid_amount(&self.token1_balance, _amount_token1)?;`
+
+As you may have noticed, the question mark at the end of the function is the way how we should cope with error handling in Rust language. Rust does not have exceptions, it has panics, for error handling uses [Result](https://doc.rust-lang.org/std/result/enum.Result.html) type.
+
+- `swap` functionality 
+
+It is the most complex one in the smart contract and due to a need for estimation firstly of possibility a given swap it is implemented three functions `estimate_swap_token1_for_given_token1` and `estimate_swap_token1_for_given_token2` and `swap_token1_for_given_token2`.
+
+1. The function `estimate_swap_token1_for_given_token1` takes a balance amount of token1 as input and estimates the resulting amount of token2 that the user will receive after swapping. It performs calculations based on the pool's liquidity and trading fee, and returns the estimated amount of token2 as a result.
+
+2. The function `estimate_swap_token1_for_given_token2` takes a balance amount of token1 as input and estimates the corresponding amount of token1 that the user needs to swap in order to receive a given amount of token2. It considers the pool's liquidity and trading fee, and returns the estimated amount of token1 as a result.
+
+3. The function `swap_token1_for_given_token2` takes a balance amount of token2 as input and calculates the amount of token1 that the user should swap to receive the specified amount of token2. It verifies the pool's liquidity, checks if there is sufficient balance, performs calculations based on the trading fee, and returns the required amount of token1 as a result.
+
+- `withdraw` functionality
+
+```rust
+pub fn get_withdraw_estimation(&self, _share: Balance) -> Result<(Balance, Balance), Error>
+```
+
+The function `get_withdraw_estimation` takes a balance amount of shares as input and provides an estimation of the corresponding amounts of token1 and token2 that will be released upon burning those shares. It verifies the liquidity in the pool, checks if the provided share amount is valid, performs calculations based on the total shares, and returns the estimated amounts of token1 and token2 as a result.
+
+```rust
+pub fn withdraw(&mut self, _share: Balance) -> Result<(Balance, Balance), Error>
+```
+
+The function `withdraw` is responsible for removing liquidity from the pool. It takes a balance amount of shares as input, validates the caller's share balance, calls the `get_withdraw_estimation` function to obtain the estimated `token1` and `token2` amounts, updates the pool and share balances accordingly, and releases the corresponding `token1` and `token2` amounts to the caller. The function returns the released amounts of `token1` and `token2` as a result.
+
+These functions work together to estimate the amounts of `token1` and `token2` that will be withdrawn based on the provided share amount and then facilitate the whole withdrawal process from the pool.
 
 ## Errors definitions and utils
 
@@ -125,7 +157,36 @@ Rust does not have traditional exceptions like those found in languages such as 
     }
 ```
 
-In the smart contract is implement some functions that are not strictly needed but helpful for testing, for example a place where a software engineer is able to generate tokens for tests - `faucet_brrr`. To follow K curve in an automated market maker is implemented `get_k` function. To get information about portfolio is implemented `get_information_portfolio` function and for pools information `get_pool_details`.
+In the smart contract is implement some functions that are not strictly needed but helpful for testing, for example a place where a software engineer is able to generate tokens for tests - `faucet_brrr`:
+
+```rust
+pub fn faucet_brrr(&mut self, _amount_token1: Balance, _amount_token2: Balance)
+```
+
+The function `faucet_brrr` is responsible for sending free tokens to the invoker (the caller). The invoker's address is obtained using: `self.env().caller()`. Essentially, the `faucet_brrr` function serves as a faucet that allows the smart contract user to distribute free tokens to the caller by increasing their token balances within the contract.
+
+To follow `K curve` in an automated market maker is implemented `get_k` function. The function `get_k` calculates and returns the liquidity constant K value of a pool by multiplying the total balance of `token1` in the pool with the total balance of `token2`:
+
+```rust
+/// Returns the liquidity constant K value of a pool
+fn get_k(&self) -> Balance {
+    self.pool_total_token1 * self.pool_total_token2
+}
+```
+
+To get information about portfolio is implemented `get_information_portfolio` function and for pools information `get_pool_details`.
+
+```rust
+pub fn get_information_portfolio(&self) -> (Balance, Balance, Balance)
+```
+
+The function `get_information_portfolio` retrieves and returns the balance of a user for `token1`, `token2`, and the number of shares they hold in the pool.
+
+```rust
+pub fn get_pool_details(&self) -> (Balance, Balance, Balance, Balance)
+```
+
+The function `get_pool_details` returns the amount of tokens locked in the pool, the total shares issued, and the trading fee parameter used in the pool.
 
 ## Additional information
 
