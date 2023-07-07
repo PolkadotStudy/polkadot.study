@@ -54,6 +54,12 @@ const sidebars = {
     "parachain-to-polkadot-vault/step5",
     "parachain-to-polkadot-vault/conclusion",
   ],
+  decentralizedExchangeInk: [
+    "decentralized-exchange-ink/introduction",
+    "decentralized-exchange-ink/implementation",
+    "decentralized-exchange-ink/unit-testing",
+    "decentralized-exchange-ink/conclusion",
+  ],
 };
 
 module.exports = sidebars;
