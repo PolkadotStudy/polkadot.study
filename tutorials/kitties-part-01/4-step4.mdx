@@ -1,0 +1,305 @@
+
+# Kitties pallet: Uniqueness, custom types and storage maps
+
+This section dives into some pillar concepts for developing pallets with FRAME (Framework for Runtime 
+Aggregation of Modularized Entities):
+
+- Writing a storage struct.
+- Implementing the randomness trait.
+- How to use existing types and traits.
+- How create your own types like providing your pallet with a Gender type. 
+
+Also, at the end of this part, you will have implemented the remaining two storage items according to the 
+logic outlined for the Substrate Kitties application.
+
+### Kitty struct
+
+An Struct in Rust is a useful construct to help store data that have things in common. For our purposes, 
+our Kitty will carry multiple properties which we can store in a single struct instead of using separate 
+storage items. This comes in handy when trying to optimize for storage reads and writes so our runtime can 
+perform less read/writes to update multiple values. Read more about storage best practices 
+[here](https://doc.deepernetwork.org/v3/runtime/storage/#best-practices).
+
+#### What information to include?
+
+Let's first go over what information a single Kitty will carry:
+
+* `dna`: the hash used to identify the DNA of a Kitty, which corresponds to its unique features. 
+DNA is also used to breed new Kitties. An will be used as key in the storage.
+* `price`: this is a balance that corresponds to the amount needed to buy a Kitty and set by its owner.
+* `gender`: an enum that can be either Male or Female.
+* `owner`: an account ID designating a single owner.
+* `generation`: to keep track of the number of generations a Kitty has been bred for.
+
+#### Sketching out the types held by our struct
+
+Looking at the items of our struct from above, we can deduce the following types:
+
+* `[u8; 16]` for dna - to use 16 bytes to represent a Kitty's DNA.
+* `BalanceOf` for price - this is a custom type using FRAME's Currency trait.
+* `Gender` for gender - we are going to create this!
+* `u64` for generation.
+
+So we get the following as our kitty struct.
+
+Copy it to replace the `TODO` for the kitty struct:
+
+```rust
+// Struct for holding kitty information
+	#[derive(Clone, Encode, Decode, PartialEq, RuntimeDebug, TypeInfo, MaxEncodedLen)]
+	#[scale_info(skip_type_params(T))]
+	pub struct Kitty<T: Config> {
+		// An array of 16 bytes representing the kitty's DNA.
+		pub dna: [u8; 16],
+
+		// The price of the kitty, stored as an optional balance.
+    	// If set to `None`, it assumes the kitty is not for sale.
+		pub price: Option<BalanceOf<T>>,
+
+		// The gender of the kitty.
+		pub gender: Gender,
+
+		// The owner of the kitty, stored as the account ID.
+		pub owner: T::AccountId,
+
+		// Generation of the kitty, stored as a u64.
+		pub generation: u64,
+	}
+```
+
+Notice how we use the derive macro to include various helper traits for using our struct. We have already
+added `TypeInfo` in order to give our struct access to this trait.
+
+For type `Gender`, we will need to build out our own custom enum and helper functions. Now is a good time 
+to do that.
+
+### Gender enum
+
+We have just created a struct that requires a custom type called `Gender`. This type will handle an enum 
+defining our Kitty's gender. To create it, you'll build out the following parts:
+
+* An enum declaration, which specifies Male and Female values.
+* Implement a helper function for our Kitty struct.
+
+1. Declare the custom enum
+
+Replace `TODO: Enum that represents the gender of a kitty` with the following code:
+
+```rust
+// Represents the gender of a kitty.
+	#[derive(Clone, Encode, Decode, PartialEq, Copy, RuntimeDebug, TypeInfo, MaxEncodedLen)]
+	// We need this to pass kitty info for genesis configuration
+	#[cfg_attr(feature = "std", derive(Serialize, Deserialize))]
+	pub enum Gender {
+		Male,
+		Female,
+	}
+```
+
+Notice the use of the derive macro which must precede the enum declaration. This wraps our enum in the 
+data structures it will need to interface with other types in our runtime. In order to use `Serialize` and 
+ `Deserialize`, you will need to add the serde crate in `pallets/kitties/Cargo.toml` as follows:
+
+```toml
+[dependencies]
+serde = { version = "1.0.136", optional = true }
+
+[features]
+default = ["std"]
+std = [
+	"codec/std",
+	"frame-benchmarking?/std",
+	"frame-support/std",
+	"frame-system/std",
+	"scale-info/std",
+	"sp-io/std",
+	"sp-runtime/std",
+	"serde",
+]
+```
+
+Great, we now know how to create a custom struct. But what about providing a way for a Kitty struct to be 
+assigned a gender value?
+
+2. Implement a helper function for our Kitty struct
+
+Configuring an struct is useful in order to pre-define a value in our struct. For example, when setting a 
+value in relation to what another function returns. In our case we have a similar situation where we need 
+to configure our Kitty struct in such a way that sets `Gender` according to a Kitty's DNA.
+
+We'll create a function called gen_dna that returns a tuple of DNA and gender for a kitty.
+
+Replace `TODO: Generates and returns DNA and Gender for a new kitty` with the following:
+
+```rust
+// Generates and returns DNA and Gender for a new kitty.
+		pub fn gen_dna() -> ([u8; 16], Gender) {
+			// Create randomness
+			let random = T::KittyRandomness::random(&b"dna"[..]).0;
+
+			// Create randomness payload. Multiple kitties can be generated in the same block,
+			// retaining uniqueness.
+			let unique_payload = (
+				random,
+				frame_system::Pallet::<T>::extrinsic_index().unwrap_or_default(),
+				frame_system::Pallet::<T>::block_number(),
+			);
+
+			// Turns into a byte array
+			let encoded_payload = unique_payload.encode();
+			let hash = blake2_128(&encoded_payload);
+
+			// Generate Gender
+			if hash[0] % 2 == 0 {
+				// Males are identified by having a even leading byte
+				(hash, Gender::Male)
+			} else {
+				// Females are identified by having a odd leading byte
+				(hash, Gender::Female)
+			}
+		}
+```
+Make sure to spend some time understanding the logic behind this function. Check the comments for some guidance.
+
+### On-chain randomness
+
+If we want to be able to tell these Kitties apart, we need to start giving them unique properties! In 
+the previous step, we've made use of `KittyRandomness` which we haven't defined yet. Let's get to 
+it.
+
+We'll be using the [`Randomness`](https://docs.rs/frame-support/latest/frame_support/traits/trait.Randomness.html) trait from [`frame_support`](https://docs.rs/frame-support/latest/frame_support/index.html#) to do it. It will generate a random seed that we'll use to create 
+unique Kitties and breed new ones.
+
+In order to use the `Randomness` trait for our pallet, we must:
+
+1. Define a new type bound by Randomness trait in our pallet's configuration trait:
+
+The `Randomness` trait from `frame_support` requires specifying it with a paramater to replace the 
+`Output` and `BlockNumber` generics. For our purposes, we want the output of functions using this 
+trait to be `Blake2 128-bit hash` which you'll notice should already be declared at the top of your 
+working codebase.
+
+Replace `TODO: The type of Randomness we want to specify for this pallet.` with the following:
+
+```rust
+/// The type of Randomness we want to specify for this pallet.
+type KittyRandomness: Randomness<Self::Hash, Self::BlockNumber>;
+```
+2. Specify the actual type in our runtime
+
+Given that we have added a new type in the configuration of our pallet, we need to config our runtime to 
+set its concrete type. This could come in handy if ever we want to change the algorithm that 
+`KittyRandomness` is using, without needing to modify where it's used inside our pallet.
+
+To showcase this point, we're going to set the `KittyRandomness` type to an instance of FRAME's 
+[`InsecureRandomnessCollectiveFlip`](https://docs.rs/pallet-insecure-randomness-collective-flip/latest/pallet_insecure_randomness_collective_flip/) 
+(It is called insecure because it should be used for only low security situations). Conveniently, the Node Template already has an instance 
+of the `InsecureRandomnessCollectiveFlip` pallet. All you need to do is set the `KittyRandomness` type in your runtime, inside `./runtime/src/lib.rs`:
+
+ ```rust
+/// Configure the pallet-template in pallets/template.
+impl pallet_template::Config for Runtime {
+	type RuntimeEvent = RuntimeEvent;
+	type Currency = Balances;
+	type KittyRandomness = RandomnessCollectiveFlip;
+}
+ ```
+
+
+### Remaining storage items
+
+#### Understanding storage item logic
+
+To track the kitties we're going to standardize the logic to use an ID as key for the each storage item. This means that a single unique 
+key will point to a Kitty object (i.e. the struct we previously declared).
+
+In order for this to work, we need to make sure that the ID for a new Kitty is unique. We can do 
+this with a new storage item called `Kitties`, which will be a mapping from an ID to the Kitty object.
+
+With this we can check for collisions by checking whether this storage item already contains a mapping using a 
+particular ID. For example, from inside a dispatchable function we could check using:
+
+```rust
+ensure!(!<Kitties<T>>::exists(new_id), "This new id already exists");
+```
+
+Our runtime needs to be made aware of:
+
+* Unique assets, like currency or Kitties (this will be held by a storage map called `Kitties`)
+* Ownership of those assets (this will be handled a new storage map called `KittiesOwned`)
+
+### Using a [StorageMap](https://paritytech.github.io/substrate/master/frame_support/storage/types/struct.StorageMap.html)
+
+To create a storage instance for the Kitty struct, we'll be using a `StorageMap` — a hash-map provided to us
+ by FRAME.
+
+Here's what the Kitties storage item looks like:
+
+```rust
+/// Maps the kitty struct to the kitty DNA.
+#[pallet::storage]
+pub(super) type Kitties<T: Config> = StorageMap<
+    _, 
+    Twox64Concat, 
+    [u8; 16], 
+    Kitty<T>
+>;
+```
+Breaking it down, we declare the storage type and assign a StorageMap that takes:
+
+* The `Twox64Concat` hashing algorithm.
+* A key of type `[u8; 16]`.
+* A value of type `Kitty<T>`.
+
+The `KittiesOwned` storage item is similar except that we'll be using a `BoundedVec` from  `frame_support::pallet_prelude` to keep track of 
+some maximum number of Kitties we'll configure in `./runtime/src/lib.rs`.
+
+Using a bounded vector is useful when you want to enforce resource constraints or prevent unexpected resource consumption. 
+In this case, it ensures that the storage item `KittiesOwned` can only hold a specific number of Kitties, which can be configured in 
+`./runtime/src/lib.rs` to match the desired limit.
+
+```rust
+/// Track the kitties owned by each account.
+#[pallet::storage]
+pub(super) type KittiesOwned<T: Config> = StorageMap<
+	_,
+	Twox64Concat,
+	T::AccountId,
+	BoundedVec<[u8; 16], T::MaxKittiesOwned>,
+	ValueQuery,
+>;
+```
+Your turn! Copy the two code snippets above to replace `TODO: Storage that maps the kitty struct to the kitty DNA.` and `TODO: Storage that tracks the kitties owned by each account.`
+
+Before we can check if our pallet compiles, we need to add a new type `MaxKittyOwned` in the `config` 
+trait, which is a pallet constant type (similar to `KittyRandomness` in the previous steps). Replace 
+`TODO: The maximum amount of kitties a single account can own.` with:
+
+```rust
+/// The maximum amount of kitties a single account can own.
+#[pallet::constant]
+type MaxKittiesOwned: Get<u32>;
+```
+Finally, we define `MaxKittyOwned` type in `./runtime/src/lib.rs`. This is the same pattern as we 
+followed for `Currency` and `KittyRandomness` except we'll be adding a fixed `u32` using the 
+`parameter_types!` macro:
+
+```rust
+parameter_types! { 
+	// One can own at most 9,999 Kitties
+	pub const MaxKittyOwned: u32 = 9999;
+}
+
+/// Configure the pallet-template in pallets/template.
+impl pallet_template::Config for Runtime {
+	type RuntimeEvent = RuntimeEvent;
+	type Currency = Balances;
+	type KittyRandomness = RandomnessCollectiveFlip;
+	type MaxKittiesOwned = MaxKittyOwned;
+}
+```
+Now is a good time to check that your Kitties blockchain compiles!
+
+```bash
+cargo build --release
+```

@@ -36,6 +36,20 @@ const sidebars = {
     "wallet-with-polkadot-js-and-react-with-typescript/step5",
     "wallet-with-polkadot-js-and-react-with-typescript/conclusion",
   ],
+
+  kittiesPart01Sidebar: [
+    "kitties-part-01/intro",
+    "kitties-part-01/step1",
+    "kitties-part-01/step2",
+    "kitties-part-01/step3",
+    "kitties-part-01/step4",
+    "kitties-part-01/step5",
+    "kitties-part-01/step6",
+    "kitties-part-01/step7",
+    "kitties-part-01/step8",
+    "kitties-part-01/conclusion",
+  ],
+  
   inherentsTutorialSidebar: [
     "substrate-inherents-tutorial/intro",
     "substrate-inherents-tutorial/setup",

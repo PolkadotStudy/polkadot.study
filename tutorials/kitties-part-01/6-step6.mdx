@@ -1,0 +1,513 @@
+# Kitties pallet: Interacting with your Kitties
+
+Up until this point in the tutorial, we've built a chain capable of only creating and tracking the 
+ownership of Kitties. Now that that's done, we want to make our runtime more like a game by introducing 
+other functions like buying and selling Kitties
+
+We will first need to enable users to mark and update the price of their Kitties. Then we can add 
+functionality to enable users to transfer, buy, and breed Kitties.
+
+Since the workflow of what we already done will be repeated for the remaining functions, we'll be giving 
+the code for each new functionality and explaining what each function does in the comments.
+
+### Set price
+
+Replace `TODO: Set the price for a kitty.` with:
+
+```rust
+// Set the price for a kitty.
+///
+/// Updates the price of a kitty and updates it in storage.
+///
+/// # Arguments
+///
+/// * `origin` - The origin of the call.
+/// * `kitty_id` - The DNA of the kitty.
+/// * `new_price` - The new price for the kitty.
+///
+/// # Errors
+///
+/// Returns an error if:
+/// * The caller is not from a signed origin.
+/// * The kitty with the given ID does not exist.
+/// * The caller is not the owner of the kitty.
+#[pallet::call_index(5)]
+#[pallet::weight(0)]
+pub fn set_price(
+    origin: OriginFor<T>,
+    kitty_id: [u8; 16],
+    new_price: Option<BalanceOf<T>>,
+) -> DispatchResult {
+    // Make sure the caller is from a signed origin
+    let sender = ensure_signed(origin)?;
+
+    // Ensure the kitty exists and is called by the kitty owner
+    let mut kitty = Kitties::<T>::get(&kitty_id).ok_or(Error::<T>::NoKitty)?;
+    ensure!(kitty.owner == sender, Error::<T>::NotOwner);
+
+    // Set the price in storage
+    kitty.price = new_price;
+    Kitties::<T>::insert(&kitty_id, kitty);
+
+    // Deposit a "PriceSet" event.
+    Self::deposit_event(Event::PriceSet { kitty: kitty_id, price: new_price });
+
+    Ok(())
+}
+```
+
+### Transfer
+
+Replace `TODO: Directly transfer a kitty to another recipient.` with:
+
+```rust
+/// Directly transfer a kitty to another recipient.
+///
+/// Any account that holds a kitty can send it to another account. This will reset the asking price
+/// of the kitty, marking it not for sale.
+///
+/// # Arguments
+///
+/// * `origin` - The origin of the call.
+/// * `to` - The account ID of the recipient.
+/// * `kitty_id` - The DNA of the kitty to be transferred.
+///
+/// # Errors
+///
+/// Returns an error if:
+/// * The caller is not from a signed origin.
+/// * The kitty with the given ID does not exist.
+/// * The caller is not the owner of the kitty.
+#[pallet::call_index(3)]
+#[pallet::weight(0)]
+pub fn transfer(
+    origin: OriginFor<T>,
+    to: T::AccountId,
+    kitty_id: [u8; 16],
+) -> DispatchResult {
+    // Make sure the caller is from a signed origin
+    let from = ensure_signed(origin)?;
+    let kitty = Kitties::<T>::get(&kitty_id).ok_or(Error::<T>::NoKitty)?;
+    ensure!(kitty.owner == from, Error::<T>::NotOwner);
+    Self::do_transfer(kitty_id, to, None)?;
+    Ok(())
+}
+```
+This will need another helper function, `do_transfer`. Replace `TODO: Update the storage to transfer a 
+kitty from one owner to another.` with:
+
+```rust
+/// Update the storage to transfer a kitty from one owner to another.
+pub fn do_transfer(
+    kitty_id: [u8; 16],
+    to: T::AccountId,
+    maybe_limit_price: Option<BalanceOf<T>>,
+) -> DispatchResult {
+    // Get the kitty
+    let mut kitty = Kitties::<T>::get(&kitty_id).ok_or(Error::<T>::NoKitty)?;
+    let from = kitty.owner;
+
+    ensure!(from != to, Error::<T>::TransferToSelf);
+    let mut from_owned = KittiesOwned::<T>::get(&from);
+
+    // Remove kitty from list of owned kitties.
+    if let Some(ind) = from_owned.iter().position(|&id| id == kitty_id) {
+        from_owned.swap_remove(ind);
+    } else {
+        return Err(Error::<T>::NoKitty.into());
+    }
+
+    // Add kitty to the list of owned kitties.
+    let mut to_owned = KittiesOwned::<T>::get(&to);
+    to_owned.try_push(kitty_id).map_err(|_| Error::<T>::TooManyOwned)?;
+
+    // Mutating state here via a balance transfer, so nothing is allowed to fail after this.
+    // The buyer will always be charged the actual price. The limit_price parameter is just a 
+    // protection so the seller isn't able to front-run the transaction.
+    if let Some(limit_price) = maybe_limit_price {
+        // Current kitty price if for sale
+        if let Some(price) = kitty.price {
+            ensure!(limit_price >= price, Error::<T>::BidPriceTooLow);
+            // Transfer the amount from buyer to seller
+            T::Currency::transfer(&to, &from, price, ExistenceRequirement::KeepAlive)?;
+            // Deposit sold event
+            Self::deposit_event(Event::Sold {
+                seller: from.clone(),
+                buyer: to.clone(),
+                kitty: kitty_id,
+                price,
+            });
+        } else {
+            // Kitty price is set to `None` and is not for sale
+            return Err(Error::<T>::NotForSale.into());
+        }
+    }
+
+    // Transfer succeeded, update the kitty owner and reset the price to `None`.
+    kitty.owner = to.clone();
+    kitty.price = None;
+
+    // Write updates to storage
+    Kitties::<T>::insert(&kitty_id, kitty);
+    KittiesOwned::<T>::insert(&to, to_owned);
+    KittiesOwned::<T>::insert(&from, from_owned);
+
+    Self::deposit_event(Event::Transferred { from, to, kitty: kitty_id });
+
+    Ok(())
+}
+```
+The `do_transfer` function is more complex than is necessary for a transfer. This is because it is already
+dealing with the logic of a sale. We'll be using this function again in the next extrinsic.
+
+### Buy
+
+Replace `TODO: Buy a kitty that is listed for sale.` with:
+
+```rust
+/// Buy a kitty that is listed for sale.
+///
+/// The `limit_price` parameter acts as a safeguard against the possibility that the seller front-runs
+/// the transaction by setting a high price. A front-end should assume that this value is always equal
+/// to the actual price of the kitty. The buyer will always be charged the actual price of the kitty.
+///
+/// If successful, this dispatchable will reset the price of the kitty to `None`, making it no longer
+/// for sale, and handle the balance and kitty transfer between the buyer and seller.
+///
+/// # Arguments
+///
+/// * `origin` - The origin of the call.
+/// * `kitty_id` - The DNA of the kitty to be purchased.
+/// * `limit_price` - The maximum price the buyer is willing to pay.
+///
+/// # Errors
+///
+/// Returns an error if:
+/// * The caller is not from a signed origin.
+#[pallet::call_index(4)]
+#[pallet::weight(0)]
+pub fn buy_kitty(
+    origin: OriginFor<T>,
+    kitty_id: [u8; 16],
+    limit_price: BalanceOf<T>,
+) -> DispatchResult {
+    // Make sure the caller is from a signed origin
+    let buyer = ensure_signed(origin)?;
+    // Transfer the kitty from seller to buyer as a sale
+    Self::do_transfer(kitty_id, buyer, Some(limit_price))?;
+
+    Ok(())
+}
+```
+As you can see, the `buy_kitty` function is also using the transfer function. The only difference is 
+that the transference is done as a sale or a payment gated transference.
+
+### Breed
+
+Replace `TODO: Breed two kitties to give birth to a new kitty that is a combination of both parents.` with:
+
+```rust
+/// Breed two kitties to give birth to a new kitty that is a combination of both parents.
+///
+/// # Arguments
+///
+/// * `origin` - The origin of the call.
+/// * `parent_1` - The DNA of the first parent kitty.
+/// * `parent_2` - The DNA of the second parent kitty.
+///
+/// # Errors
+///
+/// Returns an error if:
+/// * The caller is not from a signed origin.
+/// * One or both of the parent kitties do not exist.
+/// * The caller is not the owner of both parent kitties.
+/// * The parent kitties are not of opposite genders.
+#[pallet::call_index(1)]
+#[pallet::weight(0)]
+pub fn breed_kitty(
+    origin: OriginFor<T>,
+    parent_1: [u8; 16],
+    parent_2: [u8; 16],
+) -> DispatchResult {
+    // Make sure the caller is from a signed origin
+    let sender = ensure_signed(origin)?;
+
+    // Get the kitties.
+    let maybe_mom = Kitties::<T>::get(&parent_1).ok_or(Error::<T>::NoKitty)?;
+    let maybe_dad = Kitties::<T>::get(&parent_2).ok_or(Error::<T>::NoKitty)?;
+
+    // Check both parents are owned by the caller of this function
+    ensure!(maybe_mom.owner == sender, Error::<T>::NotOwner);
+    ensure!(maybe_dad.owner == sender, Error::<T>::NotOwner);
+
+    // Parents must be of opposite genders
+    ensure!(maybe_mom.gender != maybe_dad.gender, Error::<T>::CantBreed);
+
+    // Create new DNA from these parents
+    let (new_dna, new_gender) = Self::breed_dna(&parent_1, &parent_2);
+
+    // Generation is the higher of the two parents' generations + 1
+    let generation = maybe_mom.generation.max(maybe_dad.generation) + 1;
+
+    // Mint new kitty
+    Self::mint(&sender, new_dna, new_gender, generation)?;
+    Ok(())
+}
+```
+This will need another helper function, `breed_dna`. Replace `TODO: Generates a new kitty DNA by 
+combining DNA fragments from two parent kitties.` with:
+
+```rust
+// Generates a new kitty DNA by combining DNA fragments from two parent kitties.
+pub fn breed_dna(parent1: &[u8; 16], parent2: &[u8; 16]) -> ([u8; 16], Gender) {
+    // Call `gen_dna` to generate random kitty DNA
+    // We don't know what Gender this kitty is yet
+    let (mut new_dna, new_gender) = Self::gen_dna();
+
+    // randomly combine DNA using `mutate_dna_fragment`
+    for i in 0..new_dna.len() {
+        // At this point, `new_dna` is a randomly generated set of bytes, so we can
+        // extract each of its bytes to act as a random value for `mutate_dna_fragment`
+        new_dna[i] = Self::mutate_dna_fragment(parent1[i], parent2[i], new_dna[i])
+    }
+    // return new DNA and gender
+    (new_dna, new_gender)
+}
+```
+This is also using another helper function called `mutate_dna_fragment`. Replace `TODO: Picks from two 
+existing DNA fragments based on a random value.` with:
+
+```rust
+// Picks from two existing DNA fragments based on a random value.
+fn mutate_dna_fragment(dna_fragment1: u8, dna_fragment2: u8, random_value: u8) -> u8 {
+    // Given some random u8
+    if random_value % 2 == 0 {
+        // either return `dna_fragment1` if its an even value
+        dna_fragment1
+    } else {
+        // or return `dna_fragment2` if its an odd value
+        dna_fragment2
+    }
+}
+```
+The breeding logic is to randomly pick a DNA fragment from each parent kitty and combine them to form a 
+new kitty.
+
+This will make more sense when we look at the UI section. The descendants of a pair of kitties will
+have some DNA fragments from each parent kitty.
+
+For example, in the following image, who do you think are the parents of the only kitty in generation 1?
+
+![kitties](./assets/kitties.png)
+
+## Genesis configuration
+
+The final step before our pallet is ready to be used is to set the genesis state of our storage items. 
+We'll make use of FRAME's `#[pallet::genesis_config]` to do this. Essentially, this allows us to declare 
+what the Kitties object in storage contains in the genesis block.
+
+Copy the following code to replace `TODO: Our pallet's genesis configuration`:
+
+```rust
+// Our pallet's genesis configuration
+#[pallet::genesis_config]
+pub struct GenesisConfig<T: Config> {
+    pub kitties: Vec<(T::AccountId, [u8; 16], Gender, u64)>,
+}
+
+// Required to implement default for GenesisConfig
+#[cfg(feature = "std")]
+impl<T: Config> Default for GenesisConfig<T> {
+    fn default() -> GenesisConfig<T> {
+        GenesisConfig { kitties: vec![] }
+    }
+}
+
+#[pallet::genesis_build]
+impl<T: Config> GenesisBuild<T> for GenesisConfig<T> {
+    fn build(&self) {
+        // When building a kitty from genesis config, we require the DNA and Gender to be
+        // supplied
+        for (account, dna, gender, generation) in &self.kitties {
+            assert!(Pallet::<T>::mint(account, *dna, *gender, *generation).is_ok());
+        }
+    }
+}
+```
+
+To let our chain know about our pallet's genesis configuration, we need to modify the `chain_spec.rs` file 
+in our project's node folder. It's important you make sure you use the name of the pallet instance in 
+`./runtime/src/lib.rs`, which in our case was `kitties_module`. Go to `./node/src/chain_spec.rs`, add 
+`kitties_module: Default::default()` to the `testnet_genesis` function, like so:
+
+```rust
+//-- snip --
+    sudo: SudoConfig {
+        // Assign network admin rights.
+        key: Some(root_key),
+    },
+    transaction_payment: Default::default(),
+    kitties_module: Default::default(),
+}
+```
+## Build, run and interact with your Kitties
+
+If you've completed all of the preceding parts and steps of this tutorial, you're ready to run your chain 
+and start interacting with all the new capabilities of your Kitties pallet!
+
+Build and run your chain using the following commands:
+
+```bash
+cargo build --release
+./target/release/node-template --tmp --dev
+```
+Now check your work using the [Polkadot-JS Apps] (https://polkadot.js.org/apps/#/explorer) just like we 
+did previously. Once your chain is running and connected to the PolkadotJS Apps UI, perform these manual 
+checks:
+
+* Fund multiple users with tokens so they can all participate.
+* Have each user create multiple Kitties.
+* Try to transfer a Kitty from one user to another using the right and wrong owner.
+* Try to set the price of a Kitty using the right and wrong owner.
+* Buy a Kitty using an owner and another user.
+* Use too little funds to purchase a Kitty.
+* Breed a Kitty and check that the new DNA is a mix of the old and new.
+
+After all of these actions, confirm that all users have the correct number of Kitties; that the total 
+Kitty count is correct; and any other storage variables are correctly represented.
+
+## Helper code
+
+If you got lost at some point in the tutorial, you can find the complete code for this tutorial 
+[here](https://gist.github.com/WalquerX/978619e208d2cdf7c6a5a0635475d339).
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
