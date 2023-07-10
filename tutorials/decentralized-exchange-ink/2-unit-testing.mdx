@@ -1,0 +1,24 @@
+# Unit testing
+
+The role of unit testing in software engineering is to verify the correctness and robustness of individual units of code in a smart contract, typically at the function or method level. Unit testing involves writing and executing automated tests that target specific units of code in isolation to ensure they function as expected. 
+
+Like in any software application written in Rust programming language, tests are usually stored in `tests` directory and the name of the file is `tests.rs`. In the `tests.rs` you can find following unit test:
+
+```rust
+#[test]
+fn create_new_contract_test() {
+    let mut _amm_contract = AutomatedMarketMaker::new(0);
+    let _accounts = ink_env::test::default_accounts::<ink_env::DefaultEnvironment>();
+    let _contract_addr: AccountId = AccountId::from([0xFF as u8; 32]);
+    set_callee::<DefaultEnvironment>(_contract_addr);
+    set_caller::<ink_env::DefaultEnvironment>(_accounts.alice);
+}
+```
+
+In order to execute the contract in separated environment execution environment you are obliged to define `callee` and `caller` exactly like in the source code above. As you can see also there is a need to configure `DefaultEnvironment`.
+
+While writing tests for ink! smart contract you can use standard assertions like `assert_eq!`. It is also worth to mention that to make tests up and running you should use `use ink_primitives::AccountId;` primitive for an account. Accept the fact that delivering working source code in Rust (but also ink! smart contracts programming language) takes time and requires patience and spirit strength.
+
+**Hint:** There are many websites that provide examples of testing ink! smart contracts using the following code: `ink-experimental-engine = ["ink_env/ink-experimental-engine"]`. However, it is important to note that if you come across such examples, they are **not up to date**.
+
+To initiate tests execution, utilize the command `cargo test`.

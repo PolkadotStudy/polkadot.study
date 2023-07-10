@@ -34,10 +34,12 @@ export default function Home(): JSX.Element {
     });
 
     allTutorialsSorted = uniqBy(allTutorialsSorted, "permalink");
-    allTutorialsSorted.sort((a, b) => a.lastUpdatedAt - b.lastUpdatedAt);
+    allTutorialsSorted.sort((a, b) => b.lastUpdatedAt - a.lastUpdatedAt);
 
     return allTutorialsSorted.filter(
-      (t) => !t.permalink.includes("/substrate-in-bits/")
+      (t) =>
+        !t.permalink.includes("/substrate-in-bits/") &&
+        !t.permalink.includes("parachain-to-polkadot-vault")
     );
   };
 
@@ -80,7 +82,7 @@ export default function Home(): JSX.Element {
             the polkadot community. Start your polkadot developer journey here.
           </p>
           <TutorialGrid
-            slides={getAllTutorialsSorted().slice(0, 6)}
+            slides={getAllTutorialsSorted().slice(0, 4)}
             style={{ marginTop: "2rem" }}
             displayRustyCrewmates={true}
             displaySubstrateInBits={true}

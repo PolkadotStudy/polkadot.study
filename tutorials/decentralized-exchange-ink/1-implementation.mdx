@@ -1,0 +1,228 @@
+# Implementation
+
+In the chapter of the tutorial you will create a fully working smart contract. Let's start with creation your first ink! smart contract:
+
+```bash
+cargo new automated_market_maker
+```
+
+ink! smart contract programming language is based on Rust and that is why the most important file where we will implement the whole business logic is based in `lib.rs` file. Helicopter view of the file `lib.rs` looks like below:
+
+```rust
+#![cfg_attr(not(feature = "std"), no_std)]
+
+const PRECISION: u128 = 1_000_000;
+
+#[ink::contract]
+pub mod automated_market_maker {
+
+    use ink_prelude::collections::BTreeMap;
+
+    /// Section: Definition of a storage
+
+    #[ink(impl)]
+    impl AutomatedMarketMaker {
+
+        /// Section: Constructor
+
+
+        /// Section: Business logic and core functions like:
+        /// -   Providing new liquidity to the pool
+        /// -   Swap
+        /// -   Removing liquidity from a pool
+        /// -   Liquidity constant curve of a pool
+
+    }
+
+        /// Section: Utils, errors definitions
+
+    }
+}
+```
+
+Within ink! smart contract language, the utilization of the standard library is not permitted. This restriction is explicitly denoted through the inclusion of a fundamental declaration at the outset of each smart contract: `#![cfg_attr(not(feature = "std"), no_std)]`. This statement signifies that, in the absence of the "std" feature, the standard library is not accessible for use in the ink! smart contract environment.
+
+## Definition of a storage
+
+Storage in a smart contract is a place where data are stored, there is also an incentive to make it as light as possible due to cost - keeping data on a blockchain is expensive.
+
+In order to hold information about `shares` we use [BTreeMap](https://paritytech.github.io/ink/ink_prelude/collections/btree_map/struct.BTreeMap.html) which works similarly to a mapping in Solidity - an ordered map based data structure. Please pay attention to the fact that `BTreeMap` comes from `ink_prelude` package, not Rust standard library
+
+```rust
+    /// Storage
+    #[ink(storage)]
+    #[derive(Default)]
+    pub struct AutomatedMarketMaker {
+        trading_fee: Balance, // Percent of trading fees charged on every trade
+        token1_balance: BTreeMap<AccountId, Balance>, // Amount of token1 balance of each user
+        token2_balance: BTreeMap<AccountId, Balance>, // Amount of token2 balance of each user
+        pool_total_token1: Balance, // The amount of token1 locked in the pool
+        pool_total_token2: Balance, // The amount of token2 locked in the pool
+        total_shares: Balance, // Stores the total amount of share issued for the pool
+        shares: BTreeMap<AccountId, Balance>, // Stores the share holding of each user
+    }
+```
+
+## Constructor
+
+Constructor is the hear of every smart contract. As a parameter to constructor our smart contract we pass information about fees.
+
+```rust
+/// Instantiating AMM instance
+/// @param _fees: valid interval -> [0,1000)
+#[ink(constructor)]
+pub fn new(_fees: Balance) -> Self {
+    Self {
+        trading_fee: if _fees >= 1000 { 0 } else { _fees },
+        ..Default::default()
+    }
+}
+```
+
+## Business logic and core functions
+
+The core functions of every decentralized exchange are:
+
+- deliver liquidity
+- swap tokens
+- withdraw liquidity
+
+Below you can find explanation of the implementation of the functionalities. Let's start from a crucial subject in any decentralized exchange which is liquidity.
+
+### Provide a liquidity functionality
+
+In `ink!` smart contract programming language every public function has to have `#[ink(message)]` annotation. There need to be at least one public method in a smart contract.
+
+```rust
+#[ink(message)]
+pub fn provide_liquidity(
+    &mut self,
+    _amount_token1: Balance,
+    _amount_token2: Balance,
+) -> Result<Balance, Error>
+```
+
+This function, `provide_liquidity`, is designed to add new liquidity to the pool. It takes two balance amounts of token1 and token2 as inputs and returns the amount of shares issued for locking those assets. The function performs validations, calculates the issued shares based on the provided by user amounts, deducts the input amounts from the caller's balance, updates the pool's total token balances and the total number of shares, and finally assigns the issued shares to the caller's account in the `shares` mapping. The function then returns the issued shares as a result if the execution is successful, or an error otherwise.
+
+Let's describe also first line of the function:
+
+`self.check_valid_amount(&self.token1_balance, _amount_token1)?;`
+
+As you may have noticed, the question mark at the end of the function is the way how we should cope with error handling in Rust and/or `ink!` language. Rust does not have exceptions, it has panics and for error handling uses [Result](https://doc.rust-lang.org/std/result/enum.Result.html) type.
+
+### `swap` functionality 
+
+It is the most complex one in the smart contract and due to a need for estimation firstly of possibility a given swap it is implemented three functions `estimate_swap_token1_for_given_token1` and `estimate_swap_token1_for_given_token2` and `swap_token1_for_given_token2`.
+
+1. The function `estimate_swap_token1_for_given_token1` takes a balance amount of token1 as input and estimates the resulting amount of token2 that the user will receive after swapping. It performs calculations based on the pool's liquidity and trading fee, and returns the estimated amount of token2 as a result.
+
+```rust
+#[ink(message)]
+pub fn estimate_swap_token1_for_given_token1(
+    &self,
+    _amount_token_1: Balance,
+) -> Result<Balance, Error>
+```
+
+2. The function `estimate_swap_token1_for_given_token2` takes a balance amount of token1 as input and estimates the corresponding amount of token1 that the user needs to swap in order to receive a given amount of token2. It considers the pool's liquidity and trading fee, and returns the estimated amount of token1 as a result.
+
+```rust
+#[ink(message)]
+pub fn estimate_swap_token1_for_given_token2(
+    &self,
+    _amount_token1: Balance,
+) -> Result<Balance, Error> 
+```
+
+3. The function `swap_token1_for_given_token2` takes a balance amount of token2 as input and calculates the amount of token1 that the user should swap to receive the specified amount of token2. It verifies the pool's liquidity, checks if there is sufficient balance, performs calculations based on the trading fee, and returns the required amount of token1 as a result.
+
+```rust
+#[ink(message)]
+pub fn swap_token1_for_given_token2(&self, _amount_token2: Balance) -> Result<Balance, Error>
+```
+
+### `withdraw` functionality
+
+```rust
+pub fn get_withdraw_estimation(&self, _share: Balance) -> Result<(Balance, Balance), Error>
+```
+
+The function `get_withdraw_estimation` takes a balance amount of shares as input and provides an estimation of the corresponding amounts of token1 and token2 that will be released upon burning those shares. It verifies the liquidity in the pool, checks if the provided share amount is valid, performs calculations based on the total shares, and returns the estimated amounts of token1 and token2 as a result.
+
+```rust
+pub fn withdraw(&mut self, _share: Balance) -> Result<(Balance, Balance), Error>
+```
+
+The function `withdraw` is responsible for removing liquidity from the pool. It takes a balance amount of shares as input, validates the caller's share balance, calls the `get_withdraw_estimation` function to obtain the estimated `token1` and `token2` amounts, updates the pool and share balances accordingly, and releases the corresponding `token1` and `token2` amounts to the caller. The function returns the released amounts of `token1` and `token2` as a result.
+
+These functions work together to estimate the amounts of `token1` and `token2` that will be withdrawn based on the provided share amount and then facilitate the whole withdrawal process from the pool.
+
+## Errors definitions and utils
+
+Rust does not have traditional exceptions like those found in languages such as Java or Python. Instead, Rust relies on the `Result` and `Option` types for error handling and handling absence of values, respectively.
+
+```rust
+    /// Errors definitions
+    #[derive(Debug, PartialEq, Eq, scale::Encode, scale::Decode)]
+    #[cfg_attr(feature = "std", derive(scale_info::TypeInfo))]
+    pub enum Error {
+        PoolDepleted(String),
+        ZeroAmountErr(String),
+        InvalidShareErr(String),
+        ZeroLiquidityErr(String),
+        SlippageExceededErr(String),
+        InsufficientAmountErr(String),
+        NonEquivalentValueErr(String),
+        ThresholdNotReachedErr(String),
+        InsufficientLiquidityErr(String),
+    }
+```
+
+In the smart contract is implement some functions that are not strictly needed but helpful for testing, for example a place where a software engineer is able to generate tokens for tests - `faucet_brrr`:
+
+```rust
+pub fn faucet_brrr(&mut self, _amount_token1: Balance, _amount_token2: Balance)
+```
+
+The function `faucet_brrr` is responsible for sending free tokens to the invoker (the caller). The invoker's address is obtained using: `self.env().caller()`. Essentially, the `faucet_brrr` function serves as a faucet that allows the smart contract user to distribute free tokens to the caller by increasing their token balances within the contract.
+
+To follow `K curve` in an automated market maker is implemented `get_k` function. The function `get_k` calculates and returns the liquidity constant K value of a pool by multiplying the total balance of `token1` in the pool with the total balance of `token2`:
+
+```rust
+/// Returns the liquidity constant K value of a pool
+fn get_k(&self) -> Balance {
+    self.pool_total_token1 * self.pool_total_token2
+}
+```
+
+To get information about portfolio is implemented `get_information_portfolio` function and for pools information `get_pool_details`.
+
+```rust
+pub fn get_information_portfolio(&self) -> (Balance, Balance, Balance)
+```
+
+The function `get_information_portfolio` retrieves and returns the balance of a user for `token1`, `token2`, and the number of shares they hold in the pool.
+
+```rust
+pub fn get_pool_details(&self) -> (Balance, Balance, Balance, Balance)
+```
+
+The function `get_pool_details` returns the amount of tokens locked in the pool, the total shares issued, and the trading fee parameter used in the pool.
+
+## Additional information
+
+More information regarding ink! smart contracts programming language you will find in the [documentation](https://use.ink).
+
+It's important to note that DEX development involves complex engineering challenges and requires a deep understanding of blockchain technology, cryptography, and security practices.
+Collaboration with blockchain experts and continuous learning about evolving protocols and standards is essential in building a successful decentralized exchange.
+
+While smart contracts are designed to be immutable, there are situations where it becomes necessary to make changes or upgrades to them. Developers may encounter scenarios where they need to address critical bugs or introduce additional features.
+
+In order to build the whole smart contract use following commands:
+```bash
+git clone git@github.com:TomaszWaszczyk/ink-automated-market-maker.git
+cd ink-automated-market-maker/automated-market-maker
+cargo +nightly build --release
+```
+
+The project uses also `cargo fmt` tool in order to deliver well formatted source code, details how to use the tool you can find in the [link.](https://github.com/rust-lang/rustfmt)
