@@ -1,407 +1,299 @@
-# Substrate Front-end template (paraphrase)
 
-The first step of this tutorial is to familiarize yourself with the Substrate Front-end template. In this step we will go through an 
-overview of what our React app will look like and the different components we'll be building. Start by installing the Front-end 
-Template from your terminal:
+# Kitties pallet: Uniqueness, custom types and storage maps
 
-```bash
-git clone https://github.com/substrate-developer-hub/substrate-front-end-template.git
-cd substrate-front-end-template
-yarn install
-```
-and run It
+This section dives into some pillar concepts for developing pallets with FRAME (Framework for Runtime 
+Aggregation of Modularized Entities):
 
-```bash
-yarn start dev
-```
-after that you should be seeing something similar to the following. It is expecting the node to be running on port 9944. The one we developed
-in the first part of the tutorial and not yet started.
+- Writing a storage struct.
+- Implementing the randomness trait.
+- How to use existing types and traits.
+- How create your own types like providing your pallet with a Gender type. 
 
-![kitties](./assets/kitties-11.png)
+Also, at the end of this part, you will have implemented the remaining two storage items according to the 
+logic outlined for the Substrate Kitties application.
 
-So lets start the node. Execute the following command in a new terminal window, in the same directory of the kitties node.
+### Kitty struct
 
-```bash
-./target/release/node-template --dev --tmp
-```
-You can verify now the node frond end is working and already has components reading the data from the template pallets:
+An Struct in Rust is a useful construct to help store data that have things in common. For our purposes, 
+our Kitty will carry multiple properties which we can store in a single struct instead of using separate 
+storage items. This comes in handy when trying to optimize for storage reads and writes so our runtime can 
+perform less read/writes to update multiple values. Read more about storage best practices 
+[here](https://doc.deepernetwork.org/v3/runtime/storage/#best-practices).
 
-![kitties](./assets/kitties-12.png)
+#### What information to include?
 
-Also, Open the template in a code editor. You'll notice the following structure (we've only including the directories we care about for 
-this tutorial):
+Let's first go over what information a single Kitty will carry:
 
-```
-substrate-front-end-template
-|
-+-- public
-|   |
-|   +-- assets              <-- Kitty avatar PNG files
-|
-+-- src                     <-- our React components
-|   |
-|   +-- __tests__
-|   |
-|   +-- config
-|   |
-|   +-- substrate-lib       <-- lib to give access to PolkadotJS API 
-|   |   |
-|   |   +-- components      <-- contains TxButton, used throughout our application
-|   |
-|   other components        <-- components prebuilt for us in the template (e.g: AccountSelector, Balances...)
-...
-```
-If you explore the ./src directory you can find the components that are already running in the frond end. Checking them you can
-have an idea of how the data is being read from the node and displayed in the frond end. For example the following code is
-from the ballances component and I will with some comments to explain what is going on:
+* `dna`: the hash used to identify the DNA of a Kitty, which corresponds to its unique features. 
+DNA is also used to breed new Kitties. An will be used as key in the storage.
+* `price`: this is a balance that corresponds to the amount needed to buy a Kitty and set by its owner.
+* `gender`: an enum that can be either Male or Female.
+* `owner`: an account ID designating a single owner.
+* `generation`: to keep track of the number of generations a Kitty has been bred for.
 
-While checking the code, keep in mind what the frond end looks like and what is doing. It is listing all accounts and its
-balances. So we can guess it has to be reading the accounts from the node and then the balances for each account. 
+#### Sketching out the types held by our struct
 
-```javascript
-// Imports
-import React, { useEffect, useState } from 'react'
-import { Table, Grid, Button, Label } from 'semantic-ui-react'
-import { CopyToClipboard } from 'react-copy-to-clipboard'
-import { useSubstrateState } from './substrate-lib'
+Looking at the items of our struct from above, we can deduce the following types:
 
+* `[u8; 16]` for dna - to use 16 bytes to represent a Kitty's DNA.
+* `BalanceOf` for price - this is a custom type using FRAME's Currency trait.
+* `Gender` for gender - we are going to create this!
+* `u64` for generation.
 
-export default function Main(props) {
-  // We use the custom hook here to access the API and 
-  // the keyring that contains the accounts
-  const { api, keyring } = useSubstrateState()
-  const accounts = keyring.getPairs()
+So we get the following as our struct kitty struct.
 
-  // Set the balances initially to null and fill them in later
-  const [balances, setBalances] = useState({})
-
-  // The hook is used to fetch the balances of all accounts
-  useEffect(() => {
-    // For each account in the keyring get its address
-    const addresses = keyring.getPairs().map(account => account.address)
-    let unsubscribeAll = null
-
-    // Call the API to get the balances of all accounts
-    // notice the how the call is made: api.query.[pallet].[storage].[function]
-    // in this case the pallet is system, the storage is account and the function is multi to query all balances at once
-    api.query.system.account
-      .multi(addresses, balances => {
-        const balancesMap = addresses.reduce(
-          (acc, address, index) => ({
-            ...acc,
-            [address]: balances[index].data.free.toHuman(),
-          }),
-          {}
-        )
-        setBalances(balancesMap)
-      })
-      .then(unsub => {
-        unsubscribeAll = unsub
-      })
-      .catch(console.error)
-
-    return () => unsubscribeAll && unsubscribeAll()
-  }, [api, keyring, setBalances])
-
- // The rest of the code is to display the data in a table 
-  return (
-    <Grid.Column>
-      <h1>Balances</h1>
-      {accounts.length === 0 ? (
-        <Label basic color="yellow">
-          No accounts to be shown
-        </Label>
-      ) : (
-        <Table celled striped size="small">
-          <Table.Body>
-            <Table.Row>
-              <Table.Cell width={3} textAlign="right">
-                <strong>Name</strong>
-              </Table.Cell>
-              <Table.Cell width={10}>
-                <strong>Address</strong>
-              </Table.Cell>
-              <Table.Cell width={3}>
-                <strong>Balance</strong>
-              </Table.Cell>
-            </Table.Row>
-            {accounts.map(account => (
-              <Table.Row key={account.address}>
-                <Table.Cell width={3} textAlign="right">
-                  {account.meta.name}
-                </Table.Cell>
-                <Table.Cell width={10}>
-                  <span style={{ display: 'inline-block', minWidth: '31em' }}>
-                    {account.address}
-                  </span>
-                  <CopyToClipboard text={account.address}>
-                    <Button
-                      basic
-                      circular
-                      compact
-                      size="mini"
-                      color="blue"
-                      icon="copy outline"
-                    />
-                  </CopyToClipboard>
-                </Table.Cell>
-                <Table.Cell width={3}>
-                  {balances &&
-                    balances[account.address] &&
-                    balances[account.address]}
-                </Table.Cell>
-              </Table.Row>
-            ))}
-          </Table.Body>
-        </Table>
-      )}
-    </Grid.Column>
-  )
-}
-
-```
-
-In the previous code the most complex part is the call to the API, so lets take a closer look into it, by playing with it
-in the javascript console of [polkadot js](https://polkadot.js.org/apps/#/js). This by default will connect to you local 
-running node.
-
-In the js console you can execute code to test the API:
-
-![kitties](./assets/kitties-13.png)
-
-Lets try a few snippets to understand how the query is retreiving the balances. But first is necessary to check how the 
-storage we are querying looks like:
-
-This is the [accounts storage](https://github.com/paritytech/substrate/blob/8c4b84520cee2d7de53cc33cb67605ce4efefba8/frame/system/src/lib.rs#L530):
+Copy it to replace the `TODO` for the kitty struct:
 
 ```rust
-/// The full account information for a particular account ID.
-	#[pallet::storage]
-	#[pallet::getter(fn account)]
-	pub type Account<T: Config> = StorageMap<
-		_,
-		Blake2_128Concat,
-		T::AccountId,
-		AccountInfo<T::Index, T::AccountData>,
-		ValueQuery,
-	>;
+// Struct for holding kitty information
+	#[derive(Clone, Encode, Decode, PartialEq, RuntimeDebug, TypeInfo, MaxEncodedLen)]
+	#[scale_info(skip_type_params(T))]
+	pub struct Kitty<T: Config> {
+		// An array of 16 bytes representing the kitty's DNA.
+		pub dna: [u8; 16],
+
+		// The price of the kitty, stored as an optional balance.
+    	// If set to `None`, it assumes the kitty is not for sale.
+		pub price: Option<BalanceOf<T>>,
+
+		// The gender of the kitty.
+		pub gender: Gender,
+
+		// The owner of the kitty, stored as the account ID.
+		pub owner: T::AccountId,
+
+		// Generation of the kitty, stored as a u64.
+		pub generation: u64,
+	}
 ```
-As the code indicates, it uses a [StorageMap](https://paritytech.github.io/substrate/master/frame_support/storage/trait.StorageMap.html#required-methods), which is a key value storage. The key is the account id and the value is the
-account info. The [account info](https://github.com/paritytech/substrate/blob/8c4b84520cee2d7de53cc33cb67605ce4efefba8/frame/system/src/lib.rs#L732) is defined as follows:
+
+Notice how we use the derive macro to include various helper traits for using our struct. We have already
+added `TypeInfo` in order to give our struct access to this trait.
+
+For type `Gender`, we will need to build out our own custom enum and helper functions. Now is a good time 
+to do that.
+
+### Gender enum
+
+We have just created a struct that requires a custom type called `Gender`. This type will handle an enum 
+defining our Kitty's gender. To create it, you'll build out the following parts:
+
+* An enum declaration, which specifies Male and Female values.
+* Implement a helper function for our Kitty struct.
+
+1. Declare the custom enum
+
+Replace `TODO: Enum that represents the gender of a kitty` with the following code:
 
 ```rust
-/// Information of an account.
-#[derive(Clone, Eq, PartialEq, Default, RuntimeDebug, Encode, Decode, TypeInfo, MaxEncodedLen)]
-pub struct AccountInfo<Index, AccountData> {
-	/// The number of transactions this account has sent.
-	pub nonce: Index,
-	/// The number of other modules that currently depend on this account's existence. The account
-	/// cannot be reaped until this is zero.
-	pub consumers: RefCount,
-	/// The number of other modules that allow this account to exist. The account may not be reaped
-	/// until this and `sufficients` are both zero.
-	pub providers: RefCount,
-	/// The number of modules that allow this account to exist for their own purposes only. The
-	/// account may not be reaped until this and `providers` are both zero.
-	pub sufficients: RefCount,
-	/// The additional data that belongs to this account. Used to store the balance(s) in a lot of
-	/// chains.
-	pub data: AccountData,
-}
-```
-There: 
-
-Index: Account index (aka nonce) type. This stores the number of previous transactions associated with a sender account.
-RefCount: A reference count.
-
-AccountData: In the pallet it is defined as a generic type, so it specified in the runtime pallet config. If you check the runtime Config
-file you will see it is defined as follows:
-
-```rust
-impl frame_system::Config for Runtime {
-	// ...
-	/// The data to be stored in an account.
-	type AccountData = pallet_balances::AccountData<Balance>;
-	// ...
-}
-```
-So its form is defined in the [balances pallet](https://github.com/paritytech/substrate/blob/8c4b84520cee2d7de53cc33cb67605ce4efefba8/frame/balances/src/lib.rs#L684) as:
-
-```rust
-/// All balance information for an account.
-#[derive(Encode, Decode, Clone, PartialEq, Eq, Default, RuntimeDebug, MaxEncodedLen, TypeInfo)]
-pub struct AccountData<Balance> {
-	/// Non-reserved part of the balance. There may still be restrictions on this, but it is the
-	/// total pool what may in principle be transferred, reserved and used for tipping.
-	///
-	/// This is the only balance that matters in terms of most operations on tokens. It
-	/// alone is used to determine the balance when in the contract execution environment.
-	pub free: Balance,
-	/// Balance which is reserved and may not be used at all.
-	///
-	/// This can still get slashed, but gets slashed last of all.
-	///
-	/// This balance is a 'reserve' balance that other subsystems use in order to set aside tokens
-	/// that are still 'owned' by the account holder, but which are suspendable.
-	/// This includes named reserve and unnamed reserve.
-	pub reserved: Balance,
-	/// The amount that `free` may not drop below when withdrawing for *anything except transaction
-	/// fee payment*.
-	pub misc_frozen: Balance,
-	/// The amount that `free` may not drop below when withdrawing specifically for transaction
-	/// fee payment.
-	pub fee_frozen: Balance,
-}
-```
-By checking the description of the fields we can see that the free field is the one we are interested in as Balance for each account.
-
-Now that we understand the storage we are trying to query we can try a few snippets on how to do it:
-
-We need some accounts to be passed to the query since the storage is expecting accounts as keys:
-
-The keys for the default acccounts in the node are:
-
-```
-alice -> "5GrwvaEF5zXb26Fz9rcQpDWS57CtERHpNehXCPcNoHGKutQY",
-alice_stash -> "5GNJqTPyNqANBkUVMN1LPPrxXnFouWXoe2wNSmmEoLctxiZY",
-bob -> "5FHneW46xGXgs5mUiveU4sbTyGBzmstUspZC92UhjJM694ty",
-bob_stash -> "5HpG9w8EBLe5XCrbczpwq5TSXvedjrBGCwqxK1iQ7qUsSWFc",
-charlie -> "5FLSigC9HGRKVhB9FiEo4Y3koPsNmBmLJbpXg2mp1hXcS59Y",
-dave -> "5DAAnrj7VHTznn2AWBemMuyBwZWs6FNFjdyVXUeYum3PTXFy",
-eve -> "5HGjWAeFDfFCWPsjFQdVV2Msvz2XtMktvgocEZcCj68kUMaw",
-ferdie -> "5CiPPseXPECbkjWCa6MnjNokrgYjMqmKndv2rSnekmSK2DjL",
+// Represents the gender of a kitty.
+	#[derive(Clone, Encode, Decode, PartialEq, Copy, RuntimeDebug, TypeInfo, MaxEncodedLen)]
+	// We need this to pass kitty info for genesis configuration
+	#[cfg_attr(feature = "std", derive(Serialize, Deserialize))]
+	pub enum Gender {
+		Male,
+		Female,
+	}
 ```
 
-1. Query all entries in the storage:
+Notice the use of the derive macro which must precede the enum declaration. This wraps our enum in the 
+data structures it will need to interface with other types in our runtime. In order to use `Serialize` and 
+ `Deserialize`, you will need to add the serde crate in `pallets/kitties/Cargo.toml` as follows:
 
-```javascript
-const result = await api.query.system.account.entries()
-result.map((entry) => { console.log(entry) })
-```
-It prints:
+```toml
+[dependencies]
+serde = { version = "1.0.136", optional = true }
 
-```
-[0x26aa394eea5630e07c48ae0c9558cef7b99d880ec681799c0cf30e8886371da932a5935f6edc617ae178fef9eb1e211fbe5ddb1579b72e84524fc29e78609e3caf42e85aa118ebfe0b0ad404b5bdd25f, {nonce: 0, consumers: 0, providers: 1, sufficients: 0, data: {free: 1152921504606846976, reserved: 0, miscFrozen: 0, feeFrozen: 0}}]
-[0x26aa394eea5630e07c48ae0c9558cef7b99d880ec681799c0cf30e8886371da94f9aea1afa791265fae359272badc1cf8eaf04151687736326c9fea17e25fc5287613693c912909cb226aa4794f26a48, {nonce: 0, consumers: 0, providers: 1, sufficients: 0, data: {free: 1152921504606846976, reserved: 0, miscFrozen: 0, feeFrozen: 0}}]
-[0x26aa394eea5630e07c48ae0c9558cef7b99d880ec681799c0cf30e8886371da96f2e33376834a63c86a195bcf685aebbfe65717dad0447d715f660a0a58411de509b42e6efb8375f562f58a554d5860e, {nonce: 0, consumers: 0, providers: 1, sufficients: 0, data: {free: 1152921504606846976, reserved: 0, miscFrozen: 0, feeFrozen: 0}}]
-[0x26aa394eea5630e07c48ae0c9558cef7b99d880ec681799c0cf30e8886371da9de1e86a9a8c739864cf3cc5ec2bea59fd43593c715fdd31c61141abd04a99fd6822c8558854ccde39a5684e7a56da27d, {nonce: 0, consumers: 0, providers: 1, sufficients: 0, data: {free: 1152921504606846976, reserved: 0, miscFrozen: 0, feeFrozen: 0}}]
-```
-![kitties](./assets/kitties-14.png)
-
-2. Query for one account:
-
-```javascript
-address = "5GrwvaEF5zXb26Fz9rcQpDWS57CtERHpNehXCPcNoHGKutQY"
-const result = await api.query.system.account(address)
-console.log(result)
-```
-It prints:
-
-```
-{nonce: 0, consumers: 0, providers: 1, sufficients: 0, data: {free: 1152921504606846976, reserved: 0, miscFrozen: 0, feeFrozen: 0}}
-```
-
-![kitties](./assets/kitties-16.png)
-
-
-
-3. Query for many accounts in one call:
-
-```javascript
-addresses = [
-    "5GrwvaEF5zXb26Fz9rcQpDWS57CtERHpNehXCPcNoHGKutQY",
-    "5GNJqTPyNqANBkUVMN1LPPrxXnFouWXoe2wNSmmEoLctxiZY",
-    "5FHneW46xGXgs5mUiveU4sbTyGBzmstUspZC92UhjJM694ty",
-    "5HpG9w8EBLe5XCrbczpwq5TSXvedjrBGCwqxK1iQ7qUsSWFc",
-    "5FLSigC9HGRKVhB9FiEo4Y3koPsNmBmLJbpXg2mp1hXcS59Y",
-    "5DAAnrj7VHTznn2AWBemMuyBwZWs6FNFjdyVXUeYum3PTXFy",
-    "5HGjWAeFDfFCWPsjFQdVV2Msvz2XtMktvgocEZcCj68kUMaw",
-    "5CiPPseXPECbkjWCa6MnjNokrgYjMqmKndv2rSnekmSK2DjL",
+[features]
+default = ["std"]
+std = [
+	"codec/std",
+	"frame-benchmarking?/std",
+	"frame-support/std",
+	"frame-system/std",
+	"scale-info/std",
+	"sp-io/std",
+	"sp-runtime/std",
+	"serde",
 ]
-const result = await api.query.system.account.multi(addresses)
-result.map((entry) => { console.log(entry)})
-```
-It prints:
-
-```
-{nonce: 0, consumers: 0, providers: 1, sufficients: 0, data: {free: 1152921504606846976, reserved: 0, miscFrozen: 0, feeFrozen: 0}}
-{nonce: 0, consumers: 0, providers: 1, sufficients: 0, data: {free: 1152921504606846976, reserved: 0, miscFrozen: 0, feeFrozen: 0}}
-{nonce: 0, consumers: 0, providers: 1, sufficients: 0, data: {free: 1152921504606846976, reserved: 0, miscFrozen: 0, feeFrozen: 0}}
-{nonce: 0, consumers: 0, providers: 1, sufficients: 0, data: {free: 1152921504606846976, reserved: 0, miscFrozen: 0, feeFrozen: 0}}
-{nonce: 0, consumers: 0, providers: 0, sufficients: 0, data: {free: 0, reserved: 0, miscFrozen: 0, feeFrozen: 0}}
-{nonce: 0, consumers: 0, providers: 0, sufficients: 0, data: {free: 0, reserved: 0, miscFrozen: 0, feeFrozen: 0}}
-{nonce: 0, consumers: 0, providers: 0, sufficients: 0, data: {free: 0, reserved: 0, miscFrozen: 0, feeFrozen: 0}}
-{nonce: 0, consumers: 0, providers: 0, sufficients: 0, data: {free: 0, reserved: 0, miscFrozen: 0, feeFrozen: 0}}
-```
-![kitties](./assets/kitties-15.png)
-
-4. Lets try to get only the balances of the accounts as the balance component does:
-
-```javascript
-const addresses = [
-  "5GrwvaEF5zXb26Fz9rcQpDWS57CtERHpNehXCPcNoHGKutQY",
-  "5GNJqTPyNqANBkUVMN1LPPrxXnFouWXoe2wNSmmEoLctxiZY",
-  "5FHneW46xGXgs5mUiveU4sbTyGBzmstUspZC92UhjJM694ty",
-  "5HpG9w8EBLe5XCrbczpwq5TSXvedjrBGCwqxK1iQ7qUsSWFc",
-  "5FLSigC9HGRKVhB9FiEo4Y3koPsNmBmLJbpXg2mp1hXcS59Y",
-  "5DAAnrj7VHTznn2AWBemMuyBwZWs6FNFjdyVXUeYum3PTXFy",
-  "5HGjWAeFDfFCWPsjFQdVV2Msvz2XtMktvgocEZcCj68kUMaw",
-  "5CiPPseXPECbkjWCa6MnjNokrgYjMqmKndv2rSnekmSK2DjL",
-];
-
-const balancesCallback = (balances) => {
-        // reduce takes 2 arguments: a reducing function and an initial value for the accumulator.
-        const balancesMap = addresses.reduce(
-          // it creates a map with address as the key and balances in json format as value
-          (acc, address, index) => ({...acc, [address]: balances[index].data.free.toHuman(),}),
-          {}
-        )
-        // We are only printing alice balance
-        console.log(balancesMap["5GrwvaEF5zXb26Fz9rcQpDWS57CtERHpNehXCPcNoHGKutQY"])
-      };
-
-// Multi query with a callback function added
-const result = await api.query.system.account
-  .multi(addresses, balancesCallback);
 ```
 
-It prints:
+Great, we now know how to create a custom struct. But what about providing a way for a Kitty struct to be 
+assigned a gender value?
 
+2. Implement a helper function for our Kitty struct
+
+Configuring an struct is useful in order to pre-define a value in our struct. For example, when setting a 
+value in relation to what another function returns. In our case we have a similar situation where we need 
+to configure our Kitty struct in such a way that sets `Gender` according to a Kitty's DNA.
+
+We'll create a function called gen_dna that returns a tuple of DNA and gender for a kitty.
+
+Replace `TODO: Generates and returns DNA and Gender for a new kitty` with the following:
+
+```rust
+// Generates and returns DNA and Gender for a new kitty.
+		pub fn gen_dna() -> ([u8; 16], Gender) {
+			// Create randomness
+			let random = T::KittyRandomness::random(&b"dna"[..]).0;
+
+			// Create randomness payload. Multiple kitties can be generated in the same block,
+			// retaining uniqueness.
+			let unique_payload = (
+				random,
+				frame_system::Pallet::<T>::extrinsic_index().unwrap_or_default(),
+				frame_system::Pallet::<T>::block_number(),
+			);
+
+			// Turns into a byte array
+			let encoded_payload = unique_payload.encode();
+			let hash = blake2_128(&encoded_payload);
+
+			// Generate Gender
+			if hash[0] % 2 == 0 {
+				// Males are identified by having a even leading byte
+				(hash, Gender::Male)
+			} else {
+				// Females are identified by having a odd leading byte
+				(hash, Gender::Female)
+			}
+		}
 ```
-1,152,921,504,606,846,976
+Make sure to spend some time understanding the logic behind this function. Check the comments for some guidance.
+
+### On-chain randomness
+
+If we want to be able to tell these Kitties apart, we need to start giving them unique properties! In 
+the previous step, we've made use of `KittyRandomness` which we haven't defined yet. Let's get to 
+it.
+
+We'll be using the [`Randomness`](https://docs.rs/frame-support/latest/frame_support/traits/trait.Randomness.html) trait from [`frame_support`](https://docs.rs/frame-support/latest/frame_support/index.html#) to do it. It will generate a random seed that we'll use to create 
+unique Kitties and breed new ones.
+
+In order to use the `Randomness` trait for our pallet, we must:
+
+1. Define a new type bound by Randomness trait in our pallet's configuration trait:
+
+The `Randomness` trait from `frame_support` requires specifying it with a paramater to replace the 
+`Output` and `BlockNumber` generics. For our purposes, we want the output of functions using this 
+trait to be `Blake2 128-bit hash` which you'll notice should already be declared at the top of your 
+working codebase.
+
+Replace `TODO: The type of Randomness we want to specify for this pallet.` with the following:
+
+```rust
+/// The type of Randomness we want to specify for this pallet.
+type KittyRandomness: Randomness<Self::Hash, Self::BlockNumber>;
+```
+2. Specify the actual type in our runtime
+
+Given that we have added a new type in the configuration of our pallet, we need to config our runtime to 
+set its concrete type. This could come in handy if ever we want to change the algorithm that 
+`KittyRandomness` is using, without needing to modify where it's used inside our pallet.
+
+To showcase this point, we're going to set the `KittyRandomness` type to an instance of FRAME's 
+`InsecureRandomnessCollectiveFlip` (It is called insecure because it should not be used in production 
+settings). Conveniently, the Node Template already has an instance of the `InsecureRandomnessCollectiveFlip` 
+pallet. All you need to do is set the `KittyRandomness` type in your runtime, inside `./runtime/src/lib.rs`:
+
+ ```rust
+/// Configure the pallet-template in pallets/template.
+impl pallet_template::Config for Runtime {
+	type RuntimeEvent = RuntimeEvent;
+	type Currency = Balances;
+	type KittyRandomness = RandomnessCollectiveFlip;
+}
+ ```
+### Remaining storage items
+
+#### Understanding storage item logic
+
+To track the kitties we're going to standardize the logic to use an ID as key for the each storage item. This means that a single unique 
+key will point to a Kitty object (i.e. the struct we previously declared).
+
+In order for this to work, we need to make sure that the ID for a new Kitty is unique. We can do 
+this with a new storage item called `Kitties`, which will be a mapping from an ID to the Kitty object.
+
+With this we can check for collisions by checking whether this storage item already contains a mapping using a 
+particular ID. For example, from inside a dispatchable function we could check using:
+
+```rust
+ensure!(!<Kitties<T>>::exists(new_id), "This new id already exists");
 ```
 
-![kitties](./assets/kitties-17.png)
+Our runtime needs to be made aware of:
 
-Note that in a component instead of printing the balance we would be setting it in the state of the component and then displaying it in 
-the table.
+* Unique assets, like currency or Kitties (this will be held by a storage map called `Kitties`)
+* Ownership of those assets (this will be handled a new storage map called `KittiesOwned`)
 
-```javascript
-const [balances, setBalances] = useState({}) // Ititialize the state
+### Using a [StorageMap](https://paritytech.github.io/substrate/master/frame_support/storage/types/struct.StorageMap.html)
 
-// ...
+To create a storage instance for the Kitty struct, we'll be using a `StorageMap` — a hash-map provided to us
+ by FRAME.
 
-setBalances(balancesMap) // Set the state after the query inside a useEffect hook so 
-                         // to re do the query when something changes
+Here's what the Kitties storage item looks like:
 
-// ...
-return (
-    // ...
-    <Table.Cell width={3}>
-        {balances &&
-        balances[account.address] && 
-        balances[account.address]} {/*Display the balance from the state*/}
-    </Table.Cell>
-    // ...
-)
+```rust
+/// Maps the kitty struct to the kitty DNA.
+#[pallet::storage]
+pub(super) type Kitties<T: Config> = StorageMap<
+    _, 
+    Twox64Concat, 
+    [u8; 16], 
+    Kitty<T>
+>;
 ```
+Breaking it down, we declare the storage type and assign a StorageMap that takes:
 
+* The `Twox64Concat` hashing algorithm.
+* A key of type `[u8; 16]`.
+* A value of type `Kitty<T>`.
 
+The `KittiesOwned` storage item is similar except that we'll be using a `BoundedVec` from  `frame_support::pallet_prelude` to keep track of 
+some maximum number of Kitties we'll configure in `./runtime/src/lib.rs`.
 
+```rust
+/// Track the kitties owned by each account.
+#[pallet::storage]
+pub(super) type KittiesOwned<T: Config> = StorageMap<
+	_,
+	Twox64Concat,
+	T::AccountId,
+	BoundedVec<[u8; 16], T::MaxKittiesOwned>,
+	ValueQuery,
+>;
+```
+Your turn! Copy the two code snippets above to replace `TODO: Storage that maps the kitty struct to the kitty DNA.` and `TODO: Storage that tracks the kitties owned by each account.`
 
+Before we can check if our pallet compiles, we need to add a new type `MaxKittyOwned` in the `config` 
+trait, which is a pallet constant type (similar to `KittyRandomness` in the previous steps). Replace 
+`TODO: The maximum amount of kitties a single account can own.` with:
 
+```rust
+/// The maximum amount of kitties a single account can own.
+#[pallet::constant]
+type MaxKittiesOwned: Get<u32>;
+```
+Finally, we define `MaxKittyOwned` type in `./runtime/src/lib.rs`. This is the same pattern as we 
+followed for `Currency` and `KittyRandomness` except we'll be adding a fixed `u32` using the 
+`parameter_types!` macro:
 
+```rust
+parameter_types! { 
+	// One can own at most 9,999 Kitties
+	pub const MaxKittyOwned: u32 = 9999;
+}
 
+/// Configure the pallet-template in pallets/template.
+impl pallet_template::Config for Runtime {
+	type RuntimeEvent = RuntimeEvent;
+	type Currency = Balances;
+	type KittyRandomness = RandomnessCollectiveFlip;
+	type MaxKittiesOwned = MaxKittyOwned;
+}
+```
+Now is a good time to check that your Kitties blockchain compiles!
 
-
-
+```bash
+cargo build --release
+```

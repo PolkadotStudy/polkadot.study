@@ -1,6 +1,6 @@
 # Node Template Set Up
 
-Before we can start making Kitties, we need to do some groundwork. This part covers the patterns involved 
+Before we can start minting Kitties, we need to do some groundwork. This part covers the patterns involved 
 with using the Substrate Node Template.
 
 ## Pre-requisites
@@ -22,21 +22,21 @@ node template v0.9.39.
 git clone -b polkadot-v0.9.39 https://github.com/substrate-developer-hub/substrate-node-template.git
 ```
 Create a new branch for your project and switch to it. So to be able to keep the original template code in
-case we get lost is the change.
+case we get lost in the changes.
 
-In the following command I'm naming the branch kitties:
+In the following command we are naming the branch as kitties:
 
 ```bash
 git checkout -b kitties
 ```
-To compile do the following. This will take a while. How long it takes depends on your machine specs. 
+To compile, do the following. This will take a while. How long it takes depends on your machine specs. 
 
 ```bash
 cargo build --release
 ```
 ![kitties](./assets/kitties-1.png)
 
-As you can see in the image, the compilation should complete with a line that looks like this:
+As you can see in the previous image, the compilation should complete with a line that looks like this:
 
 ```bash
 Finished release [optimized] target(s) in 14m 31s
@@ -51,6 +51,8 @@ To run the node, use the following command, in the same directory where you ran 
 Here we are executing the node binary and passing it the --dev argument. This tells the node to run in development 
 mode ensuring that you have a clean working state any time you stop and restart the node. You can stop the node by 
 pressing Ctrl+C.
+
+## Interacting with the node template
 
 Now is a good moment to play for a while with the node. Use the Polkadot JS Apps UI to connect to your 
 local node by going to [polkadot.js Apps UI](https://polkadot.js.org/apps/#/explorer). It should be configured to 
@@ -71,7 +73,7 @@ template (you will find it as templateModule) has only two extrinsics.
 * `do_something`
 * `cause_error`
 
-`do_something` stores a `u32` value in the runtime storage. Try setting a value and submiting the extrinsic.
+`do_something` stores a `u32` value in the runtime storage. Try setting a value by submiting the extrinsic.
  And then checking the value in the storage.
 
 To check the value in the storage, go to:
@@ -86,7 +88,7 @@ the right to query it.
 ![kitties](./assets/kitties-4.png)
 
 Also check the code in the pallet template. You can find it in the pallets folder. See how the code of the 
-extrinsic you called looks like. In the directory where you compiled the node go to  check the 
+extrinsic you just called looks like. In the directory where you compiled the node go to  check the 
 `pallets/template/src/lib.rs` file.
 
 There you can find the storage code:

@@ -44,6 +44,9 @@ const sidebars = {
     "kitties-part-01/step3",
     "kitties-part-01/step4",
     "kitties-part-01/step5",
+    "kitties-part-01/step6",
+    "kitties-part-01/step7",
+    "kitties-part-01/step8",
     "kitties-part-01/conclusion",
   ],
   

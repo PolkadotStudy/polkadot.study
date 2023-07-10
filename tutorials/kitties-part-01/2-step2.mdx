@@ -1,15 +1,15 @@
 # Renaming the TemplateModule Pallet
 
-We will copy and rename the template pallet so to have it renamed as kitties. This implies making some 
+We will copy and rename the template pallet so to have it renamed as `kitties`. This implies making some 
 changes along side the pallet and the runtime.
 
-- Go to the pallets folder and make a duplicate of the template pallet folder and rename it to kitties.
+- Go to the pallets folder and make a duplicate of the template pallet folder and rename it to `kitties`.
 
 ```bash
 cd pallets
 cp -r ./template ./kitties
 ```
-- Inside kitties folder modify the cargo.toml file to have `pallet-kitties` as the pallet name.
+- Inside kitties folder modify the `cargo.toml` file to have `pallet-kitties` as the pallet name.
 
 ```toml
 [package]
@@ -24,7 +24,7 @@ publish = false
 repository = "https://github.com/substrate-developer-hub/substrate-node-template/"
 ...
 ```
-- Add the `pallet-kitties` to the runtime. Go to `./runtime/cargo.toml` file and add the pallet-kitties in 
+- Add the `pallet-kitties` to the runtime's `cargo.toml`: Go to `./runtime/cargo.toml` file and add the pallet-kitties in 
 the same way the `template-pallet` is added.
 
 ```toml
@@ -83,7 +83,7 @@ try-runtime = [
 	"pallet-transaction-payment/try-runtime",
 ]
 ```
-- Go to `./runtime/src/lib.rs` and add the `pallet-kitties` in the same way the `template-pallet` is added.
+- Add the `pallet-kitties` to the runtime's `lib.rs`: Go to `./runtime/src/lib.rs` and add the `pallet-kitties` in the same way the `template-pallet` is added.
 
 ```rust
 // ...
@@ -144,7 +144,7 @@ mod benches {
 	);
 }
 ```
-- Compile and run it to check that everything is working as expected. Return to the root folder and run:
+- Compile and run it to check that everything is working as expected: return to the root folder and run:
 
 ```bash
 cargo build --release
@@ -156,6 +156,10 @@ has.
 
 ![kitties pallet](./assets/kitties-5.png)
 
+Note: If the [polkadot-js app UI](https://polkadot.js.org/apps/#/explorer) is not conected to your local node, go to the upper left corner 
+and select `Local Node` in the `Network` dropdown menu. Like in the following image:
+
+![kitties](./assets/kitties-3.png)
 
 
 
