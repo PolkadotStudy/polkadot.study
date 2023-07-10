@@ -20,7 +20,7 @@ coding up our Kitty pallet's minting and ownership management capabilities.
 We will be breaking up the "heavy lifting" logics into private helper functions. This improves code 
 readability and reusability.
 
-Lets paint the big picture of what combining dispatchables and helper functions looks like.
+Let's paint the big picture of what combining dispatchables and helper functions looks like.
 
 `create_kitty` is a dispatchable function or extrinsic that:
 
@@ -53,7 +53,8 @@ carries before it is called so that a node will account for it's worst case, avo
 network with extrinsics that may take longer than the specified block time. Weights are also 
 intimately linked to the fee system for a signed extrinsic.
 
-For this application, and since we are developing it for learning purposes, we're going to default all weights to 0.
+For this application, and since we are developing it for learning purposes, we're going to default all weights to 0. If you're interested in 
+learning more about weights, check out the [Substrate Docs](https://docs.substrate.io/reference/how-to-guides/weights/).
 
 Replace `TODO: Create a new unique kitty.` with the following:
 

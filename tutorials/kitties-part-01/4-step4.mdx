@@ -40,7 +40,7 @@ Looking at the items of our struct from above, we can deduce the following types
 * `Gender` for gender - we are going to create this!
 * `u64` for generation.
 
-So we get the following as our struct kitty struct.
+So we get the following as our kitty struct.
 
 Copy it to replace the `TODO` for the kitty struct:
 
@@ -192,9 +192,9 @@ set its concrete type. This could come in handy if ever we want to change the al
 `KittyRandomness` is using, without needing to modify where it's used inside our pallet.
 
 To showcase this point, we're going to set the `KittyRandomness` type to an instance of FRAME's 
-`InsecureRandomnessCollectiveFlip` (It is called insecure because it should not be used in production 
-settings). Conveniently, the Node Template already has an instance of the `InsecureRandomnessCollectiveFlip` 
-pallet. All you need to do is set the `KittyRandomness` type in your runtime, inside `./runtime/src/lib.rs`:
+[`InsecureRandomnessCollectiveFlip`](https://docs.rs/pallet-insecure-randomness-collective-flip/latest/pallet_insecure_randomness_collective_flip/) 
+(It is called insecure because it should be used for only low security situations). Conveniently, the Node Template already has an instance 
+of the `InsecureRandomnessCollectiveFlip` pallet. All you need to do is set the `KittyRandomness` type in your runtime, inside `./runtime/src/lib.rs`:
 
  ```rust
 /// Configure the pallet-template in pallets/template.
@@ -204,6 +204,8 @@ impl pallet_template::Config for Runtime {
 	type KittyRandomness = RandomnessCollectiveFlip;
 }
  ```
+
+
 ### Remaining storage items
 
 #### Understanding storage item logic
@@ -251,6 +253,10 @@ Breaking it down, we declare the storage type and assign a StorageMap that takes
 
 The `KittiesOwned` storage item is similar except that we'll be using a `BoundedVec` from  `frame_support::pallet_prelude` to keep track of 
 some maximum number of Kitties we'll configure in `./runtime/src/lib.rs`.
+
+Using a bounded vector is useful when you want to enforce resource constraints or prevent unexpected resource consumption. 
+In this case, it ensures that the storage item `KittiesOwned` can only hold a specific number of Kitties, which can be configured in 
+`./runtime/src/lib.rs` to match the desired limit.
 
 ```rust
 /// Track the kitties owned by each account.
