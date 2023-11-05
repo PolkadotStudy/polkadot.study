@@ -32,7 +32,7 @@ Replace `TODO: Set the price for a kitty.` with:
 /// * The kitty with the given ID does not exist.
 /// * The caller is not the owner of the kitty.
 #[pallet::call_index(5)]
-#[pallet::weight(0)]
+#[pallet::weight({0})]
 pub fn set_price(
     origin: OriginFor<T>,
     kitty_id: [u8; 16],
@@ -79,7 +79,7 @@ Replace `TODO: Directly transfer a kitty to another recipient.` with:
 /// * The kitty with the given ID does not exist.
 /// * The caller is not the owner of the kitty.
 #[pallet::call_index(3)]
-#[pallet::weight(0)]
+#[pallet::weight({0})]
 pub fn transfer(
     origin: OriginFor<T>,
     to: T::AccountId,
@@ -185,7 +185,7 @@ Replace `TODO: Buy a kitty that is listed for sale.` with:
 /// Returns an error if:
 /// * The caller is not from a signed origin.
 #[pallet::call_index(4)]
-#[pallet::weight(0)]
+#[pallet::weight({0})]
 pub fn buy_kitty(
     origin: OriginFor<T>,
     kitty_id: [u8; 16],
@@ -223,7 +223,7 @@ Replace `TODO: Breed two kitties to give birth to a new kitty that is a combinat
 /// * The caller is not the owner of both parent kitties.
 /// * The parent kitties are not of opposite genders.
 #[pallet::call_index(1)]
-#[pallet::weight(0)]
+#[pallet::weight({0})]
 pub fn breed_kitty(
     origin: OriginFor<T>,
     parent_1: [u8; 16],
@@ -300,56 +300,6 @@ For example, in the following image, who do you think are the parents of the onl
 
 ![kitties](./assets/kitties.png)
 
-## Genesis configuration
-
-The final step before our pallet is ready to be used is to set the genesis state of our storage items. 
-We'll make use of FRAME's `#[pallet::genesis_config]` to do this. Essentially, this allows us to declare 
-what the Kitties object in storage contains in the genesis block.
-
-Copy the following code to replace `TODO: Our pallet's genesis configuration`:
-
-```rust
-// Our pallet's genesis configuration
-#[pallet::genesis_config]
-pub struct GenesisConfig<T: Config> {
-    pub kitties: Vec<(T::AccountId, [u8; 16], Gender, u64)>,
-}
-
-// Required to implement default for GenesisConfig
-#[cfg(feature = "std")]
-impl<T: Config> Default for GenesisConfig<T> {
-    fn default() -> GenesisConfig<T> {
-        GenesisConfig { kitties: vec![] }
-    }
-}
-
-#[pallet::genesis_build]
-impl<T: Config> GenesisBuild<T> for GenesisConfig<T> {
-    fn build(&self) {
-        // When building a kitty from genesis config, we require the DNA and Gender to be
-        // supplied
-        for (account, dna, gender, generation) in &self.kitties {
-            assert!(Pallet::<T>::mint(account, *dna, *gender, *generation).is_ok());
-        }
-    }
-}
-```
-
-To let our chain know about our pallet's genesis configuration, we need to modify the `chain_spec.rs` file 
-in our project's node folder. It's important you make sure you use the name of the pallet instance in 
-`./runtime/src/lib.rs`, which in our case was `kitties_module`. Go to `./node/src/chain_spec.rs`, add 
-`kitties_module: Default::default()` to the `testnet_genesis` function, like so:
-
-```rust
-//-- snip --
-    sudo: SudoConfig {
-        // Assign network admin rights.
-        key: Some(root_key),
-    },
-    transaction_payment: Default::default(),
-    kitties_module: Default::default(),
-}
-```
 ## Build, run and interact with your Kitties
 
 If you've completed all of the preceding parts and steps of this tutorial, you're ready to run your chain 

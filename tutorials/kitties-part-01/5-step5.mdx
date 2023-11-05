@@ -14,10 +14,9 @@ extrinsic using the PolkadotJS Apps UI.
 
 ### Public and private functions
 
-It is important to understand the pallet design decisions we'll be making around 
-coding up our Kitty pallet's minting and ownership management capabilities.
+It is important to understand the pallet design decisions we'll be making.
 
-We will be breaking up the "heavy lifting" logics into private helper functions. This improves code 
+We will be breaking up the "heavy lifting" logic into private helper functions. This improves code 
 readability and reusability.
 
 Let's paint the big picture of what combining dispatchables and helper functions looks like.
@@ -31,7 +30,7 @@ Let's paint the big picture of what combining dispatchables and helper functions
 
 `mint()` is a private helper function that:
 
-* Check if the kitty does not already exist in our storage map.
+* Checks if the kitty does not already exist in our storage map.
 * Updates storage with the new Kitty ID (for all Kitties and for the owner's account).
 * Updates the new total Kitty count for storage and the new owner's account.
 * Deposits an `Event` to signal that a Kitty has succesfully been created.
@@ -63,7 +62,7 @@ Replace `TODO: Create a new unique kitty.` with the following:
 ///
 /// The actual kitty creation is done in the `mint()` function.
 #[pallet::call_index(0)]
-#[pallet::weight(0)]
+#[pallet::weight({0})]
 pub fn create_kitty(origin: OriginFor<T>) -> DispatchResult {
     // Make sure the caller is from a signed origin
     let sender = ensure_signed(origin)?;
@@ -172,7 +171,7 @@ This allows us to deposit a specifc event using the pattern below:
 Self::deposit_event(Event::Success(var_time, var_day));
 ```
 
-In order to use events inside our pallet, we add the associated type `Event` inside our pallet's 
+In order to use events inside our pallet, we add the associated type `RuntimeEvent` inside our pallet's 
 configuration trait `Config`. Additionally — just as when adding any type to our pallet's Config trait — we 
 also needed to define it in our runtime `./runtime/src/lib.rs`.
 
