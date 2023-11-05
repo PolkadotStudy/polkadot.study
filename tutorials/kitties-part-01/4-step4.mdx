@@ -14,11 +14,11 @@ logic outlined for the Substrate Kitties application.
 
 ### Kitty struct
 
-An Struct in Rust is a useful construct to help store data that have things in common. For our purposes, 
-our Kitty will carry multiple properties which we can store in a single struct instead of using separate 
-storage items. This comes in handy when trying to optimize for storage reads and writes so our runtime can 
-perform less read/writes to update multiple values. Read more about storage best practices 
-[here](https://doc.deepernetwork.org/v3/runtime/storage/#best-practices).
+An [Struct](https://doc.rust-lang.org/book/ch05-01-defining-structs.html) in Rust is a useful construct to 
+help store data that have things in common. For our purposes, our Kitty will carry multiple properties which 
+we can store in a single struct instead of using separate storage items. This comes in handy when trying to 
+optimize for storage reads and writes so our runtime can perform less read/writes to update multiple values. Read 
+more about storage best practices [here](https://doc.deepernetwork.org/v3/runtime/storage/#best-practices).
 
 #### What information to include?
 
@@ -42,7 +42,7 @@ Looking at the items of our struct from above, we can deduce the following types
 
 So we get the following as our kitty struct.
 
-Copy it to replace the `TODO` for the kitty struct:
+Copy it to replace the `TODO: Struct for holding kitty information`:
 
 ```rust
 // Struct for holding kitty information
@@ -67,11 +67,11 @@ Copy it to replace the `TODO` for the kitty struct:
 	}
 ```
 
-Notice how we use the derive macro to include various helper traits for using our struct. We have already
-added `TypeInfo` in order to give our struct access to this trait.
+Notice how we use the [derive](https://doc.rust-lang.org/rust-by-example/trait/derive.html) macro to include 
+various helper traits for using our struct. We have already added `TypeInfo` in order to give our struct access 
+to this trait.
 
-For type `Gender`, we will need to build out our own custom enum and helper functions. Now is a good time 
-to do that.
+For type `Gender`, we will need to build out our own custom enum and helper functions.
 
 ### Gender enum
 
@@ -133,31 +133,31 @@ Replace `TODO: Generates and returns DNA and Gender for a new kitty` with the fo
 
 ```rust
 // Generates and returns DNA and Gender for a new kitty.
-		pub fn gen_dna() -> ([u8; 16], Gender) {
-			// Create randomness
-			let random = T::KittyRandomness::random(&b"dna"[..]).0;
+pub fn gen_dna() -> ([u8; 16], Gender) {
+	// Create randomness
+	let random = T::KittyRandomness::random(&b"dna"[..]).0;
 
-			// Create randomness payload. Multiple kitties can be generated in the same block,
-			// retaining uniqueness.
-			let unique_payload = (
-				random,
-				frame_system::Pallet::<T>::extrinsic_index().unwrap_or_default(),
-				frame_system::Pallet::<T>::block_number(),
-			);
+	// Create randomness payload. Multiple kitties can be generated in the same block,
+	// retaining uniqueness.
+	let unique_payload = (
+		random,
+		frame_system::Pallet::<T>::extrinsic_index().unwrap_or_default(),
+		frame_system::Pallet::<T>::block_number(),
+	);
 
-			// Turns into a byte array
-			let encoded_payload = unique_payload.encode();
-			let hash = blake2_128(&encoded_payload);
+	// Turns into a byte array
+	let encoded_payload = unique_payload.encode();
+	let hash = blake2_128(&encoded_payload);
 
-			// Generate Gender
-			if hash[0] % 2 == 0 {
-				// Males are identified by having a even leading byte
-				(hash, Gender::Male)
-			} else {
-				// Females are identified by having a odd leading byte
-				(hash, Gender::Female)
-			}
-		}
+	// Generate Gender
+	if hash[0] % 2 == 0 {
+		// Males are identified by having a even leading byte
+		(hash, Gender::Male)
+	} else {
+		// Females are identified by having a odd leading byte
+		(hash, Gender::Female)
+	}
+}
 ```
 Make sure to spend some time understanding the logic behind this function. Check the comments for some guidance.
 
@@ -183,7 +183,7 @@ Replace `TODO: The type of Randomness we want to specify for this pallet.` with 
 
 ```rust
 /// The type of Randomness we want to specify for this pallet.
-type KittyRandomness: Randomness<Self::Hash, Self::BlockNumber>;
+type KittyRandomness: Randomness<Self::Hash, BlockNumberFor<Self>>;
 ```
 2. Specify the actual type in our runtime
 
@@ -193,8 +193,59 @@ set its concrete type. This could come in handy if ever we want to change the al
 
 To showcase this point, we're going to set the `KittyRandomness` type to an instance of FRAME's 
 [`InsecureRandomnessCollectiveFlip`](https://docs.rs/pallet-insecure-randomness-collective-flip/latest/pallet_insecure_randomness_collective_flip/) 
-(It is called insecure because it should be used for only low security situations). Conveniently, the Node Template already has an instance 
-of the `InsecureRandomnessCollectiveFlip` pallet. All you need to do is set the `KittyRandomness` type in your runtime, inside `./runtime/src/lib.rs`:
+(It is called insecure because it should be used for only low security situations). We need to add the pallet to the
+node runtime, do the following:
+
+1. Add the pallet to ./runtime/Cargo.toml:
+
+```rust
+[dependencies]
+// ...
+pallet-insecure-randomness-collective-flip = { version = "4.0.0-dev", default-features = false, git = "https://github.com/paritytech/substrate.git", branch = "polkadot-v1.0.0" }
+
+
+[features]
+default = ["std"]
+std = [
+	// ...
+	"pallet-insecure-randomness-collective-flip/std",
+]
+```
+2. Declare it in ./runtime/src/lib.rs, inside construct_runtime! macro:
+
+```rust
+construct_runtime!(
+	pub struct Runtime {
+		System: frame_system,
+		RandomnessCollectiveFlip: pallet_insecure_randomness_collective_flip,  // <---- Add this
+		Timestamp: pallet_timestamp,
+		Aura: pallet_aura,
+		Grandpa: pallet_grandpa,
+		Balances: pallet_balances,
+		TransactionPayment: pallet_transaction_payment,
+		Sudo: pallet_sudo,
+		// Include the custom logic from the pallet-template in the runtime.
+		TemplateModule: pallet_template,
+		// Include the custom logic from the pallet-kitties in the runtime.
+        KittiesModule: pallet_kitties,
+	}
+);
+```
+
+3. Implement pallet_insecure_randomness_collective_flip::Config for the runtime inside ./runtime/src/lib.rs:
+
+```rust
+/// Configure the pallet-kitties in pallets/kitties.
+impl pallet_kitties::Config for Runtime {
+    type RuntimeEvent = RuntimeEvent;
+	type Currency = Balances;
+	type KittyRandomness = RandomnessCollectiveFlip;
+	type MaxKittiesOwned = MaxKittyOwned;
+}
+
+impl pallet_insecure_randomness_collective_flip::Config for Runtime {} // <-- add this 
+```
+4. Declare the type KittyRandomness as being implemented by RandomnessCollectiveFlip pallet:
 
  ```rust
 /// Configure the pallet-template in pallets/template.
@@ -205,13 +256,12 @@ impl pallet_template::Config for Runtime {
 }
  ```
 
-
 ### Remaining storage items
 
 #### Understanding storage item logic
 
 To track the kitties we're going to standardize the logic to use an ID as key for the each storage item. This means that a single unique 
-key will point to a Kitty object (i.e. the struct we previously declared).
+key will point to a Kitty object (i.e. an instance of the struct we previously declared).
 
 In order for this to work, we need to make sure that the ID for a new Kitty is unique. We can do 
 this with a new storage item called `Kitties`, which will be a mapping from an ID to the Kitty object.

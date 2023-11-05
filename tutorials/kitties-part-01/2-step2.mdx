@@ -25,7 +25,7 @@ repository = "https://github.com/substrate-developer-hub/substrate-node-template
 ...
 ```
 - Add the `pallet-kitties` to the runtime's `cargo.toml`: Go to `./runtime/cargo.toml` file and add the pallet-kitties in 
-the same way the `template-pallet` is added.
+the same way the `template-pallet` is added. Notice kitties pallet is also being added to the features sections.
 
 ```toml
 ...
@@ -99,11 +99,13 @@ pub use pallet_kitties;
 /// Configure the pallet-template in pallets/template.
 impl pallet_template::Config for Runtime {
 	type RuntimeEvent = RuntimeEvent;
+	type WeightInfo = pallet_template::weights::SubstrateWeight<Runtime>;
 }
 
 /// Configure the pallet-kitties in pallets/kitties.
 impl pallet_kitties::Config for Runtime {
 	type RuntimeEvent = RuntimeEvent;
+	type WeightInfo = pallet_kitties::weights::SubstrateWeight<Runtime>;
 }
 
 // ...
@@ -144,9 +146,10 @@ mod benches {
 	);
 }
 ```
-- Compile and run it to check that everything is working as expected: return to the root folder and run:
+- Return to root directory. Compile and run it to check that everything is working as expected: return to the root folder and run:
 
 ```bash
+cd ..
 cargo build --release
 ./target/release/node-template --dev
 ```

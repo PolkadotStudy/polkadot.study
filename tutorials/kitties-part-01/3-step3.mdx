@@ -1,6 +1,6 @@
 # Kitties pallet: scaffold & main logic
 
-Lets check and enumerate what we want the pallet to be able to do. And order it in a logical and 
+Lets check and enumerate what we want the pallet to be able to do. And lets order it in a logical and 
 progressive way, so we can build it step by step.
 
 1. Create a kitty (for first time and by breeding).
@@ -37,13 +37,15 @@ substrate-node-template          <--  The name of our project directory
 |       |
 |       +-- src
 |           |
-|           +-- benchmarking.rs     <-- Remove file
+|           +-- benchmarking.rs     <-- File containing benchmarking functions (ignore it for now). 
 |           |
-|           +-- lib.rs              <-- Remove contents
+|           +-- lib.rs              <-- Remove contents (We will be working here).
 |           |
-|           +-- mock.rs             <-- Remove file
+|           +-- mock.rs             <-- File for mock runtime used in tests and benchmarking (ignore it for now).
 |           |
-|           +-- tests.rs            <-- Remove file
+|           +-- tests.rs            <-- File containing unit tests (ignore it for now).
+|           |
+|           +-- weights.rs          <-- File containing weights for each extrinsic (ignore it for now).
 |
 +-- Cargo.toml
 ```
@@ -182,7 +184,7 @@ We will get some errors related to imports that we have to fix.
 
 Move `sp_io` declaration from `[dev-dependencies]` to `[dependencies]` in the `cargo.toml` file of the 
 pallet, with `default-features` set to false (if not compilation of the node will fail later). This is
-necessary because we are using it in the pallet code. Also Add it to the `features` section in the 
+necessary because we are using it in the pallet code. Also Add it to the [`features`](https://doc.rust-lang.org/cargo/reference/features.html) section in the 
 `cargo.toml` file of the pallet, as follows:
 
 ```toml
@@ -269,11 +271,12 @@ This creates a storage item for our pallet to keep track of the total count of K
 ## Add Currency implementation
 
 Before we proceed with building our node, we need to add the `Currency` type to our pallet's runtime 
-implementation. In `./runtime/src/lib.rs`, add the following:
+implementation. In `./runtime/src/lib.rs`, also remove the benchmarking weights (WeightInfo) implementation, 
+since we don´t have that type anymore:
 
 ```rust
 impl pallet_kitties::Config for Runtime {
-    type Event = Event;
+    type RuntimeEvent = RuntimeEvent;
     type Currency = Balances; // <-- Add this line
 }
 ```
