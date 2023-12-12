@@ -12,7 +12,12 @@ export function StudyPaths() {
   const allTags = usePluginData(
     "docusaurus-plugin-content-tutorials",
     "tutorials"
-  ).tags;
+  )?.tags;
+
+  const test = useGlobalData();
+  console.log("test", test);
+
+  console.log("allTags", allTags);
 
   //filter tags that are 'polkadot.js' or 'substrate'
   const allTagsFiltered = pick(allTags, "polkadot.js", "substrate");

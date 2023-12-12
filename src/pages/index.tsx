@@ -23,9 +23,14 @@ export default function Home(): JSX.Element {
   const allTags = usePluginData(
     "docusaurus-plugin-content-tutorials",
     "tutorials"
-  ).tags;
+  )?.tags;
+
+  console.log("allTags", allTags);
 
   const getAllTutorialsSorted = () => {
+    if (!allTags) {
+      return [];
+    }
     let allTutorialsSorted = [];
 
     Object.keys(allTags).map((key) => {
