@@ -1,0 +1,14 @@
+## Adding New Feature on the dApp
+
+After getting in-depth explanations about how the boilerplate works, we should increase the difficulty a bit now. Our next challenge now is to add a message reversal feature on the dApp. To do that, we have prepared some code snippets, and they are very easy to use with VSCode. 
+
+Let’s begin our task by again opening a terminal and going to the `/contracts` subdirectory first. There, look for [lib.rs](https://github.com/scio-labs/inkathon/blob/main/contracts/src/greeter/lib.rs) file and open it in VSCode. 
+
+Go to `greeter` module, type `Workshop` , select `Workshop Contracts Snippet #1` and confirm. You will instantly see some snippets of a method called `reverse_message`. It is the method that will simply reverse the message.
+
+Afterwards, go inside `tests` module, type `Workshop` again, but this time choose `Workshop Contracts Snippet #2` and confirm. It will generate some snippets of code to test the `reverse_message` method.
+After that, we do the exact thing as before. Build the contract with `pnpm run build` and then deploy it to the blockchain with `pnpm run deploy`.
+
+As usual, we will need to connect the frontend to the newly deployed contract. However, in this case we need to add new UI into the dApp so that we can execute `reverse_message` from the frontend.
+
+To do this, find and open [greeter-contract-interactions.ts](https://github.com/scio-labs/inkathon/blob/main/frontend/src/components/web3/greeter-contract-interactions.tsx) on the frontend subdirectory. Again, type `Workshop`, select `Workshop Frontend Snippet #1` just above `if (!api) return null` line. A function with onClick event handler will be generated, which will then send a transaction to the contract to reverse the message when a button is clicked. We now need to create the corresponding button. Go down and find the closing tag of `<Card/>` component of Update Greeting widget. Type `Workshop` and select `Workshop Frontend Snippet #2`, then confirm. A jsx code will be created for a widget containing a button. To see what this button does, run `pnpm dev` and open [localhost:3000](http://localhost:3000) on the browser. At the bottom of the page, look for a widget with purple `Submit` button just below Update Greeting widget. Click on it and then confirm the popup of transaction details. The message should be reversed now.

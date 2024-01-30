@@ -74,6 +74,15 @@ const sidebars = {
     "decentralized-exchange-ink/unit-testing",
     "decentralized-exchange-ink/conclusion",
   ],
+  firstFullStackInkDapp: [
+    "first-full-stack-ink-dapp/intro",
+    "first-full-stack-ink-dapp/setup-and-launch",
+    "first-full-stack-ink-dapp/deploy-contract-and-connect-frontend",
+    "first-full-stack-ink-dapp/codebase-explanation",
+    "first-full-stack-ink-dapp/adding-new-dapp-feature",
+    "first-full-stack-ink-dapp/frontend-deployment-guide",
+    "first-full-stack-ink-dapp/conclusion",
+  ]
 };
 
 module.exports = sidebars;
