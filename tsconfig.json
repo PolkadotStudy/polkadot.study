@@ -1,7 +1,12 @@
 {
-  // This file is not used in compilation. It is here just for a nice editor experience.
-  "extends": "@tsconfig/docusaurus/tsconfig.json",
+  "extends": "./tsconfig-docusaurus.json",
   "compilerOptions": {
-    "baseUrl": "."
-  }
+    "noEmit": false,
+    "incremental": true,
+    "tsBuildInfoFile": "./lib/.tsbuildinfo",
+    "rootDir": "src",
+    "outDir": "lib"
+  },
+  "include": ["src"],
+  "exclude": ["src/client", "**/__tests__/**"]
 }

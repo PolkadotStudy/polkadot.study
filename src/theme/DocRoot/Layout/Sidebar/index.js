@@ -1,10 +1,10 @@
 import React, {useState, useCallback} from 'react';
 import clsx from 'clsx';
-import {ThemeClassNames} from '@docusaurus/theme-common';
+import {prefersReducedMotion, ThemeClassNames} from '@docusaurus/theme-common';
 import {useDocsSidebar} from '@docusaurus/theme-common/internal';
 import {useLocation} from '@docusaurus/router';
 import DocSidebar from '@theme/DocSidebar';
-import ExpandButton from '@theme/DocPage/Layout/Sidebar/ExpandButton';
+import ExpandButton from '@theme/DocRoot/Layout/Sidebar/ExpandButton';
 import styles from './styles.module.css';
 // Reset sidebar state when sidebar changes
 // Use React key to unmount/remount the children
@@ -17,7 +17,7 @@ function ResetOnSidebarChange({children}) {
     </React.Fragment>
   );
 }
-export default function DocPageLayoutSidebar({
+export default function DocRootLayoutSidebar({
   sidebar,
   hiddenSidebarContainer,
   setHiddenSidebarContainer,
@@ -27,6 +27,11 @@ export default function DocPageLayoutSidebar({
   const toggleSidebar = useCallback(() => {
     if (hiddenSidebar) {
       setHiddenSidebar(false);
+    }
+    // onTransitionEnd won't fire when sidebar animation is disabled
+    // fixes https://github.com/facebook/docusaurus/issues/8918
+    if (!hiddenSidebar && prefersReducedMotion()) {
+      setHiddenSidebar(true);
     }
     setHiddenSidebarContainer((value) => !value);
   }, [setHiddenSidebarContainer, hiddenSidebar]);
