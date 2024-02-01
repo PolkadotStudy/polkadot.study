@@ -1,5 +1,6 @@
 # Dependencies
 /node_modules
+/plugin-content-tutorials/node_modules
 
 # Production
 /build

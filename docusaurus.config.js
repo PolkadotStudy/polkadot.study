@@ -46,7 +46,7 @@ const config = {
       },
     ],
     [
-      "@niklasp/docusaurus-plugin-content-tutorials",
+      "@docusaurus/plugin-content-tutorials",
       {
         id: "tutorials",
         path: "tutorials",
