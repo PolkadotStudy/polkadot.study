@@ -5,9 +5,9 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import path from 'path';
-import _ from 'lodash';
-import logger from '@docusaurus/logger';
+import path from "path";
+import _ from "lodash";
+import logger from "@docusaurus/logger";
 import {
   normalizeUrl,
   docuHash,
@@ -18,26 +18,26 @@ import {
   createAbsoluteFilePathMatcher,
   createSlugger,
   DEFAULT_PLUGIN_ID,
-} from '@docusaurus/utils';
-import {loadSidebars, resolveSidebarPathOption} from './sidebars';
-import {CategoryMetadataFilenamePattern} from './sidebars/generator';
+} from "@docusaurus/utils";
+import { loadSidebars, resolveSidebarPathOption } from "./sidebars";
+import { CategoryMetadataFilenamePattern } from "./sidebars/generator";
 import {
   readVersionDocs,
   processDocMetadata,
   addDocNavigation,
   type DocEnv,
   createDocsByIdIndex,
-} from './docs';
-import {readVersionsMetadata, toFullVersion} from './versions';
-import {cliDocsVersionCommand} from './cli';
-import {VERSIONS_JSON_FILE} from './constants';
-import {toGlobalDataVersion} from './globalData';
+} from "./docs";
+import { readVersionsMetadata, toFullVersion } from "./versions";
+import { cliDocsVersionCommand } from "./cli";
+import { VERSIONS_JSON_FILE } from "./constants";
+import { toGlobalDataVersion } from "./globalData";
 import {
   translateLoadedContent,
   getLoadedContentTranslationFiles,
-} from './translations';
-import {createAllRoutes} from './routes';
-import {createSidebarsUtils} from './sidebars/utils';
+} from "./translations";
+import { createAllRoutes } from "./routes";
+import { createSidebarsUtils } from "./sidebars/utils";
 
 import type {
   PluginOptions,
@@ -46,41 +46,42 @@ import type {
   DocFrontMatter,
   LoadedContent,
   LoadedVersion,
-} from '@docusaurus/plugin-content-docs';
-import type {LoadContext, Plugin} from '@docusaurus/types';
+} from "@docusaurus/plugin-content-docs";
+import type { LoadContext, Plugin } from "@docusaurus/types";
 import type {
   SourceToPermalink,
   DocFile,
   DocsMarkdownOption,
   FullVersion,
-} from './types';
-import type {RuleSetRule} from 'webpack';
+} from "./types";
+import type { RuleSetRule } from "webpack";
+import { getTaggedTutorials } from "./tags";
 
 export default async function pluginContentDocs(
   context: LoadContext,
-  options: PluginOptions,
+  options: PluginOptions
 ): Promise<Plugin<LoadedContent>> {
-  const {siteDir, generatedFilesDir, baseUrl, siteConfig} = context;
+  const { siteDir, generatedFilesDir, baseUrl, siteConfig } = context;
   // Mutate options to resolve sidebar path according to siteDir
   options.sidebarPath = resolveSidebarPathOption(siteDir, options.sidebarPath);
 
-  const versionsMetadata = await readVersionsMetadata({context, options});
+  const versionsMetadata = await readVersionsMetadata({ context, options });
 
   const pluginId = options.id;
 
   const pluginDataDirRoot = path.join(
     generatedFilesDir,
-    'docusaurus-plugin-content-docs',
+    "docusaurus-plugin-content-tutorials"
   );
   const dataDir = path.join(pluginDataDirRoot, pluginId);
   const aliasedSource = (source: string) =>
-    `~docs/${posixPath(path.relative(pluginDataDirRoot, source))}`;
+    `~tutorials/${posixPath(path.relative(pluginDataDirRoot, source))}`;
 
   // TODO env should be injected into all plugins
   const env = process.env.NODE_ENV as DocEnv;
 
   return {
-    name: 'docusaurus-plugin-content-docs',
+    name: "docusaurus-plugin-content-tutorials",
 
     extendCli(cli) {
       const isDefaultPluginId = pluginId === DEFAULT_PLUGIN_ID;
@@ -88,22 +89,22 @@ export default async function pluginContentDocs(
       // Need to create one distinct command per plugin instance
       // otherwise 2 instances would try to execute the command!
       const command = isDefaultPluginId
-        ? 'docs:version'
+        ? "docs:version"
         : `docs:version:${pluginId}`;
       const commandDescription = isDefaultPluginId
-        ? 'Tag a new docs version'
+        ? "Tag a new docs version"
         : `Tag a new docs version (${pluginId})`;
 
       cli
         .command(command)
-        .arguments('<version>')
+        .arguments("<version>")
         .description(commandDescription)
         .action((version: unknown) =>
-          cliDocsVersionCommand(version, options, context),
+          cliDocsVersionCommand(version, options, context)
         );
     },
 
-    getTranslationFiles({content}) {
+    getTranslationFiles({ content }) {
       return getLoadedContentTranslationFiles(content);
     },
 
@@ -112,12 +113,12 @@ export default async function pluginContentDocs(
         const result = [
           ...options.include.flatMap((pattern) =>
             getContentPathList(version).map(
-              (docsDirPath) => `${docsDirPath}/${pattern}`,
-            ),
+              (docsDirPath) => `${docsDirPath}/${pattern}`
+            )
           ),
           `${version.contentPath}/**/${CategoryMetadataFilenamePattern}`,
         ];
-        if (typeof version.sidebarFilePath === 'string') {
+        if (typeof version.sidebarFilePath === "string") {
           result.unshift(version.sidebarFilePath);
         }
         return result;
@@ -128,7 +129,7 @@ export default async function pluginContentDocs(
 
     async loadContent() {
       async function loadVersionDocsBase(
-        versionMetadata: VersionMetadata,
+        versionMetadata: VersionMetadata
       ): Promise<DocMetadataBase[]> {
         const docFiles = await readVersionDocs(versionMetadata, options);
         if (docFiles.length === 0) {
@@ -137,8 +138,8 @@ export default async function pluginContentDocs(
               versionMetadata.versionName
             }" has no docs! At least one doc should exist at "${path.relative(
               siteDir,
-              versionMetadata.contentPath,
-            )}".`,
+              versionMetadata.contentPath
+            )}".`
           );
         }
         function processVersionDoc(docFile: DocFile) {
@@ -154,10 +155,10 @@ export default async function pluginContentDocs(
       }
 
       async function doLoadVersion(
-        versionMetadata: VersionMetadata,
+        versionMetadata: VersionMetadata
       ): Promise<LoadedVersion> {
         const docsBase: DocMetadataBase[] = await loadVersionDocsBase(
-          versionMetadata,
+          versionMetadata
         );
 
         // TODO we only ever need draftIds in further code, not full draft items
@@ -218,11 +219,11 @@ export default async function pluginContentDocs(
       };
     },
 
-    translateContent({content, translationFiles}) {
+    translateContent({ content, translationFiles }) {
       return translateLoadedContent(content, translationFiles);
     },
 
-    async contentLoaded({content, actions}) {
+    async contentLoaded({ content, actions }) {
       const versions: FullVersion[] = content.loadedVersions.map(toFullVersion);
 
       await createAllRoutes({
@@ -233,10 +234,24 @@ export default async function pluginContentDocs(
         aliasedSource,
       });
 
+      let versionTags: any = [];
+
+      if (versions[0] !== undefined) {
+        versionTags = getTaggedTutorials(versions[0].docs);
+      }
+
       actions.setGlobalData({
         path: normalizeUrl([baseUrl, options.routeBasePath]),
         versions: versions.map(toGlobalDataVersion),
         breadcrumbs: options.breadcrumbs,
+        tags: versionTags,
+      });
+
+      actions.setGlobalData({
+        path: normalizeUrl([baseUrl, options.routeBasePath]),
+        versions: versions.map(toGlobalDataVersion),
+        breadcrumbs: options.breadcrumbs,
+        tags: versionTags,
       });
     },
 
@@ -251,7 +266,7 @@ export default async function pluginContentDocs(
       function getSourceToPermalink(): SourceToPermalink {
         const allDocs = content.loadedVersions.flatMap((v) => v.docs);
         return Object.fromEntries(
-          allDocs.map(({source, permalink}) => [source, permalink]),
+          allDocs.map(({ source, permalink }) => [source, permalink])
         );
       }
 
@@ -261,7 +276,7 @@ export default async function pluginContentDocs(
         versionsMetadata,
         onBrokenMarkdownLink: (brokenMarkdownLink) => {
           logger.report(
-            siteConfig.onBrokenMarkdownLinks,
+            siteConfig.onBrokenMarkdownLinks
           )`Docs markdown link couldn't be resolved: (url=${brokenMarkdownLink.link}) in path=${brokenMarkdownLink.filePath} for version number=${brokenMarkdownLink.contentPaths.versionName}`;
         },
       };
@@ -276,7 +291,7 @@ export default async function pluginContentDocs(
           include: contentDirs,
           use: [
             {
-              loader: require.resolve('@docusaurus/mdx-loader'),
+              loader: require.resolve("@docusaurus/mdx-loader"),
               options: {
                 admonitions: options.admonitions,
                 remarkPlugins,
@@ -284,12 +299,12 @@ export default async function pluginContentDocs(
                 beforeDefaultRehypePlugins,
                 beforeDefaultRemarkPlugins,
                 staticDirs: siteConfig.staticDirectories.map((dir) =>
-                  path.resolve(siteDir, dir),
+                  path.resolve(siteDir, dir)
                 ),
                 siteDir,
                 isMDXPartial: createAbsoluteFilePathMatcher(
                   options.exclude,
-                  contentDirs,
+                  contentDirs
                 ),
                 metadataPath: (mdxPath: string) => {
                   // Note that metadataPath must be the same/in-sync as
@@ -310,7 +325,7 @@ export default async function pluginContentDocs(
               },
             },
             {
-              loader: path.resolve(__dirname, './markdown/index.js'),
+              loader: path.resolve(__dirname, "./markdown/index.js"),
               options: docsMarkdownOptions,
             },
           ].filter(Boolean),
@@ -326,7 +341,7 @@ export default async function pluginContentDocs(
         ],
         resolve: {
           alias: {
-            '~docs': pluginDataDirRoot,
+            "~tutorials": pluginDataDirRoot,
           },
         },
         module: {
@@ -337,4 +352,4 @@ export default async function pluginContentDocs(
   };
 }
 
-export {validateOptions} from './options';
+export { validateOptions } from "./options";

@@ -5,13 +5,19 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import type {BrokenMarkdownLink, Tag} from '@docusaurus/utils';
+import type { BrokenMarkdownLink, Tag } from "@docusaurus/utils";
 import type {
   VersionMetadata,
   LoadedVersion,
   CategoryGeneratedIndexMetadata,
-} from '@docusaurus/plugin-content-docs';
-import type {SidebarsUtils} from './sidebars/utils';
+} from "@docusaurus/plugin-content-docs";
+import type { SidebarsUtils } from "./sidebars/utils";
+
+export type TutorialTag = {
+  label: string;
+  permalink: string;
+  description?: string;
+};
 
 export type DocFile = {
   contentPath: string; // /!\ may be localized

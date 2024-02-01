@@ -6,9 +6,14 @@
  */
 /// <reference path="../src/plugin-content-docs.d.ts" />
 /// <reference types="@docusaurus/plugin-content-docs/src/plugin-content-docs.js" />
-import type { BrokenMarkdownLink, Tag } from '@docusaurus/utils';
-import type { VersionMetadata, LoadedVersion, CategoryGeneratedIndexMetadata } from '@docusaurus/plugin-content-docs';
-import type { SidebarsUtils } from './sidebars/utils';
+import type { BrokenMarkdownLink, Tag } from "@docusaurus/utils";
+import type { VersionMetadata, LoadedVersion, CategoryGeneratedIndexMetadata } from "@docusaurus/plugin-content-docs";
+import type { SidebarsUtils } from "./sidebars/utils";
+export type TutorialTag = {
+    label: string;
+    permalink: string;
+    description?: string;
+};
 export type DocFile = {
     contentPath: string;
     filePath: string;

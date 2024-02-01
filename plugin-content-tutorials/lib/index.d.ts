@@ -6,7 +6,7 @@
  */
 /// <reference path="../src/plugin-content-docs.d.ts" />
 /// <reference types="@docusaurus/plugin-content-docs/src/plugin-content-docs.js" />
-import type { PluginOptions, LoadedContent } from '@docusaurus/plugin-content-docs';
-import type { LoadContext, Plugin } from '@docusaurus/types';
+import type { PluginOptions, LoadedContent } from "@docusaurus/plugin-content-docs";
+import type { LoadContext, Plugin } from "@docusaurus/types";
 export default function pluginContentDocs(context: LoadContext, options: PluginOptions): Promise<Plugin<LoadedContent>>;
-export { validateOptions } from './options';
+export { validateOptions } from "./options";

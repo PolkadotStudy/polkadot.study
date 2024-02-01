@@ -22,32 +22,33 @@ const globalData_1 = require("./globalData");
 const translations_1 = require("./translations");
 const routes_1 = require("./routes");
 const utils_2 = require("./sidebars/utils");
+const tags_1 = require("./tags");
 async function pluginContentDocs(context, options) {
     const { siteDir, generatedFilesDir, baseUrl, siteConfig } = context;
     // Mutate options to resolve sidebar path according to siteDir
     options.sidebarPath = (0, sidebars_1.resolveSidebarPathOption)(siteDir, options.sidebarPath);
     const versionsMetadata = await (0, versions_1.readVersionsMetadata)({ context, options });
     const pluginId = options.id;
-    const pluginDataDirRoot = path_1.default.join(generatedFilesDir, 'docusaurus-plugin-content-docs');
+    const pluginDataDirRoot = path_1.default.join(generatedFilesDir, "docusaurus-plugin-content-tutorials");
     const dataDir = path_1.default.join(pluginDataDirRoot, pluginId);
-    const aliasedSource = (source) => `~docs/${(0, utils_1.posixPath)(path_1.default.relative(pluginDataDirRoot, source))}`;
+    const aliasedSource = (source) => `~tutorials/${(0, utils_1.posixPath)(path_1.default.relative(pluginDataDirRoot, source))}`;
     // TODO env should be injected into all plugins
     const env = process.env.NODE_ENV;
     return {
-        name: 'docusaurus-plugin-content-docs',
+        name: "docusaurus-plugin-content-tutorials",
         extendCli(cli) {
             const isDefaultPluginId = pluginId === utils_1.DEFAULT_PLUGIN_ID;
             // Need to create one distinct command per plugin instance
             // otherwise 2 instances would try to execute the command!
             const command = isDefaultPluginId
-                ? 'docs:version'
+                ? "docs:version"
                 : `docs:version:${pluginId}`;
             const commandDescription = isDefaultPluginId
-                ? 'Tag a new docs version'
+                ? "Tag a new docs version"
                 : `Tag a new docs version (${pluginId})`;
             cli
                 .command(command)
-                .arguments('<version>')
+                .arguments("<version>")
                 .description(commandDescription)
                 .action((version) => (0, cli_1.cliDocsVersionCommand)(version, options, context));
         },
@@ -60,7 +61,7 @@ async function pluginContentDocs(context, options) {
                     ...options.include.flatMap((pattern) => (0, utils_1.getContentPathList)(version).map((docsDirPath) => `${docsDirPath}/${pattern}`)),
                     `${version.contentPath}/**/${generator_1.CategoryMetadataFilenamePattern}`,
                 ];
-                if (typeof version.sidebarFilePath === 'string') {
+                if (typeof version.sidebarFilePath === "string") {
                     result.unshift(version.sidebarFilePath);
                 }
                 return result;
@@ -149,10 +150,21 @@ async function pluginContentDocs(context, options) {
                 actions,
                 aliasedSource,
             });
+            let versionTags = [];
+            if (versions[0] !== undefined) {
+                versionTags = (0, tags_1.getTaggedTutorials)(versions[0].docs);
+            }
             actions.setGlobalData({
                 path: (0, utils_1.normalizeUrl)([baseUrl, options.routeBasePath]),
                 versions: versions.map(globalData_1.toGlobalDataVersion),
                 breadcrumbs: options.breadcrumbs,
+                tags: versionTags,
+            });
+            actions.setGlobalData({
+                path: (0, utils_1.normalizeUrl)([baseUrl, options.routeBasePath]),
+                versions: versions.map(globalData_1.toGlobalDataVersion),
+                breadcrumbs: options.breadcrumbs,
+                tags: versionTags,
             });
         },
         configureWebpack(_config, isServer, utils, content) {
@@ -179,7 +191,7 @@ async function pluginContentDocs(context, options) {
                     include: contentDirs,
                     use: [
                         {
-                            loader: require.resolve('@docusaurus/mdx-loader'),
+                            loader: require.resolve("@docusaurus/mdx-loader"),
                             options: {
                                 admonitions: options.admonitions,
                                 remarkPlugins,
@@ -204,7 +216,7 @@ async function pluginContentDocs(context, options) {
                             },
                         },
                         {
-                            loader: path_1.default.resolve(__dirname, './markdown/index.js'),
+                            loader: path_1.default.resolve(__dirname, "./markdown/index.js"),
                             options: docsMarkdownOptions,
                         },
                     ].filter(Boolean),
@@ -218,7 +230,7 @@ async function pluginContentDocs(context, options) {
                 ],
                 resolve: {
                     alias: {
-                        '~docs': pluginDataDirRoot,
+                        "~tutorials": pluginDataDirRoot,
                     },
                 },
                 module: {
