@@ -9,7 +9,7 @@ export default function PaginatorNavLink(props) {
 
   const location = useLocation();
 
-  const { tasks } = useContext(DocTaskContext);
+  const tasks = useContext(DocTaskContext);
   const unfinishedTasks = tasks?.filter(
     (t) => t.page === location.pathname && !t.checked && t.mandatory
   );
