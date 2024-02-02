@@ -32,9 +32,13 @@ export default function TutorialGrid({
     const allTags = usePluginData(
       "docusaurus-plugin-content-tutorials",
       "tutorials"
-    ).tags;
+    )?.tags;
 
     let allTutorials = [];
+
+    if (!allTags) {
+      return null;
+    }
 
     Object.values(allTags).forEach((tag) => {
       tag.items?.forEach((tutorial) => allTutorials.push(tutorial));
