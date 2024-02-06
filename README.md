@@ -26,7 +26,15 @@ submitting a pull request.
 $ yarn
 ```
 
+```bash
+git submodule init
+git submodule update --remote
+```
+
 ### Local Development
+
+Before you start the dev server, you need to update git submodules as we pull
+content from other repos.
 
 ```
 $ yarn start
