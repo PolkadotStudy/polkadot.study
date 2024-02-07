@@ -1,6 +1,6 @@
 # Substrate tutorials
 
-Substate tutorials is a collection of exercises that will theach you the basics
+Substate tutorials is a collection of exercises that will teach you the basics
 of Substrate development and broaden your skillsets through real-world use
 cases.
 
