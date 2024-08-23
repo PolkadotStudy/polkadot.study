@@ -1,0 +1,102 @@
+# Kusama DeFi Hub
+
+<center>
+<iframe width="640" height="360"
+    src="https://www.youtube.com/embed/yCTa4ONgB9c?fs=2&autoplay=0" frameborder="0"
+    allow="fullscreen; accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+</center>
+<hr/>
+
+In the previous lesson, we looked at ways to acquire, store, and exchange KSM tokens. The first, and most common, way is to get through centralized cryptocurrency exchanges that have a built-in token wallet. With the development of Web3 technologies, the second method is becoming increasingly popular, which involves the use of decentralized protocols that provide liquidity exchange between software wallets, but do not access them. One such protocol, Karura, will be discussed in this tutorial. We will look at how it works, provides reliability to users, and enables token transfers between networks within the Kusama blockchain.
+
+## **What is Karura**
+
+Karura is parachain in Kusama network and its first DeFi Hub. Such as Kusama is a sister network of Polkadot, Karura is a sister network to Polkadots DeFi Hub - Acala. It provides an array of services for Kusama network, which we gonna discuss below.
+
+## **Token swap and liquidity providing**
+
+Providing liquidity in DeFi and blockchain means the act of depositing your cryptocurrencies into a liquidity pool. These liquidity pools are a fundamental component of Automated Market Makers (AMMs) and DEX and represent digital assets managed by smart contracts that enable trades between different tokens or cryptocurrencies on Karura, and other DEXs. When you provide liquidity, you contribute your funds to a pool of assets that other users can trade against.
+
+:::info
+**Automated Market Makers (AMMs)** are a decentralized alternative to centralized Order Books for trading cryptocurrencies. While Order Books rely on intermediaries to match buy and sell orders, AMMs use liquidity pools where users (known as "liquidity providers") supply assets, and trades are executed instantly based on a mathematical algorithm. This algorithm considers the liquidity of the assets in the pool and other relevant factors, ensuring fair and efficient trading without the need for central authority or control. AMMs empower users to participate in trading and liquidity provision autonomously, fostering a permissionless and community-driven approach to cryptocurrency markets.
+:::
+
+
+Tokens that are available for swapping in Karura: KSM, USDT, CSM, BNC, USDCet, RMRK, ARIS, AIR, QTZ, CSM, KAR, KBTC, KINT, aSEED, LKSM, PHA, tKSM, TAI - You can swap every token from the list for another one. KSM → USDT is most popular pool and only one such on DEX platforms.
+
+Our video lesson represents swapping KSM tokens for Crust Shadow (CSM) via liquidity pool on Karura. Be sure to watch and have a clear representation of this process.
+
+If you become liquidity provider, and lock your funds on Karura, you will receive liquidity provider (LP) tokens proportional to your share of the pool. These tokens will represent your contribution to the pool and can be used for interaction within the platform.
+
+## **Bridge between parachains**
+
+Karura is a multichain system that meets the interoperability requirements of the Kusama ecosystem. Thanks to the HRMP teleport we discussed in Lesson 2, tokens can be transferred between each Kusama parachain and compatible networks. You can also send tokens from the Ethereum network to Karura by connecting your Metamask wallet.
+
+### Karura token
+
+Karura has its own utility token - KAR, created for powering hub by:
+
+1. Staking,
+2. Network securing,
+3. Governance,
+4. Transaction fees,
+5. Incentive distribution.
+
+In case you consider investing in KAR, you can check their tokenomics represented [here](https://acala.network/karura/token).
+
+KAR, as well as ETH in Ethereum, is used to pay for gas, but unlike Ethereum, where you need to have a certain amount of ETH in your account to pay for gas even if you send, for example, USDT, in Karura you can pay for gas with the tokens you directly send. The platform itself calculates and buys a small portion of KAR tokens as a gas payment.
+
+Karura also has its own stablecoin, which they are sharing with the Acala network - **aUSD**.
+
+### Staking in Karura
+
+You can stake your KSM tokens in Karura, and by so mint Liquidity KSM (LKSM). You can also stake your minted LKSM to earn aUSD. APY is around 15%.
+
+<center>
+
+![Alt Text](./assets/stats.png)
+
+</center>
+
+LP staking is also available on Karura. It is the process of transferring LP tokens to a blockchain service in exchange for rewards in the form of new tokens. That is, the user deposits LP tokens and receives rewards on top of them.
+
+<center>
+
+![Alt Text](./assets/liquidity.png)
+
+</center>
+
+### Governance in Karura
+
+Karura takes a phased approach to employ various governance mechanisms that will allow it to progressively decentralize and ultimately be commanded by the majority network stakeholders. Karura's governance framework is based on Polkadot's technology and consists of a few councils: general council, financial council, liquid staking council, and technical committee.
+
+import Quiz from "/src/components/quiz";
+
+export const questions = [{
+  question: "What is a liquidity pool?",
+  answers: [
+    "a stablecoin that is held in significant quantities by exchanges as part of their emergency exchange reserves",
+    "a list of all open orders that are currently available for trade for a specific crypto pair",
+    "a reserve of tokens locked via smart contract for regulator check",
+    "a crowdsourced reserve of tokens locked via smart contract for trades between the assets"
+  ],
+  correctAnswerIdx: [3],
+  msgCorrect: "Correct answer. Good job.",
+  msgIncorrect: "Incorrect answer. Please try again.",
+},
+{
+  question: "Important concept that you will frequently encounter when using DEX is price impact. Before each token swap, you will see the percentage by which the swap will affect its price (which is algorithmically determined). This impact needs to be understood when making transactions so as not to experience too much increase or decrease in the value of the token. Let's assume you want to swap the token aUSD for the token KSM, and currently 1 KSM = 20 aUSD. In the pool, there are 1000 KSM and 20000 aUSD. You have two options: sell 100 aUSD or 1000 aUSD. In which case will the price of 1 KSM be higher for you?",
+  answers: [
+    "When selling 100 aUSD",
+    "When selling 1000 aUSD",
+    "The price is the same for both options and is equal to 20 aUSD",
+    "The price will increase for both options and will become equal to 21 aUSD"
+  ],
+  correctAnswerIdx: [1],
+  msgCorrect: "Correct answer. Good job.",
+  msgIncorrect: "Incorrect answer. Please try again.",
+}];
+
+
+<Quiz quizItem={questions[0]} />
+<Quiz quizItem={questions[1]} />
