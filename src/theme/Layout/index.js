@@ -16,7 +16,7 @@ import LayoutProvider from "@theme/Layout/Provider";
 import ErrorPageContent from "@theme/ErrorPageContent";
 import styles from "./styles.module.css";
 import Head from "@docusaurus/Head";
-import Grill from "@site/src/components/grill/grill-chat";
+
 export default function Layout(props) {
   const {
     children,
@@ -65,7 +65,6 @@ export default function Layout(props) {
       </div>
 
       {!noFooter && <Footer />}
-      <Grill />
 
       <Analytics />
     </LayoutProvider>

@@ -160,10 +160,9 @@ const config = {
       announcementBar: {
         id: "support_us",
         content:
-          'We are looking for payed authors to write Polkadot developer tutorials <a rel="noopener noreferrer" href="/blog/looking-for-authors">Learn More</a>',
-        backgroundColor: "var(--polkadot-pink)",
+          'Polkadot.study is currently not actively maintained and tutorials found here are outdated and left here as an archive. Please use the official tutorials from <a href="https://docs.polkadot.com/">Polkadot Docs</a> or <a href="https://dotcodeschool.com/">dotcodeschool</a> for the latest tutorials.',
         textColor: "#eee",
-        isCloseable: true,
+        isCloseable: false,
       },
       showLastUpdateAuthor: true,
       showLastUpdateTime: true,

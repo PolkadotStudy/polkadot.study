@@ -1,6 +1,6 @@
 import React, { ChangeEvent, useEffect, useState } from "react";
 import cn from "classnames";
-import styles from "./index.module.scss";
+import styles from "./quiz.module.scss";
 import clsx from "clsx";
 import Button from "../button/Button";
 
