@@ -1,0 +1,11 @@
+# --- Practice: Light a Lamp
+
+The [Lights Up](https://v0.dapp.robonomics.network/#/lights-up) demo allow you to get a demo subscription, which is useful only inside demo, and test remote control of the smart lamp.
+
+## **Task**
+
+1. First, you need to add your account address to the demo subscription list. You can do this using the [@robonomics_free_rws](https://t.me/robonomics_free_rws_bot)Telegram bot.
+2. Open the [dapp with demo](https://v0.dapp.robonomics.network/#/lights-up) and connect your account to it. In `Get IoT Subscription` line you should see that the subscription is active.
+3. Select the desired **color** you wish to illuminate the lamp with.
+4. Go through the **authentication** process in the Crust ecosystem. This authentication step serves the purpose of **storing information** of the chosen light settings for future reference. As this data is stowed away, an IPFS Hash is generated in the background.
+5. After signing and sending a transaction, a **launch extrinsic** will be dispatched. This extrinsic incorporates the IPFS hash and the robot account address. In about 15 seconds the lamp's color changes accordingly.

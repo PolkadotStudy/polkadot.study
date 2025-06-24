@@ -57,7 +57,7 @@ export default function Task({
       )}
       ref={ref}
     >
-      <div className={styles.title}>Task!</div>
+      <div className={styles.title}>{caption? caption: "Task!"}</div>
       <label className={styles.taskContent}>
         <input
           id={taskId}

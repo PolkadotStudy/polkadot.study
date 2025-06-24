@@ -74,6 +74,38 @@ const sidebars = {
     "decentralized-exchange-ink/unit-testing",
     "decentralized-exchange-ink/conclusion",
   ],
+  kusamaTheoryPracticeSidebar: [
+      "kusama-theory-practice/intro",
+      "kusama-theory-practice/intro-to-polkadot",
+      "kusama-theory-practice/ecosystem-explained",
+      "kusama-theory-practice/practice-wallet",
+      "kusama-theory-practice/first-transaction",
+      "kusama-theory-practice/practice-transaction",
+      "kusama-theory-practice/talisman",
+      "kusama-theory-practice/ledger",
+      "kusama-theory-practice/novawallet",
+      "kusama-theory-practice/practice-proposal",
+      "kusama-theory-practice/token-mint",
+      "kusama-theory-practice/token-manage",
+      "kusama-theory-practice/practice-mint",
+      "kusama-theory-practice/polkadot-auth",
+      "kusama-theory-practice/ksm",
+      "kusama-theory-practice/karura",
+      "kusama-theory-practice/basilisk",
+      "kusama-theory-practice/moonriver",
+      "kusama-theory-practice/ipfs",
+      "kusama-theory-practice/practice-ipfs",
+      "kusama-theory-practice/crust",
+      "kusama-theory-practice/practice-crust",
+      "kusama-theory-practice/crust-routine",
+      "kusama-theory-practice/robonomics",
+      "kusama-theory-practice/lamp",
+      "kusama-theory-practice/practice-lamp",
+      "kusama-theory-practice/spot",
+      "kusama-theory-practice/practice-spot",
+      "kusama-theory-practice/has",
+
+  ]
 };
 
 module.exports = sidebars;
