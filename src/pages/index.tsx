@@ -124,9 +124,7 @@ export default function Home(): JSX.Element {
               after a a successful referendum.
             </p>
           </div>
-          <div className={styles.right}>
-            <Dots></Dots>
-          </div>
+          <div className={styles.right}>{/* <Dots></Dots> */}</div>
         </section>
         <section className={styles.sectionStudyPaths}>
           <h2>Study Paths</h2>
@@ -160,9 +158,7 @@ export default function Home(): JSX.Element {
               Learn how to contribute
             </Button>
           </div>
-          <div className={styles.right}>
-            <Dots />
-          </div>
+          <div className={styles.right}>{/* <Dots /> */}</div>
         </section>
       </main>
     </Layout>
